@@ -115,11 +115,11 @@ export function chunkEmail(email: EmailJSON, emailPath: string): EmailChunk[] {
       emailId: email.id.hash,
       emailPath: emailPath,
       subject: subject,
-      fromName: email.headers.from.name || "",
-      fromEmail: email.headers.from.email,
-      toEmails: email.headers.to.map(t => t.email),
-      date: email.headers.date.iso,
-      labels: email.metadata.labels || [],
+      fromName: email.headers.from?.name || "",
+      fromEmail: email.headers.from?.email || "",
+      toEmails: email.headers.to?.map(t => t.email) || [],
+      date: email.headers.date?.iso || new Date().toISOString(),
+      labels: email.metadata?.labels || [],
       hasAttachments: (email.attachments?.count || 0) > 0,
       isReply: !!email.headers.in_reply_to
     }];
@@ -149,11 +149,11 @@ export function chunkEmail(email: EmailJSON, emailPath: string): EmailChunk[] {
         emailId: email.id.hash,
         emailPath: emailPath,
         subject: subject,
-        fromName: email.headers.from.name || "",
-        fromEmail: email.headers.from.email,
-        toEmails: email.headers.to.map(t => t.email),
-        date: email.headers.date.iso,
-        labels: email.metadata.labels || [],
+        fromName: email.headers.from?.name || "",
+        fromEmail: email.headers.from?.email || "",
+        toEmails: email.headers.to?.map(t => t.email) || [],
+        date: email.headers.date?.iso || new Date().toISOString(),
+        labels: email.metadata?.labels || [],
         hasAttachments: (email.attachments?.count || 0) > 0,
         isReply: !!email.headers.in_reply_to
       });
@@ -171,7 +171,8 @@ export function chunkEmail(email: EmailJSON, emailPath: string): EmailChunk[] {
  * Structure: {year}/{email}.json directly in year folder
  */
 export async function* iterateEmails(): AsyncGenerator<{ path: string; email: EmailJSON }> {
-  const years = ["2020", "2021", "2022", "2023", "2024", "2025", "2026"];
+  // Start from 2025 to index newest first, then backfill older years
+  const years = ["2025", "2026", "2024", "2023", "2022", "2021", "2020"];
 
   for (const year of years) {
     const yearPath = `${EMAIL_BASE}/${year}`;

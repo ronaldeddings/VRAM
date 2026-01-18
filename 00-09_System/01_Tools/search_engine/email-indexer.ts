@@ -74,21 +74,30 @@ async function indexEmails() {
         // Format embedding as PostgreSQL vector literal
         const vectorLiteral = `[${embedding.join(",")}]`;
 
-        // Format arrays as PostgreSQL array literals
+        // Format arrays as PostgreSQL array literals (use empty array, not null)
         const toEmailsArray = chunk.toEmails && chunk.toEmails.length > 0
           ? `{${chunk.toEmails.map(s => `"${s.replace(/"/g, '\\"')}"`).join(",")}}`
-          : null;
+          : '{}';
         const labelsArray = chunk.labels && chunk.labels.length > 0
           ? `{${chunk.labels.map(s => `"${s.replace(/"/g, '\\"')}"`).join(",")}}`
-          : null;
+          : '{}';
+
+        // Extract year and month from email date
+        const emailDate = new Date(chunk.date);
+        const emailYear = emailDate.getFullYear();
+        const emailMonth = emailDate.getMonth() + 1; // 1-indexed
+        const emailQuarter = Math.ceil(emailMonth / 3);
 
         await sql.unsafe(`
           INSERT INTO email_chunks (
             email_id, email_path, subject, from_name, from_email,
             to_emails, email_date, labels, has_attachments, is_reply,
-            chunk_index, chunk_text, chunk_size, embedding
+            chunk_index, chunk_text, chunk_size, embedding,
+            year, month, quarter, search_vector
           ) VALUES (
-            $1, $2, $3, $4, $5, $6::text[], $7::timestamptz, $8::text[], $9, $10, $11, $12, $13, $14::vector
+            $1, $2, $3, $4, $5, $6::text[], $7::timestamptz, $8::text[], $9, $10, $11, $12, $13, $14::vector,
+            $15, $16, $17,
+            setweight(to_tsvector('english', coalesce($3, '')), 'A') || setweight(to_tsvector('english', coalesce($12, '')), 'B')
           )
         `, [
           chunk.emailId,
@@ -104,7 +113,10 @@ async function indexEmails() {
           chunk.index,
           chunk.text,
           chunk.text.length,
-          vectorLiteral
+          vectorLiteral,
+          emailYear,
+          emailMonth,
+          emailQuarter
         ]);
 
         totalChunks++;

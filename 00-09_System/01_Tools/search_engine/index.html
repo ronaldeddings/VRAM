@@ -208,6 +208,135 @@
       color: #00d4ff;
     }
 
+    /* Advanced filters section */
+    .advanced-filters {
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background: #16213e;
+      border-radius: 8px;
+      border: 1px solid #333;
+    }
+    .advanced-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      color: #888;
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+    }
+    .advanced-toggle:hover { color: #00d4ff; }
+    .advanced-toggle.active { color: #00d4ff; }
+    .advanced-content {
+      display: none;
+      padding-top: 1rem;
+      border-top: 1px solid #333;
+    }
+    .advanced-content.visible { display: block; }
+    .filter-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.75rem;
+    }
+    .filter-row:last-child { margin-bottom: 0; }
+    .filter-group.small select,
+    .filter-group.small input {
+      width: 100px;
+    }
+    .filter-group input[type="text"] {
+      padding: 0.5rem;
+      background: #1a1a2e;
+      color: #eee;
+      border: 1px solid #333;
+      border-radius: 4px;
+      outline: none;
+      width: 150px;
+    }
+    .filter-group input[type="text"]:focus { border-color: #00d4ff; }
+
+    /* Boolean toggle switches */
+    .toggle-switch {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+    .toggle-switch input[type="checkbox"] {
+      display: none;
+    }
+    .toggle-slider {
+      width: 36px;
+      height: 20px;
+      background: #333;
+      border-radius: 10px;
+      position: relative;
+      transition: background 0.2s;
+    }
+    .toggle-slider::after {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background: #666;
+      border-radius: 50%;
+      top: 2px;
+      left: 2px;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .toggle-switch input:checked + .toggle-slider {
+      background: #00d4ff33;
+    }
+    .toggle-switch input:checked + .toggle-slider::after {
+      transform: translateX(16px);
+      background: #00d4ff;
+    }
+    .toggle-label {
+      font-size: 0.875rem;
+      color: #888;
+    }
+    .toggle-switch input:checked ~ .toggle-label {
+      color: #00d4ff;
+    }
+
+    /* Tabs for navigation */
+    .nav-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid #333;
+      padding-bottom: 0.5rem;
+    }
+    .nav-tab {
+      padding: 0.5rem 1rem;
+      background: transparent;
+      color: #888;
+      border: none;
+      border-radius: 4px 4px 0 0;
+      cursor: pointer;
+      font-size: 0.875rem;
+    }
+    .nav-tab:hover { color: #ccc; }
+    .nav-tab.active {
+      background: #16213e;
+      color: #00d4ff;
+      border: 1px solid #333;
+      border-bottom: none;
+    }
+
+    /* Contact/Company metadata badges */
+    .metadata-badge {
+      font-size: 0.7rem;
+      padding: 0.15rem 0.4rem;
+      border-radius: 3px;
+      margin-right: 0.25rem;
+    }
+    .metadata-person { background: #1a5a5a; color: #4dd4d4; }
+    .metadata-company { background: #5a4a1a; color: #d4c44d; }
+    .metadata-attachment { background: #5a1a3a; color: #d44d8d; }
+    .metadata-internal { background: #1a3a5a; color: #4d8dd4; }
+    .metadata-thread { background: #3a1a5a; color: #8d4dd4; }
+
     /* Phase 5: Score badges for hybrid results */
     .score-badge {
       font-size: 0.7rem;
@@ -552,6 +681,86 @@
         </div>
       </div>
     </div>
+
+    <!-- Advanced Filters -->
+    <div class="advanced-filters">
+      <div class="advanced-toggle" onclick="toggleAdvanced()">
+        <span id="advancedArrow">▶</span> Advanced Filters
+      </div>
+      <div class="advanced-content" id="advancedContent">
+        <div class="filter-row">
+          <div class="filter-group small">
+            <label>Year:</label>
+            <select id="filterYear">
+              <option value="">Any</option>
+              <option value="2026">2026</option>
+              <option value="2025">2025</option>
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+              <option value="2022">2022</option>
+              <option value="2021">2021</option>
+              <option value="2020">2020</option>
+            </select>
+          </div>
+          <div class="filter-group small">
+            <label>Quarter:</label>
+            <select id="filterQuarter">
+              <option value="">Any</option>
+              <option value="1">Q1</option>
+              <option value="2">Q2</option>
+              <option value="3">Q3</option>
+              <option value="4">Q4</option>
+            </select>
+          </div>
+          <div class="filter-group small">
+            <label>Month:</label>
+            <select id="filterMonth">
+              <option value="">Any</option>
+              <option value="1">Jan</option>
+              <option value="2">Feb</option>
+              <option value="3">Mar</option>
+              <option value="4">Apr</option>
+              <option value="5">May</option>
+              <option value="6">Jun</option>
+              <option value="7">Jul</option>
+              <option value="8">Aug</option>
+              <option value="9">Sep</option>
+              <option value="10">Oct</option>
+              <option value="11">Nov</option>
+              <option value="12">Dec</option>
+            </select>
+          </div>
+        </div>
+        <div class="filter-row">
+          <div class="filter-group">
+            <label>Person:</label>
+            <input type="text" id="filterPerson" placeholder="Name or email...">
+          </div>
+          <div class="filter-group">
+            <label>Company:</label>
+            <input type="text" id="filterCompany" placeholder="Company name...">
+          </div>
+        </div>
+        <div class="filter-row">
+          <label class="toggle-switch">
+            <input type="checkbox" id="filterSentByMe">
+            <span class="toggle-slider"></span>
+            <span class="toggle-label">Sent by me</span>
+          </label>
+          <label class="toggle-switch">
+            <input type="checkbox" id="filterHasAttachments">
+            <span class="toggle-slider"></span>
+            <span class="toggle-label">Has attachments</span>
+          </label>
+          <label class="toggle-switch">
+            <input type="checkbox" id="filterIsInternal">
+            <span class="toggle-slider"></span>
+            <span class="toggle-label">Internal only</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
     <div class="embedding-status" id="embeddingStatus" style="display: none;"></div>
 
     <div class="stats" id="stats">Loading stats...</div>
@@ -590,10 +799,51 @@
     const weightLabel = document.getElementById('weightLabel');
     const embeddingStatusDiv = document.getElementById('embeddingStatus');
 
+    // Advanced filter elements
+    const filterYear = document.getElementById('filterYear');
+    const filterQuarter = document.getElementById('filterQuarter');
+    const filterMonth = document.getElementById('filterMonth');
+    const filterPerson = document.getElementById('filterPerson');
+    const filterCompany = document.getElementById('filterCompany');
+    const filterSentByMe = document.getElementById('filterSentByMe');
+    const filterHasAttachments = document.getElementById('filterHasAttachments');
+    const filterIsInternal = document.getElementById('filterIsInternal');
+
     // Modal state
     let currentFilePath = null;
     // Embedding server availability
     let embeddingServerConnected = false;
+
+    // Toggle advanced filters visibility
+    function toggleAdvanced() {
+      const content = document.getElementById('advancedContent');
+      const arrow = document.getElementById('advancedArrow');
+      const toggle = document.querySelector('.advanced-toggle');
+
+      if (content.classList.contains('visible')) {
+        content.classList.remove('visible');
+        arrow.textContent = '▶';
+        toggle.classList.remove('active');
+      } else {
+        content.classList.add('visible');
+        arrow.textContent = '▼';
+        toggle.classList.add('active');
+      }
+    }
+
+    // Get all advanced filter values
+    function getAdvancedFilters() {
+      return {
+        year: filterYear.value || undefined,
+        quarter: filterQuarter.value || undefined,
+        month: filterMonth.value || undefined,
+        person: filterPerson.value.trim() || undefined,
+        company: filterCompany.value.trim() || undefined,
+        sentByMe: filterSentByMe.checked ? true : undefined,
+        hasAttachments: filterHasAttachments.checked ? true : undefined,
+        isInternal: filterIsInternal.checked ? true : undefined
+      };
+    }
 
     // Search type change handler
     function onSearchTypeChange() {
@@ -790,6 +1040,17 @@
         }
       }
 
+      // Add advanced filters for all search types
+      const advFilters = getAdvancedFilters();
+      if (advFilters.year) params.set('year', advFilters.year);
+      if (advFilters.quarter) params.set('quarter', advFilters.quarter);
+      if (advFilters.month) params.set('month', advFilters.month);
+      if (advFilters.person) params.set('person', advFilters.person);
+      if (advFilters.company) params.set('company', advFilters.company);
+      if (advFilters.sentByMe) params.set('sent_by_me', 'true');
+      if (advFilters.hasAttachments) params.set('has_attachments', 'true');
+      if (advFilters.isInternal) params.set('is_internal', 'true');
+
       try {
         const res = await fetch(`${API}${endpoint}?${params}`);
         const data = await res.json();
@@ -847,6 +1108,44 @@
             ? `<div class="result-speakers">🎤 ${speakers.slice(0, 3).map(s => escapeHtml(s)).join(', ')}${speakers.length > 3 ? '...' : ''}</div>`
             : '';
 
+          // Build metadata badges based on source type and available metadata
+          let metadataBadges = '';
+          const meta = r.metadata || {};
+
+          if (source === 'email') {
+            if (meta.has_attachments) {
+              metadataBadges += `<span class="metadata-badge metadata-attachment">📎 Attachments</span>`;
+            }
+            if (meta.is_reply) {
+              metadataBadges += `<span class="metadata-badge metadata-thread">↩ Reply</span>`;
+            }
+            if (meta.from_name) {
+              metadataBadges += `<span class="metadata-badge metadata-person">👤 ${escapeHtml(meta.from_name)}</span>`;
+            }
+          } else if (source === 'slack') {
+            if (meta.is_thread_reply) {
+              metadataBadges += `<span class="metadata-badge metadata-thread">🧵 Thread</span>`;
+            }
+            if (meta.has_reactions) {
+              metadataBadges += `<span class="metadata-badge metadata-internal">😀 Reactions</span>`;
+            }
+            if (meta.channel) {
+              metadataBadges += `<span class="metadata-badge metadata-company">#${escapeHtml(meta.channel)}</span>`;
+            }
+          } else if (source === 'transcript') {
+            if (meta.is_internal !== undefined) {
+              metadataBadges += meta.is_internal
+                ? `<span class="metadata-badge metadata-internal">🏠 Internal</span>`
+                : `<span class="metadata-badge metadata-company">🌐 External</span>`;
+            }
+            if (meta.duration_minutes) {
+              metadataBadges += `<span class="metadata-badge metadata-person">⏱ ${meta.duration_minutes}m</span>`;
+            }
+          }
+
+          // Year/Month info if available
+          const dateInfo = meta.year ? `${meta.year}${meta.month ? '/' + String(meta.month).padStart(2, '0') : ''}` : '';
+
           return `
             <div class="result" onclick="openPreview('${escapedPath}')">
               <div class="result-header">
@@ -854,9 +1153,11 @@
                 <div class="result-meta">
                   ${r.area ? `<span>${r.area}</span>` : ''}
                   ${r.category ? `<span>${r.category}</span>` : ''}
+                  ${dateInfo ? `<span>${dateInfo}</span>` : ''}
                 </div>
               </div>
               <div class="result-path">${escapeHtml(r.path)}</div>
+              ${metadataBadges ? `<div style="margin: 0.25rem 0;">${metadataBadges}</div>` : ''}
               ${speakersHtml}
               ${snippet ? `<div class="result-snippet">${snippet}</div>` : ''}
               <button class="copy-btn" onclick="event.stopPropagation(); copyPath('${escapedPath}')">Copy Path</button>

@@ -584,7 +584,7 @@ export async function searchSlackFTS(
 }
 
 /**
- * Unified keyword search across all sources
+ * Unified keyword search across all sources with enhanced filtering
  */
 export async function unifiedKeywordSearch(
   query: string,
@@ -594,6 +594,15 @@ export async function unifiedKeywordSearch(
     area?: string;
     extension?: string;
     speaker?: string;
+    // Enhanced filters
+    year?: number;
+    month?: number;
+    quarter?: number;
+    person?: string;
+    company?: string;
+    sentByMe?: boolean;
+    hasAttachments?: boolean;
+    isInternal?: boolean;
   } = {}
 ): Promise<UnifiedFTSResult[]> {
   const {
@@ -601,10 +610,19 @@ export async function unifiedKeywordSearch(
     sources = ["file", "transcript", "email", "slack"],
     area,
     extension,
-    speaker
+    speaker,
+    year,
+    month,
+    quarter,
+    person,
+    company,
+    sentByMe,
+    hasAttachments,
+    isInternal
   } = options;
 
   const searches: Promise<UnifiedFTSResult[]>[] = [];
+  const sql = getConnection();
 
   // Search files (non-transcript documents)
   if (sources.includes("file")) {
@@ -629,19 +647,25 @@ export async function unifiedKeywordSearch(
     );
   }
 
-  // Search transcripts (from chunks table with speaker metadata)
+  // Search transcripts with enhanced filters
   if (sources.includes("transcript")) {
-    searches.push(searchTranscriptsFTS(query, { limit, speaker }));
+    searches.push(searchTranscriptsFTSEnhanced(query, {
+      limit, speaker, year, month, quarter, person, company, isInternal
+    }));
   }
 
-  // Search emails
+  // Search emails with enhanced filters
   if (sources.includes("email")) {
-    searches.push(searchEmailsFTS(query, { limit }));
+    searches.push(searchEmailsFTSEnhanced(query, {
+      limit, year, month, quarter, person, company, sentByMe, hasAttachments
+    }));
   }
 
-  // Search Slack
+  // Search Slack with enhanced filters
   if (sources.includes("slack")) {
-    searches.push(searchSlackFTS(query, { limit }));
+    searches.push(searchSlackFTSEnhanced(query, {
+      limit, speaker, year, month, quarter, person, company
+    }));
   }
 
   // Execute all searches in parallel
@@ -656,4 +680,344 @@ export async function unifiedKeywordSearch(
   results.sort((a, b) => b.rank - a.rank);
 
   return results.slice(0, limit);
+}
+
+/**
+ * Enhanced email FTS search with new filters
+ */
+async function searchEmailsFTSEnhanced(
+  query: string,
+  options: {
+    limit?: number;
+    year?: number;
+    month?: number;
+    quarter?: number;
+    person?: string;
+    company?: string;
+    sentByMe?: boolean;
+    hasAttachments?: boolean;
+  } = {}
+): Promise<UnifiedFTSResult[]> {
+  const { limit = 20, year, month, quarter, person, company, sentByMe, hasAttachments } = options;
+  const sql = getConnection();
+  const tsQuery = toTsQuery(query);
+
+  try {
+    // Build dynamic WHERE clause
+    let whereConditions = [`search_vector @@ to_tsquery('english', $1)`];
+    const params: any[] = [tsQuery];
+    let paramIndex = 2;
+
+    if (year !== undefined) {
+      whereConditions.push(`year = $${paramIndex++}`);
+      params.push(year);
+    }
+    if (month !== undefined) {
+      whereConditions.push(`month = $${paramIndex++}`);
+      params.push(month);
+    }
+    if (quarter !== undefined) {
+      whereConditions.push(`quarter = $${paramIndex++}`);
+      params.push(quarter);
+    }
+    if (sentByMe !== undefined) {
+      whereConditions.push(`is_sent_by_me = $${paramIndex++}`);
+      params.push(sentByMe);
+    }
+    if (hasAttachments !== undefined) {
+      whereConditions.push(`(attachment_count > 0) = $${paramIndex++}`);
+      params.push(hasAttachments);
+    }
+    if (person) {
+      whereConditions.push(`(from_name ILIKE $${paramIndex} OR from_email ILIKE $${paramIndex})`);
+      params.push(`%${person}%`);
+      paramIndex++;
+    }
+    if (company) {
+      // Search company in sender domain, recipient domains, and content
+      whereConditions.push(`(
+        from_email ILIKE $${paramIndex} OR
+        array_to_string(to_emails, ',') ILIKE $${paramIndex} OR
+        chunk_text ILIKE $${paramIndex}
+      )`);
+      params.push(`%${company}%`);
+      paramIndex++;
+    }
+
+    params.push(limit);
+
+    const results = await sql.unsafe(`
+      SELECT
+        id, email_id, email_path, subject, from_name, from_email, to_emails,
+        email_date, labels, has_attachments, is_reply, is_sent_by_me,
+        cc_emails, attachment_count, year, month, chunk_index,
+        ts_headline('english', chunk_text, to_tsquery('english', $1),
+          'StartSel=→, StopSel=←, MaxWords=50, MinWords=20, MaxFragments=3'
+        ) AS snippet,
+        ts_rank(search_vector, to_tsquery('english', $1)) AS rank
+      FROM email_chunks
+      WHERE ${whereConditions.join(' AND ')}
+      ORDER BY rank DESC
+      LIMIT $${paramIndex}
+    `, params);
+
+    return results.map((row: any) => ({
+      id: row.id,
+      source: "email" as const,
+      path: `email://${row.email_id}`,
+      title: row.subject || 'No Subject',
+      snippet: row.snippet || '',
+      area: "Email",
+      category: (row.labels || [])[0] || "Inbox",
+      rank: row.rank || 0,
+      metadata: {
+        emailId: row.email_id,
+        emailPath: row.email_path,
+        from: row.from_email,
+        fromName: row.from_name,
+        toEmails: row.to_emails,
+        ccEmails: row.cc_emails,
+        date: row.email_date?.toISOString?.() || row.email_date,
+        labels: row.labels,
+        hasAttachments: row.has_attachments,
+        attachmentCount: row.attachment_count,
+        isReply: row.is_reply,
+        isSentByMe: row.is_sent_by_me,
+        year: row.year,
+        month: row.month,
+        chunkIndex: row.chunk_index
+      }
+    }));
+  } catch (error) {
+    console.warn(`Enhanced Email FTS failed: ${error}`);
+    return [];
+  }
+}
+
+/**
+ * Enhanced Slack FTS search with new filters
+ */
+async function searchSlackFTSEnhanced(
+  query: string,
+  options: {
+    limit?: number;
+    speaker?: string;
+    year?: number;
+    month?: number;
+    quarter?: number;
+    person?: string;
+    company?: string;
+  } = {}
+): Promise<UnifiedFTSResult[]> {
+  const { limit = 20, speaker, year, month, quarter, person, company } = options;
+  const sql = getConnection();
+  const tsQuery = toTsQuery(query);
+
+  try {
+    let whereConditions = [`search_vector @@ to_tsquery('english', $1)`];
+    const params: any[] = [tsQuery];
+    let paramIndex = 2;
+
+    if (year !== undefined) {
+      whereConditions.push(`year = $${paramIndex++}`);
+      params.push(year);
+    }
+    if (month !== undefined) {
+      whereConditions.push(`month = $${paramIndex++}`);
+      params.push(month);
+    }
+    if (quarter !== undefined) {
+      whereConditions.push(`quarter = $${paramIndex++}`);
+      params.push(quarter);
+    }
+    if (speaker) {
+      whereConditions.push(`$${paramIndex++} = ANY(speakers)`);
+      params.push(speaker);
+    }
+    if (person) {
+      whereConditions.push(`EXISTS (SELECT 1 FROM unnest(real_names) rn WHERE rn ILIKE $${paramIndex++})`);
+      params.push(`%${person}%`);
+    }
+    if (company) {
+      // Search company in companies array and content
+      whereConditions.push(`(
+        EXISTS (SELECT 1 FROM unnest(companies) co WHERE co ILIKE $${paramIndex}) OR
+        chunk_text ILIKE $${paramIndex}
+      )`);
+      params.push(`%${company}%`);
+      paramIndex++;
+    }
+
+    params.push(limit);
+
+    const results = await sql.unsafe(`
+      SELECT
+        id, channel, channel_type, speakers, user_ids, message_date,
+        message_count, has_files, has_reactions, chunk_index, year, month,
+        real_names, companies, is_edited, thread_ts,
+        ts_headline('english', chunk_text, to_tsquery('english', $1),
+          'StartSel=→, StopSel=←, MaxWords=50, MinWords=20, MaxFragments=3'
+        ) AS snippet,
+        ts_rank(search_vector, to_tsquery('english', $1)) AS rank
+      FROM slack_chunks
+      WHERE ${whereConditions.join(' AND ')}
+      ORDER BY rank DESC
+      LIMIT $${paramIndex}
+    `, params);
+
+    return results.map((row: any) => ({
+      id: row.id,
+      source: "slack" as const,
+      path: `slack://${row.channel}/${row.message_date}`,
+      title: `#${row.channel}`,
+      snippet: row.snippet || '',
+      area: "Slack",
+      category: row.channel_type || "channel",
+      rank: row.rank || 0,
+      metadata: {
+        channel: row.channel,
+        channelType: row.channel_type,
+        speakers: row.speakers,
+        realNames: row.real_names,
+        companies: row.companies,
+        userIds: row.user_ids,
+        date: row.message_date,
+        messageCount: row.message_count,
+        hasFiles: row.has_files,
+        hasReactions: row.has_reactions,
+        isEdited: row.is_edited,
+        threadTs: row.thread_ts,
+        year: row.year,
+        month: row.month,
+        chunkIndex: row.chunk_index
+      }
+    }));
+  } catch (error) {
+    console.warn(`Enhanced Slack FTS failed: ${error}`);
+    return [];
+  }
+}
+
+/**
+ * Enhanced transcript FTS search with new filters
+ */
+async function searchTranscriptsFTSEnhanced(
+  query: string,
+  options: {
+    limit?: number;
+    speaker?: string;
+    year?: number;
+    month?: number;
+    quarter?: number;
+    person?: string;
+    company?: string;
+    isInternal?: boolean;
+  } = {}
+): Promise<UnifiedFTSResult[]> {
+  const { limit = 20, speaker, year, month, quarter, person, company, isInternal } = options;
+  const sql = getConnection();
+  const tsQuery = toTsQuery(query);
+
+  try {
+    let whereConditions = [
+      `c.search_vector @@ to_tsquery('english', $1)`,
+      `c.content_type = 'transcript'`
+    ];
+    const params: any[] = [tsQuery];
+    let paramIndex = 2;
+
+    if (speaker) {
+      whereConditions.push(`$${paramIndex++} = ANY(c.speakers)`);
+      params.push(speaker);
+    }
+    if (year !== undefined) {
+      whereConditions.push(`(c.year = $${paramIndex} OR tm.year = $${paramIndex})`);
+      params.push(year);
+      paramIndex++;
+    }
+    if (month !== undefined) {
+      whereConditions.push(`(c.month = $${paramIndex} OR tm.month = $${paramIndex})`);
+      params.push(month);
+      paramIndex++;
+    }
+    if (quarter !== undefined) {
+      whereConditions.push(`(c.quarter = $${paramIndex} OR tm.quarter = $${paramIndex})`);
+      params.push(quarter);
+      paramIndex++;
+    }
+    if (isInternal !== undefined) {
+      whereConditions.push(`tm.is_internal = $${paramIndex++}`);
+      params.push(isInternal);
+    }
+    if (person) {
+      whereConditions.push(`(
+        EXISTS (SELECT 1 FROM unnest(c.speakers) s WHERE s ILIKE $${paramIndex})
+        OR EXISTS (
+          SELECT 1 FROM meeting_participants mp
+          JOIN contacts ct ON ct.id = mp.contact_id
+          WHERE mp.meeting_id = tm.id AND ct.name ILIKE $${paramIndex}
+        )
+      )`);
+      params.push(`%${person}%`);
+      paramIndex++;
+    }
+    if (company) {
+      whereConditions.push(`EXISTS (
+        SELECT 1 FROM meeting_participants mp
+        JOIN contacts ct ON ct.id = mp.contact_id
+        JOIN companies co ON co.id = ct.company_id
+        WHERE mp.meeting_id = tm.id AND co.name ILIKE $${paramIndex}
+      )`);
+      params.push(`%${company}%`);
+      paramIndex++;
+    }
+
+    params.push(limit);
+
+    const results = await sql.unsafe(`
+      SELECT
+        c.id, c.file_path, c.chunk_index, c.speakers, c.start_time, c.end_time,
+        c.document_id, c.year, c.month,
+        d.filename, d.area, d.category,
+        tm.meeting_id AS fathom_meeting_id, tm.title AS meeting_title,
+        tm.is_internal, tm.duration_minutes, tm.participant_count,
+        ts_headline('english', c.chunk_text, to_tsquery('english', $1),
+          'StartSel=→, StopSel=←, MaxWords=50, MinWords=20, MaxFragments=3'
+        ) AS snippet,
+        ts_rank(c.search_vector, to_tsquery('english', $1)) AS rank
+      FROM chunks c
+      LEFT JOIN documents d ON c.document_id = d.id
+      LEFT JOIN transcript_meetings tm ON c.meeting_id = tm.id
+      WHERE ${whereConditions.join(' AND ')}
+      ORDER BY rank DESC
+      LIMIT $${paramIndex}
+    `, params);
+
+    return results.map((row: any) => ({
+      id: row.id,
+      source: "transcript" as const,
+      path: row.file_path,
+      title: row.meeting_title || row.filename || row.file_path?.split('/').pop() || 'Unknown',
+      snippet: row.snippet || '',
+      area: row.area || "Work",
+      category: row.category || "Meetings",
+      rank: row.rank || 0,
+      metadata: {
+        speakers: row.speakers,
+        startTime: row.start_time,
+        endTime: row.end_time,
+        chunkIndex: row.chunk_index,
+        documentId: row.document_id,
+        meetingId: row.fathom_meeting_id,
+        isInternal: row.is_internal,
+        duration: row.duration_minutes,
+        participantCount: row.participant_count,
+        year: row.year,
+        month: row.month
+      }
+    }));
+  } catch (error) {
+    console.warn(`Enhanced Transcript FTS failed: ${error}`);
+    return [];
+  }
 }
