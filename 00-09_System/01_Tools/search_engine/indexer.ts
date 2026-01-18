@@ -1,10 +1,15 @@
-// indexer.ts
-import { Database } from "bun:sqlite";
+// indexer.ts - PostgreSQL Version
+/**
+ * Full-text search indexer using PostgreSQL tsvector
+ * Replaces SQLite FTS5 for multi-agent concurrency support
+ */
+
 import { Glob } from "bun";
 import { stat } from "node:fs/promises";
+import { indexDocument, type DocumentInput } from "./pg-fts";
+import { getConnection } from "./pg-client";
 
 const VRAM = "/Volumes/VRAM";
-const DB_PATH = `${VRAM}/00-09_System/00_Index/search.db`;
 
 // Area mapping from path
 function extractArea(filepath: string): string {
@@ -29,70 +34,21 @@ function extractCategory(filepath: string): string {
   return match ? match[1] : "Uncategorized";
 }
 
-// Initialize database
-const db = new Database(DB_PATH);
-db.run("PRAGMA journal_mode = WAL;");
-
-db.run(`
-  CREATE TABLE IF NOT EXISTS files (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    path TEXT UNIQUE NOT NULL,
-    filename TEXT NOT NULL,
-    extension TEXT,
-    content TEXT,
-    file_size INTEGER,
-    modified_at TEXT,
-    indexed_at TEXT DEFAULT CURRENT_TIMESTAMP,
-    area TEXT,
-    category TEXT
-  )
-`);
-
-db.run(`
-  CREATE VIRTUAL TABLE IF NOT EXISTS files_fts USING fts5(
-    path, filename, content, area, category,
-    content='files', content_rowid='id',
-    tokenize='porter unicode61'
-  )
-`);
-
-// Create triggers if they don't exist
-db.run(`
-  CREATE TRIGGER IF NOT EXISTS files_ai AFTER INSERT ON files BEGIN
-    INSERT INTO files_fts(rowid, path, filename, content, area, category)
-    VALUES (new.id, new.path, new.filename, new.content, new.area, new.category);
-  END
-`);
-
-db.run(`
-  CREATE TRIGGER IF NOT EXISTS files_ad AFTER DELETE ON files BEGIN
-    INSERT INTO files_fts(files_fts, rowid, path, filename, content, area, category)
-    VALUES ('delete', old.id, old.path, old.filename, old.content, old.area, old.category);
-  END
-`);
-
-db.run(`
-  CREATE TRIGGER IF NOT EXISTS files_au AFTER UPDATE ON files BEGIN
-    INSERT INTO files_fts(files_fts, rowid, path, filename, content, area, category)
-    VALUES ('delete', old.id, old.path, old.filename, old.content, old.area, old.category);
-    INSERT INTO files_fts(rowid, path, filename, content, area, category)
-    VALUES (new.id, new.path, new.filename, new.content, new.area, new.category);
-  END
-`);
-
-const insertFile = db.prepare(`
-  INSERT OR REPLACE INTO files
-    (path, filename, extension, content, file_size, modified_at, area, category)
-  VALUES
-    ($path, $filename, $extension, $content, $size, $modified, $area, $category)
-`);
+// Sanitize content to remove null bytes (PostgreSQL doesn't allow them)
+function sanitizeContent(content: string): string {
+  return content.replace(/\0/g, '');
+}
 
 // Index files
 const glob = new Glob("**/*.{md,txt,json}");
 let count = 0;
 let errors = 0;
 
-console.log("Indexing files...\n");
+console.log("╔════════════════════════════════════════╗");
+console.log("║   PostgreSQL Full-Text Indexer         ║");
+console.log("╚════════════════════════════════════════╝\n");
+
+console.log("📂 Scanning VRAM filesystem...\n");
 const startTime = Date.now();
 
 for await (const file of glob.scan(VRAM)) {
@@ -113,39 +69,62 @@ for await (const file of glob.scan(VRAM)) {
     const filename = file.split("/").pop() || file;
     const extension = filename.split(".").pop() || "";
 
-    insertFile.run({
-      $path: filepath,
-      $filename: filename,
-      $extension: extension,
-      $content: content,
-      $size: stats.size,
-      $modified: stats.mtime.toISOString(),
-      $area: extractArea(filepath),
-      $category: extractCategory(filepath),
-    });
+    const doc: DocumentInput = {
+      path: filepath,
+      filename: filename,
+      extension: extension,
+      content: sanitizeContent(content),
+      fileSize: stats.size,
+      modifiedAt: stats.mtime,
+      area: extractArea(filepath),
+      category: extractCategory(filepath),
+    };
+
+    await indexDocument(doc);
 
     count++;
     if (count % 1000 === 0) {
-      console.log(`Indexed ${count} files...`);
+      const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+      const rate = (count / parseFloat(elapsed)).toFixed(0);
+      console.log(`⏳ Indexed ${count.toLocaleString()} files... (${rate} files/sec)`);
     }
   } catch (err) {
     errors++;
     if (errors <= 10) {
-      console.error(`Error indexing ${filepath}:`, err);
+      console.error(`❌ Error indexing ${filepath}:`, err);
     } else if (errors === 11) {
       console.error("(suppressing further errors...)");
     }
   }
 }
 
-// Rebuild FTS index
-console.log("\nRebuilding FTS index...");
-db.run(`INSERT INTO files_fts(files_fts) VALUES('rebuild')`);
+// Link documents to chunks for hybrid search
+console.log("\n🔗 Linking documents to chunks...");
+const sql = getConnection();
+const linkResult = await sql`
+  UPDATE chunks c
+  SET document_id = d.id
+  FROM documents d
+  WHERE c.file_path = d.path
+    AND c.document_id IS NULL
+`;
+console.log(`   Linked ${linkResult.count} chunks to documents`);
 
 const elapsed = ((Date.now() - startTime) / 1000).toFixed(2);
-console.log(`\nComplete! Indexed ${count} files in ${elapsed}s.`);
+
+console.log("\n╔════════════════════════════════════════╗");
+console.log("║           Indexing Complete!           ║");
+console.log("╠════════════════════════════════════════╣");
+console.log(`║  Files indexed:     ${count.toLocaleString().padStart(14)}  ║`);
+console.log(`║  Errors:            ${errors.toLocaleString().padStart(14)}  ║`);
+console.log(`║  Time:              ${elapsed.padStart(12)}s  ║`);
+console.log("╚════════════════════════════════════════╝");
+
 if (errors > 0) {
-  console.log(`Encountered ${errors} errors.`);
+  console.log(`\n⚠️  ${errors} files failed to index. Check errors above.`);
+} else {
+  console.log("\n✅ All files indexed successfully!");
 }
 
-db.close();
+// Close connection
+await sql.close();

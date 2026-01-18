@@ -2,30 +2,45 @@
 
 ## Project Overview
 
-Full-text search engine for the VRAM (Video RAM) personal data asset management system. Built with Bun runtime, SQLite FTS5, and REST API.
+Full-text search engine for the VRAM (Video RAM) personal data asset management system. Built with Bun runtime, **PostgreSQL** (tsvector FTS + pgvector embeddings), and REST API.
 
-**Purpose**: Index and search text files (`.md`, `.txt`, `.json`) across the VRAM filesystem with sub-100ms query performance.
+**Purpose**: Index and search text files (`.md`, `.txt`, `.json`) across the VRAM filesystem with keyword, semantic, and hybrid search capabilities.
+
+**Key Features**:
+- **Keyword Search**: PostgreSQL tsvector full-text search
+- **Semantic Search**: pgvector with Qwen3-Embedding-8B (4096 dimensions)
+- **Hybrid Search**: Reciprocal Rank Fusion (RRF) combining both
+- **Multi-Agent Safe**: PostgreSQL MVCC enables concurrent writes from AI agents
 
 ## Architecture
 
 ```
 VRAM Volume (/Volumes/VRAM)
 ├── 00-09_System/
-│   ├── 00_Index/search.db      ← SQLite database with FTS5
+│   ├── 00_Index/search.db      ← SQLite (archived, not used)
 │   └── 01_Tools/search_engine/ ← This project
 ├── 10-19_Work/
 ├── 20-29_Finance/
 ├── ...other Johnny.Decimal areas
+
+PostgreSQL Database (vram_embeddings)
+├── documents         ← File metadata + FTS tsvector
+├── chunks            ← File chunk embeddings
+├── email_chunks      ← Email embeddings
+└── slack_chunks      ← Slack message embeddings
 ```
 
 ### Components
 
 | File | Purpose | Run Command |
 |------|---------|-------------|
+| `start.ts` | Unified server startup (embedding + API) | `bun start` |
 | `indexer.ts` | Full reindex of VRAM filesystem | `bun run index` |
 | `server.ts` | REST API server (port 3000) | `bun run serve` |
 | `cli.ts` | Terminal search interface | `bun run search "query"` |
 | `watcher.ts` | Real-time file change monitor | `bun run watch` |
+| `pg-fts.ts` | PostgreSQL FTS client module | imported |
+| `pg-client.ts` | PostgreSQL/pgvector client | imported |
 | `index.html` | Web UI (served at `/`) | via server |
 
 ## Bun Runtime
@@ -39,35 +54,45 @@ Default to Bun instead of Node.js:
 
 ### Bun APIs Used
 
-- `bun:sqlite` - SQLite with FTS5 full-text search
+- `Bun.SQL` - PostgreSQL client (FTS + pgvector)
 - `Bun.serve()` - HTTP server with routes
 - `Bun.file()` - File reading
 - `Bun.Glob` - Filesystem globbing
 
 ## Database Schema
 
-**Location**: `/Volumes/VRAM/00-09_System/00_Index/search.db`
+**Location**: PostgreSQL database `vram_embeddings` on `localhost:5432`
 
 ```sql
--- Main files table
-CREATE TABLE files (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
+-- Main documents table with auto-generated tsvector
+CREATE TABLE documents (
+  id SERIAL PRIMARY KEY,
   path TEXT UNIQUE NOT NULL,
   filename TEXT NOT NULL,
   extension TEXT,
   content TEXT,
   file_size INTEGER,
-  modified_at TEXT,
-  indexed_at TEXT DEFAULT CURRENT_TIMESTAMP,
+  modified_at TIMESTAMPTZ,
+  indexed_at TIMESTAMPTZ DEFAULT NOW(),
   area TEXT,
-  category TEXT
+  category TEXT,
+  search_vector TSVECTOR GENERATED ALWAYS AS (
+    setweight(to_tsvector('english', coalesce(filename, '')), 'A') ||
+    setweight(to_tsvector('english', coalesce(content, '')), 'B')
+  ) STORED
 );
 
--- FTS5 virtual table for full-text search
-CREATE VIRTUAL TABLE files_fts USING fts5(
-  path, filename, content, area, category,
-  content='files', content_rowid='id',
-  tokenize='porter unicode61'
+-- GIN index for fast FTS
+CREATE INDEX idx_documents_search ON documents USING GIN (search_vector);
+
+-- Vector embeddings table
+CREATE TABLE chunks (
+  id SERIAL PRIMARY KEY,
+  file_path TEXT,
+  chunk_index INTEGER,
+  chunk_text TEXT,
+  embedding VECTOR(4096),
+  document_id INTEGER REFERENCES documents(id)
 );
 ```
 
@@ -92,23 +117,47 @@ Areas are extracted from Johnny.Decimal folder prefixes:
 
 Base URL: `http://localhost:3000`
 
+### Search Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/search` | GET | Keyword search (PostgreSQL tsvector) |
+| `/semantic` | GET | Semantic search (pgvector) |
+| `/hybrid` | GET | Combined search (RRF fusion) |
+| `/explain` | GET | Search explanation (debug) |
+| `/search/emails` | GET | Email-specific semantic search |
+| `/search/slack` | GET | Slack-specific semantic search |
+
+### Other Endpoints
+
 | Endpoint | Method | Description |
 |----------|--------|-------------|
 | `/` | GET | Web UI |
-| `/search?q=<query>&limit=20&offset=0&area=<area>` | GET | Full-text search |
 | `/file?path=<path>&content=true` | GET | Get file metadata/content |
 | `/browse/<area>?limit=50` | GET | Browse files by area |
 | `/stats` | GET | Index statistics |
 | `/health` | GET | Health check |
+| `/embed` | POST | Generate embedding for text |
+| `/embedding/status` | GET | Embedding server status |
 
 ### Search Query Syntax
 
-Uses SQLite FTS5 query syntax:
+Uses PostgreSQL tsquery syntax:
 - `meeting notes` - matches both terms (AND)
-- `"meeting notes"` - exact phrase
-- `meeting OR notes` - either term
-- `meet*` - prefix matching
-- `meeting NOT notes` - exclusion
+- `"meeting notes"` - exact phrase (use single quotes in tsquery)
+- `meeting OR notes` - either term (use `|`)
+- `meet*` - prefix matching (use `:*`)
+- `meeting NOT notes` - exclusion (use `!`)
+
+### Hybrid Search Parameters
+
+```
+GET /hybrid?q=<query>&limit=10&fts_weight=0.4&strategy=rrf&sources=file,email,slack
+```
+
+- `fts_weight`: Weight for keyword results (0-1, default 0.4)
+- `strategy`: `rrf` (default), `weighted`, or `max`
+- `sources`: Comma-separated list of sources to search
 
 ## CLI Usage
 
@@ -135,14 +184,14 @@ bun cli.ts -s
 # Install dependencies
 bun install
 
-# Run full index
+# Start both embedding server and API server (recommended)
+bun start
+
+# Run full reindex
 bun run index
 
-# Start API server (foreground)
+# Start API server only (foreground)
 bun run serve
-
-# Start API server (background)
-bun server.ts &
 
 # Start file watcher
 bun run watch
@@ -156,17 +205,27 @@ bunx tsc --noEmit
 
 ## Common Operations
 
+### Start Services
+
+```bash
+# Start unified server (embedding + API)
+bun start
+
+# Or start in background
+bun start &
+```
+
 ### Rebuild Index
 
 ```bash
 # Stop running server if any
 lsof -ti:3000 | xargs kill -9 2>/dev/null
 
-# Run full reindex
+# Run full reindex to PostgreSQL
 bun run index
 
 # Restart server
-bun server.ts &
+bun start
 ```
 
 ### Check Server Status
@@ -176,10 +235,17 @@ curl http://localhost:3000/health
 curl http://localhost:3000/stats
 ```
 
-### Test Search
+### Test Search Types
 
 ```bash
-curl "http://localhost:3000/search?q=test&limit=5"
+# Keyword search
+curl "http://localhost:3000/search?q=meeting&limit=5"
+
+# Semantic search
+curl "http://localhost:3000/semantic?q=project%20planning&limit=5"
+
+# Hybrid search
+curl "http://localhost:3000/hybrid?q=documentation&limit=5"
 ```
 
 ## File Exclusions
@@ -190,11 +256,20 @@ The indexer skips these paths:
 - `Backup/` - Backup directories
 - `tools/` - Tool directories at root
 
-## Performance Targets
+## Performance
 
-- Search queries: <100ms
-- Index rebuild: <60s for 10K files
-- File watcher debounce: 500ms
+- **Keyword search**: ~50-200ms
+- **Semantic search**: ~8-10s (embedding generation)
+- **Hybrid search**: ~1-2s
+- **Index rebuild**: ~5-10min for 180K files
+- **File watcher debounce**: 500ms
+
+## Embedding Server
+
+The embedding server runs llama-server on port 8081 with Qwen3-Embedding-8B model:
+- **Model**: Qwen3-Embedding-8B-Q8_0.gguf
+- **Dimensions**: 4096
+- **Location**: `/Users/ronaldeddings/.lmstudio/models/Qwen/Qwen3-Embedding-8B-GGUF/`
 
 ## Troubleshooting
 
@@ -203,19 +278,34 @@ The indexer skips these paths:
 lsof -ti:3000 | xargs kill -9
 ```
 
-### Database locked
-The database uses WAL mode. If locked:
+### Port 8081 in use (embedding server)
 ```bash
-# Stop all processes accessing the DB
-pkill -f "bun.*search"
-# Rebuild index
-bun run index
+lsof -ti:8081 | xargs kill -9
+```
+
+### PostgreSQL connection issues
+```bash
+# Check PostgreSQL is running
+pg_isready -h localhost -p 5432
+
+# Start PostgreSQL (macOS)
+brew services start postgresql
+```
+
+### Embedding server not responding
+```bash
+# Check embedding server status
+curl http://localhost:8081/health
+
+# Restart via unified start
+pkill -f llama-server
+bun start
 ```
 
 ### Search returns no results
-1. Check if database exists: `ls -la /Volumes/VRAM/00-09_System/00_Index/search.db`
-2. Check file count: `bun cli.ts -s`
-3. Rebuild if needed: `bun run index`
+1. Check if documents table has data: `bun cli.ts -s`
+2. Check PostgreSQL connection: `curl http://localhost:3000/health`
+3. Rebuild index if needed: `bun run index`
 
 ## Related Documentation
 
@@ -223,4 +313,4 @@ bun run index
 - `docs/API.md` - API reference
 - `docs/CLI.md` - CLI guide
 - `docs/CONFIG.md` - Configuration and setup
-- `docs/plans/implementation-plan.md` - Original implementation plan
+- `docs/plans/6-postgresql-consolidation.md` - PostgreSQL migration plan

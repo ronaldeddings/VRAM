@@ -8,7 +8,7 @@
 import { Database } from "bun:sqlite";
 import { SQL } from "bun";
 import { generateEmbedding, checkHealth } from "./qwen3vl-client";
-import { smartChunk } from "./smart-chunker";
+import { smartChunk, isTranscript } from "./smart-chunker";
 
 const SEARCH_DB = "/Volumes/VRAM/00-09_System/00_Index/search.db";
 const POSTGRES_URL = process.env.POSTGRES_URL || "postgres://ronaldeddings@localhost:5432/vram_embeddings";
@@ -103,6 +103,9 @@ async function main() {
           continue;
         }
 
+        // Determine content_type based on file content or speakers
+        const fileIsTranscript = isTranscript(file.content || "");
+
         // Generate embeddings for all chunks
         for (const chunk of chunks) {
           const embedding = await generateEmbedding(chunk.text);
@@ -115,13 +118,21 @@ async function main() {
             ? `{${chunk.speakers.map(s => `"${s.replace(/"/g, '\\"')}"`).join(",")}}`
             : null;
 
+          // Determine content_type for this chunk (transcript if file is transcript or chunk has speakers)
+          const chunkIsTranscript = fileIsTranscript || (chunk.speakers && chunk.speakers.length > 0);
+          const contentType = chunkIsTranscript ? "transcript" : "file";
+
           await sql.unsafe(`
             INSERT INTO chunks (
               file_id, file_path, filename, area, category,
               chunk_index, chunk_text, chunk_size,
-              speakers, start_time, end_time, embedding
+              speakers, start_time, end_time, embedding,
+              content_type, search_vector
             ) VALUES (
-              $1, $2, $3, $4, $5, $6, $7, $8, $9::text[], $10, $11, $12::vector
+              $1, $2, $3, $4, $5, $6, $7, $8, $9::text[], $10, $11, $12::vector,
+              $13,
+              setweight(to_tsvector('english', coalesce(array_to_string($9::text[], ' '), '')), 'A') ||
+              setweight(to_tsvector('english', coalesce($7, '')), 'B')
             )
           `, [
             file.id,
@@ -135,7 +146,8 @@ async function main() {
             speakersArray,
             chunk.startTime || null,
             chunk.endTime || null,
-            vectorLiteral
+            vectorLiteral,
+            contentType
           ]);
 
           totalChunks++;

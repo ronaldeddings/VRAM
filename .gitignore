@@ -87,6 +87,7 @@ node_modules/
 .bun/
 bun.lockb
 *.bun
+.pnpm-store/
 
 # Optional: Keep lock files for reproducible builds
 # Uncomment the next 3 lines to exclude lock files
@@ -213,3 +214,5 @@ e2e-results/
 # PERSONAL DOCUMENTS AT ROOT
 # =============================================================================
 Triad_Analysis_Personal_Growth.md
+10-19_Work/10_Hacker_Valley_Media/10.09_technology/10.09.01_website/hackervalley-website-hubspot/
+10-19_Work/10_Hacker_Valley_Media/10.09_technology/10.09.01_website/hvm-website-payloadcms/

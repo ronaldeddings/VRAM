@@ -220,6 +220,26 @@
     .score-semantic { background: #ff980033; color: #ff9800; }
     .score-distance { background: #9c27b033; color: #ce93d8; }
 
+    /* Source type badges */
+    .source-badge {
+      font-size: 0.7rem;
+      padding: 0.15rem 0.4rem;
+      border-radius: 3px;
+      margin-right: 0.5rem;
+      font-weight: 500;
+    }
+    .source-file { background: #1a5a1a; color: #4caf50; }
+    .source-transcript { background: #5a1a5a; color: #ce93d8; }
+    .source-email { background: #1a3d5a; color: #64b5f6; }
+    .source-slack { background: #5a3d1a; color: #ffb74d; }
+
+    /* Speaker info for transcripts */
+    .result-speakers {
+      font-size: 0.75rem;
+      color: #ce93d8;
+      margin-top: 0.25rem;
+    }
+
     /* Phase 2: Modal Overlay Styles */
     .modal-overlay {
       position: fixed;
@@ -510,7 +530,7 @@
           <option value="100">100</option>
         </select>
       </div>
-      <div class="filter-group" id="sourcesGroup" style="display: none;">
+      <div class="filter-group" id="sourcesGroup">
         <label>Sources:</label>
         <div class="source-checkboxes">
           <span class="source-checkbox">
@@ -518,7 +538,7 @@
             <label for="sourceFiles">📄 Files</label>
           </span>
           <span class="source-checkbox">
-            <input type="checkbox" id="sourceTranscripts" value="transcript">
+            <input type="checkbox" id="sourceTranscripts" value="transcript" checked>
             <label for="sourceTranscripts">🎙️ Transcripts</label>
           </span>
           <span class="source-checkbox">
@@ -581,8 +601,8 @@
       const sourcesGroup = document.getElementById('sourcesGroup');
       weightGroup.style.display = searchType === 'hybrid' ? 'flex' : 'none';
 
-      // Show sources filter only for semantic/hybrid (keyword only searches files)
-      sourcesGroup.style.display = (searchType === 'semantic' || searchType === 'hybrid') ? 'flex' : 'none';
+      // Show sources filter for all search types (unified FTS supports all 4 sources)
+      sourcesGroup.style.display = 'flex';
 
       // Update type filter availability based on selected sources
       updateTypeFilterState();
@@ -604,16 +624,17 @@
     // Transcript path prefix
     const TRANSCRIPT_PATH = '10-19_Work/13_Meetings/13.01_transcripts';
 
-    // Get selected sources from checkboxes
+    // Get selected sources from checkboxes (now includes transcript as a first-class source)
     function getSelectedSources() {
       const sources = [];
       if (document.getElementById('sourceFiles').checked) sources.push('file');
+      if (document.getElementById('sourceTranscripts').checked) sources.push('transcript');
       if (document.getElementById('sourceEmails').checked) sources.push('email');
       if (document.getElementById('sourceSlack').checked) sources.push('slack');
       return sources;
     }
 
-    // Check if transcripts filter is selected
+    // Check if transcripts filter is selected (for backward compatibility)
     function isTranscriptsSelected() {
       return document.getElementById('sourceTranscripts').checked;
     }
@@ -758,9 +779,15 @@
           params.set('extension', typeSelect.value);
         }
       } else {
-        // Keyword search
+        // Keyword search (now supports unified multi-source FTS)
         if (areaSelect.value) params.set('area', areaSelect.value);
         if (typeSelect.value) params.set('type', typeSelect.value);
+
+        // Pass sources for unified keyword search
+        const sources = getSelectedSources();
+        if (sources.length > 0 && sources.length < 4) {
+          params.set('sources', sources.join(','));
+        }
       }
 
       try {
@@ -806,19 +833,31 @@
           } else if (searchType === 'semantic' && r.similarity !== undefined) {
             const simPct = (r.similarity * 100).toFixed(1);
             scoreBadges = `<span class="score-badge score-semantic">${simPct}%</span>`;
-            if (r.source) scoreBadges += `<span class="score-badge score-fts">${r.source}</span>`;
           }
+
+          // Build source badge (for all search types)
+          const source = r.source || 'file';
+          const sourceIcons = { file: '📄', transcript: '🎙️', email: '📧', slack: '💬' };
+          const sourceLabels = { file: 'File', transcript: 'Transcript', email: 'Email', slack: 'Slack' };
+          const sourceBadge = `<span class="source-badge source-${source}">${sourceIcons[source] || '📄'} ${sourceLabels[source] || source}</span>`;
+
+          // Show speakers for transcripts
+          const speakers = r.speakers || r.metadata?.speakers || [];
+          const speakersHtml = (source === 'transcript' && speakers.length > 0)
+            ? `<div class="result-speakers">🎤 ${speakers.slice(0, 3).map(s => escapeHtml(s)).join(', ')}${speakers.length > 3 ? '...' : ''}</div>`
+            : '';
 
           return `
             <div class="result" onclick="openPreview('${escapedPath}')">
               <div class="result-header">
-                <span class="result-title">${escapeHtml(r.filename || r.path.split('/').pop())}${scoreBadges}</span>
+                <span class="result-title">${sourceBadge}${escapeHtml(r.filename || r.title || r.path.split('/').pop())}${scoreBadges}</span>
                 <div class="result-meta">
                   ${r.area ? `<span>${r.area}</span>` : ''}
                   ${r.category ? `<span>${r.category}</span>` : ''}
                 </div>
               </div>
               <div class="result-path">${escapeHtml(r.path)}</div>
+              ${speakersHtml}
               ${snippet ? `<div class="result-snippet">${snippet}</div>` : ''}
               <button class="copy-btn" onclick="event.stopPropagation(); copyPath('${escapedPath}')">Copy Path</button>
             </div>

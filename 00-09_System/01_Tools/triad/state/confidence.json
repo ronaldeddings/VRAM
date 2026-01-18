@@ -7949,6 +7949,506 @@
       "validations": 0,
       "createdAt": "2026-01-15T18:52:08.755Z",
       "updatedAt": "2026-01-15T18:52:08.755Z"
+    },
+    {
+      "id": "insight-1768739388049-ycbi4pimb",
+      "title": "Validation Of Gemini-Alpha Findings",
+      "area": "Hacker Valley Media",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:29:48.049Z",
+      "updatedAt": "2026-01-18T12:29:48.049Z"
+    },
+    {
+      "id": "insight-1768739388056-48oe90ntv",
+      "title": "Input: target account list + thought leadership gu...",
+      "area": "Hacker Valley Media",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:29:48.056Z",
+      "updatedAt": "2026-01-18T12:29:48.056Z"
+    },
+    {
+      "id": "insight-1768739388063-2mxzg26sb",
+      "title": "Process: LinkedIn Live recording -> podcast repurp...",
+      "area": "Hacker Valley Media",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:29:48.063Z",
+      "updatedAt": "2026-01-18T12:29:48.063Z"
+    },
+    {
+      "id": "insight-1768739388069-dral70xuv",
+      "title": "Output: leads, intros, brand awareness, and a usab...",
+      "area": "Hacker Valley Media",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:29:48.069Z",
+      "updatedAt": "2026-01-18T12:29:48.069Z"
+    },
+    {
+      "id": "insight-1768739388074-6a6ywzgdp",
+      "title": "A team member is using multiple new domains for co...",
+      "area": "Hacker Valley Media",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:29:48.074Z",
+      "updatedAt": "2026-01-18T12:29:48.074Z"
+    },
+    {
+      "id": "insight-1768739388079-v5sbxg5yd",
+      "title": "Focus Area: Hacker Valley Media (HVM)",
+      "area": "Hacker Valley Media",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:29:48.079Z",
+      "updatedAt": "2026-01-18T12:29:48.079Z"
+    },
+    {
+      "id": "insight-1768739388085-pcx6tdgme",
+      "title": "EXECUTIVE SUMMARY: THE INVISIBLE AGENCY",
+      "area": "Hacker Valley Media",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:29:48.085Z",
+      "updatedAt": "2026-01-18T12:29:48.085Z"
+    },
+    {
+      "id": "insight-1768739388090-t3c24smd8",
+      "title": "Key Finding: HVM has pivoted from selling *sponsor...",
+      "area": "Hacker Valley Media",
+      "confidence": 0.6,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:29:48.090Z",
+      "updatedAt": "2026-01-18T12:29:48.090Z"
+    },
+    {
+      "id": "insight-1768739388111-pc0mgl2wf",
+      "title": "1. CROSS-VALIDATION & FACTUAL BASE",
+      "area": "Hacker Valley Media",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:29:48.111Z",
+      "updatedAt": "2026-01-18T12:29:48.111Z"
+    },
+    {
+      "id": "insight-1768739388117-4mgq2rpk0",
+      "title": "2. META-PATTERN RECOGNITION",
+      "area": "Hacker Valley Media",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:29:48.117Z",
+      "updatedAt": "2026-01-18T12:29:48.117Z"
+    },
+    {
+      "id": "insight-1768740120582-qcsgn7xfr",
+      "title": "Focus Area: Career & Skills",
+      "area": "Career & Skills",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:42:00.582Z",
+      "updatedAt": "2026-01-18T12:42:00.582Z"
+    },
+    {
+      "id": "insight-1768740120590-thi1pn2fi",
+      "title": "The \"Agency\" Transformation is Complete",
+      "area": "Career & Skills",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:42:00.590Z",
+      "updatedAt": "2026-01-18T12:42:00.590Z"
+    },
+    {
+      "id": "insight-1768740120595-fspj3p4h8",
+      "title": "Services Sold: He is no longer just selling \"ads.\"...",
+      "area": "Career & Skills",
+      "confidence": 0.6,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:42:00.595Z",
+      "updatedAt": "2026-01-18T12:42:00.595Z"
+    },
+    {
+      "id": "insight-1768740120600-8ixjpx9pc",
+      "title": "Infrastructure: He utilizes a sophisticated \"Budge...",
+      "area": "Career & Skills",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:42:00.600Z",
+      "updatedAt": "2026-01-18T12:42:00.600Z"
+    },
+    {
+      "id": "insight-1768740120605-u9rq9auo1",
+      "title": "Team Expansion: He has onboarded a new Operations ...",
+      "area": "Career & Skills",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:42:00.605Z",
+      "updatedAt": "2026-01-18T12:42:00.605Z"
+    },
+    {
+      "id": "insight-1768740120609-8e4xf3vdt",
+      "title": "VALIDATION OF GEMINI-ALPHA FINDINGS",
+      "area": "Career & Skills",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:42:00.609Z",
+      "updatedAt": "2026-01-18T12:42:00.609Z"
+    },
+    {
+      "id": "insight-1768740120614-zw85c5e4v",
+      "title": "NEW DISCOVERIES (NOT IN GEMINI-ALPHA’S OUTPUT)",
+      "area": "Career & Skills",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:42:00.614Z",
+      "updatedAt": "2026-01-18T12:42:00.614Z"
+    },
+    {
+      "id": "insight-1768740120619-vstgmcpgw",
+      "title": "SYNTHESIS (BIG PICTURE)",
+      "area": "Career & Skills",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:42:00.619Z",
+      "updatedAt": "2026-01-18T12:42:00.619Z"
+    },
+    {
+      "id": "insight-1768740120624-zzg4shftw",
+      "title": "Work ↔ Finance: The budget calculator and margin d...",
+      "area": "Career & Skills",
+      "confidence": 0.6,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:42:00.624Z",
+      "updatedAt": "2026-01-18T12:42:00.624Z"
+    },
+    {
+      "id": "insight-1768740120628-5gdvfnzbk",
+      "title": "Work ↔ Personal: Ron explicitly says he needed to ...",
+      "area": "Career & Skills",
+      "confidence": 0.6,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:42:00.628Z",
+      "updatedAt": "2026-01-18T12:42:00.628Z"
+    },
+    {
+      "id": "insight-1768740120633-7jldd7xef",
+      "title": "Focus Area: Career & Skills",
+      "area": "Career & Skills",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:42:00.633Z",
+      "updatedAt": "2026-01-18T12:42:00.633Z"
+    },
+    {
+      "id": "insight-1768740120639-4fwzg960n",
+      "title": "EXECUTIVE SUMMARY: THE \"PHANTOM AGENCY\" PARADOX",
+      "area": "Career & Skills",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:42:00.639Z",
+      "updatedAt": "2026-01-18T12:42:00.639Z"
+    },
+    {
+      "id": "insight-1768740120643-qkyiuky8u",
+      "title": "The Reality: High-margin consulting, $15k+ product...",
+      "area": "Career & Skills",
+      "confidence": 0.6,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:42:00.643Z",
+      "updatedAt": "2026-01-18T12:42:00.643Z"
+    },
+    {
+      "id": "insight-1768740120648-4ok22lfyx",
+      "title": "The Infrastructure: An empty \"Growth\" directory, a...",
+      "area": "Career & Skills",
+      "confidence": 0.6,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:42:00.648Z",
+      "updatedAt": "2026-01-18T12:42:00.648Z"
+    },
+    {
+      "id": "insight-1768740120652-fynpc0vc6",
+      "title": "The Bottom Line: Ron is running a mature, high-lev...",
+      "area": "Career & Skills",
+      "confidence": 0.6,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:42:00.652Z",
+      "updatedAt": "2026-01-18T12:42:00.652Z"
+    },
+    {
+      "id": "insight-1768740823576-02r2jnvf8",
+      "title": "VALIDATION OF GEMINI-ALPHA FINDINGS",
+      "area": "Financial",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:53:43.576Z",
+      "updatedAt": "2026-01-18T12:53:43.576Z"
+    },
+    {
+      "id": "insight-1768740823582-shrrvjxwz",
+      "title": "Gemini‑Alpha’s mention of Suzu Labs and McIntyre t...",
+      "area": "Financial",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:53:43.582Z",
+      "updatedAt": "2026-01-18T12:53:43.582Z"
+    },
+    {
+      "id": "insight-1768740823587-gdknrfnse",
+      "title": "The “regex search failed / ignore pattern restrict...",
+      "area": "Financial",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:53:43.587Z",
+      "updatedAt": "2026-01-18T12:53:43.587Z"
+    },
+    {
+      "id": "insight-1768740823593-odmdaoxvz",
+      "title": "QuickBooks hygiene is a blocking dependency for CR...",
+      "area": "Financial",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:53:43.593Z",
+      "updatedAt": "2026-01-18T12:53:43.593Z"
+    },
+    {
+      "id": "insight-1768740823598-jklyo2vnq",
+      "title": "Contractor payments are inconsistent and operation...",
+      "area": "Financial",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:53:43.598Z",
+      "updatedAt": "2026-01-18T12:53:43.598Z"
+    },
+    {
+      "id": "insight-1768740855589-2xk0kc5hy",
+      "title": "Agent 1: Not compliant; only states intent, no evi...",
+      "area": "Hacker Valley Media",
+      "confidence": 0.75,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:54:15.589Z",
+      "updatedAt": "2026-01-18T12:54:15.589Z"
+    },
+    {
+      "id": "insight-1768740855597-aacktdm9d",
+      "title": "Agent 2: Strong, evidence‑anchored, actionable; be...",
+      "area": "Hacker Valley Media",
+      "confidence": 0.75,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:54:15.597Z",
+      "updatedAt": "2026-01-18T12:54:15.597Z"
+    },
+    {
+      "id": "insight-1768740855603-ezcda3zm3",
+      "title": "Agent 3: Not compliant; mostly intent, includes sp...",
+      "area": "Hacker Valley Media",
+      "confidence": 0.75,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:54:15.603Z",
+      "updatedAt": "2026-01-18T12:54:15.603Z"
+    },
+    {
+      "id": "insight-1768740855609-215ehhs57",
+      "title": "Agent 4: Off‑scope (Career & Skills, Iteration 74)...",
+      "area": "Hacker Valley Media",
+      "confidence": 0.75,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:54:15.609Z",
+      "updatedAt": "2026-01-18T12:54:15.609Z"
+    },
+    {
+      "id": "insight-1768740855614-zi36d7cv0",
+      "title": "Agent 5: Strong, evidence‑anchored; corrects/quali...",
+      "area": "Hacker Valley Media",
+      "confidence": 0.75,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T12:54:15.614Z",
+      "updatedAt": "2026-01-18T12:54:15.614Z"
+    },
+    {
+      "id": "insight-1768742186971-gww5dw67u",
+      "title": "Focus Area: Personal Growth (`30-39_Personal`)",
+      "area": "Personal Growth",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T13:16:26.971Z",
+      "updatedAt": "2026-01-18T13:16:26.971Z"
+    },
+    {
+      "id": "insight-1768742186978-87jadzhgk",
+      "title": "1. KEY OBSERVATIONS: THE \"INVISIBLE EMPLOYMENT\" PA...",
+      "area": "Personal Growth",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T13:16:26.978Z",
+      "updatedAt": "2026-01-18T13:16:26.978Z"
+    },
+    {
+      "id": "insight-1768742186985-0dg8d4d0b",
+      "title": "Observation 1: The \"Double Agent\" Career (Mozilla ...",
+      "area": "Personal Growth",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T13:16:26.985Z",
+      "updatedAt": "2026-01-18T13:16:26.985Z"
+    },
+    {
+      "id": "insight-1768742186991-5qzd02r6g",
+      "title": "Finding: Ron is actively employed by or contractin...",
+      "area": "Personal Growth",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T13:16:26.991Z",
+      "updatedAt": "2026-01-18T13:16:26.991Z"
+    },
+    {
+      "id": "insight-1768742186996-mweib1nla",
+      "title": "`2025-12-03.md`: \"Gratitude... For being gainfully...",
+      "area": "Personal Growth",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T13:16:26.996Z",
+      "updatedAt": "2026-01-18T13:16:26.996Z"
+    },
+    {
+      "id": "insight-1768742187001-nln91uakf",
+      "title": "Validation of Gemini-Alpha Findings",
+      "area": "Personal Growth",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T13:16:27.001Z",
+      "updatedAt": "2026-01-18T13:16:27.001Z"
+    },
+    {
+      "id": "insight-1768742187006-7xzz7fc18",
+      "title": "Prioritized Recommendations",
+      "area": "Personal Growth",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T13:16:27.006Z",
+      "updatedAt": "2026-01-18T13:16:27.006Z"
+    },
+    {
+      "id": "insight-1768742187012-2ffbmthmk",
+      "title": "Urgency: High | Impact: High | Effort: Low — Add a...",
+      "area": "Personal Growth",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T13:16:27.012Z",
+      "updatedAt": "2026-01-18T13:16:27.012Z"
+    },
+    {
+      "id": "insight-1768742187018-0f4r99iqr",
+      "title": "Urgency: High | Impact: High | Effort: Medium — Es...",
+      "area": "Personal Growth",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T13:16:27.018Z",
+      "updatedAt": "2026-01-18T13:16:27.018Z"
+    },
+    {
+      "id": "insight-1768742187023-qymkw57s7",
+      "title": "Urgency: Medium | Impact: High | Effort: Medium — ...",
+      "area": "Personal Growth",
+      "confidence": 0.65,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T13:16:27.023Z",
+      "updatedAt": "2026-01-18T13:16:27.023Z"
+    },
+    {
+      "id": "insight-1768742187029-j79pnlq3c",
+      "title": "Focus Area: Personal Growth",
+      "area": "Personal Growth",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T13:16:27.029Z",
+      "updatedAt": "2026-01-18T13:16:27.029Z"
+    },
+    {
+      "id": "insight-1768742187034-a9dd1ja08",
+      "title": "EXECUTIVE SUMMARY: THE \"SHADOW OPERATOR\" PARADOX",
+      "area": "Personal Growth",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T13:16:27.034Z",
+      "updatedAt": "2026-01-18T13:16:27.034Z"
+    },
+    {
+      "id": "insight-1768742187040-c99oftqnf",
+      "title": "The \"Hoarding\" Reality: The `31_Capture` folder is...",
+      "area": "Personal Growth",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T13:16:27.040Z",
+      "updatedAt": "2026-01-18T13:16:27.040Z"
+    },
+    {
+      "id": "insight-1768742187045-x64h518ly",
+      "title": "The \"Ghost\" Dashboard: His daily reflection habit ...",
+      "area": "Personal Growth",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T13:16:27.045Z",
+      "updatedAt": "2026-01-18T13:16:27.045Z"
+    },
+    {
+      "id": "insight-1768742187050-jy2ceq4m7",
+      "title": "The \"Invisible Job\": His employment with Mozilla i...",
+      "area": "Personal Growth",
+      "confidence": 0.5,
+      "actionable": false,
+      "validations": 0,
+      "createdAt": "2026-01-18T13:16:27.050Z",
+      "updatedAt": "2026-01-18T13:16:27.050Z"
     }
   ],
   "thresholds": {
@@ -7958,13 +8458,13 @@
     "actionable": 0.9
   },
   "stats": {
-    "total": 795,
+    "total": 845,
     "byConfidence": {
       "high": 0,
-      "medium": 106,
+      "medium": 119,
       "low": 0
     },
     "actionable": 0
   },
-  "lastUpdated": "2026-01-15T18:52:08.756Z"
+  "lastUpdated": "2026-01-18T13:16:27.053Z"
 }

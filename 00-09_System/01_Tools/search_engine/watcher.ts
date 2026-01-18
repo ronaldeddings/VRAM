@@ -1,13 +1,16 @@
-// watcher.ts
+// watcher.ts - PostgreSQL Version
+/**
+ * Real-time file watcher for VRAM filesystem
+ * Indexes file changes to PostgreSQL for multi-agent concurrency
+ */
+
 import { watch } from "node:fs";
 import { stat } from "node:fs/promises";
-import { Database } from "bun:sqlite";
+import { indexDocument, deleteDocument, type DocumentInput } from "./pg-fts";
+import { closeConnection } from "./pg-client";
+import { isTranscript } from "./smart-chunker";
 
 const VRAM = "/Volumes/VRAM";
-const DB_PATH = `${VRAM}/00-09_System/00_Index/search.db`;
-
-const db = new Database(DB_PATH);
-db.run("PRAGMA journal_mode = WAL;");
 
 function extractArea(filepath: string): string {
   const match = filepath.match(/\/(\d{2}-\d{2}_[^/]+)\//);
@@ -30,14 +33,10 @@ function extractCategory(filepath: string): string {
   return match ? match[1] : "Uncategorized";
 }
 
-const insertFile = db.prepare(`
-  INSERT OR REPLACE INTO files
-    (path, filename, extension, content, file_size, modified_at, area, category)
-  VALUES
-    ($path, $filename, $extension, $content, $size, $modified, $area, $category)
-`);
-
-const deleteFile = db.prepare(`DELETE FROM files WHERE path = $path`);
+// Sanitize content to remove null bytes (PostgreSQL doesn't allow them)
+function sanitizeContent(content: string): string {
+  return content.replace(/\0/g, '');
+}
 
 async function indexFile(filepath: string): Promise<boolean> {
   const bunFile = Bun.file(filepath);
@@ -49,17 +48,22 @@ async function indexFile(filepath: string): Promise<boolean> {
     const filename = filepath.split("/").pop() || filepath;
     const extension = filename.split(".").pop() || "";
 
-    insertFile.run({
-      $path: filepath,
-      $filename: filename,
-      $extension: extension,
-      $content: content,
-      $size: stats.size,
-      $modified: stats.mtime.toISOString(),
-      $area: extractArea(filepath),
-      $category: extractCategory(filepath),
-    });
+    // Detect if this is a transcript file
+    const contentType = isTranscript(content) ? "transcript" : "file";
 
+    const doc: DocumentInput = {
+      path: filepath,
+      filename: filename,
+      extension: extension,
+      content: sanitizeContent(content),
+      fileSize: stats.size,
+      modifiedAt: stats.mtime,
+      area: extractArea(filepath),
+      category: extractCategory(filepath),
+      contentType: contentType,
+    };
+
+    await indexDocument(doc);
     return true;
   } catch (err) {
     console.error(`Error indexing ${filepath}:`, err);
@@ -85,9 +89,11 @@ function debounce(filepath: string, callback: () => Promise<void>) {
   );
 }
 
-console.log(`VRAM File Watcher`);
-console.log(`Watching: ${VRAM}`);
-console.log(`Database: ${DB_PATH}`);
+console.log("╔════════════════════════════════════════╗");
+console.log("║   VRAM File Watcher (PostgreSQL)       ║");
+console.log("╚════════════════════════════════════════╝\n");
+console.log(`📂 Watching: ${VRAM}`);
+console.log(`🐘 Backend: PostgreSQL`);
 console.log(`Press Ctrl+C to stop.\n`);
 
 // Track stats
@@ -120,7 +126,7 @@ watch(VRAM, { recursive: true }, (event, filename) => {
         added++;
         console.log(`[${timestamp}] ✅ Added: ${filename}`);
       } else {
-        deleteFile.run({ $path: filepath });
+        await deleteDocument(filepath);
         removed++;
         console.log(`[${timestamp}] ❌ Removed: ${filename}`);
       }
@@ -132,10 +138,10 @@ watch(VRAM, { recursive: true }, (event, filename) => {
   });
 });
 
-process.on("SIGINT", () => {
+process.on("SIGINT", async () => {
   console.log("\n\nStopping watcher...");
   console.log(`Session stats: ${added} added, ${updated} updated, ${removed} removed`);
-  db.close();
+  await closeConnection();
   process.exit(0);
 });
 

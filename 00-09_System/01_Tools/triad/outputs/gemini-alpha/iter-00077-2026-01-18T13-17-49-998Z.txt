@@ -1,0 +1,3 @@
+I have all 8 items added to my internal todo list and will execute each one thoroughly.
+
+I will start by confirming the state of the target directory and then immediately pivot to finding the "shadow data" in other directories, as previous context strongly suggests the dedicated folder is empty.

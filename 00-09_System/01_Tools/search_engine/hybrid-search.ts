@@ -1,47 +1,25 @@
 /**
- * Hybrid Search Module
+ * Hybrid Search Module - PostgreSQL Version
  *
- * Combines SQLite FTS5 (keyword search) with PostgreSQL pgvector (semantic search).
+ * Combines PostgreSQL tsvector (keyword search) with PostgreSQL pgvector (semantic search).
  * Uses Reciprocal Rank Fusion (RRF) for result merging.
+ *
+ * All search is now unified in PostgreSQL for multi-agent concurrency.
  */
 
-import { Database } from "bun:sqlite";
 import { semanticSearch, type VectorSearchResult } from "./pg-client";
+import {
+  keywordSearch as pgKeywordSearch,
+  unifiedKeywordSearch,
+  getDocument,
+  browseByArea as pgBrowseByArea,
+  getFTSStats as pgGetFTSStats,
+  type FTSResult,
+  type UnifiedFTSResult
+} from "./pg-fts";
 
-const SEARCH_DB = "/Volumes/VRAM/00-09_System/00_Index/search.db";
-
-// FTS5 database connection
-let _ftsDb: Database | null = null;
-
-function getFTSDb(): Database {
-  if (!_ftsDb) {
-    _ftsDb = new Database(SEARCH_DB, { readonly: true });
-    _ftsDb.run("PRAGMA journal_mode = WAL;");
-  }
-  return _ftsDb;
-}
-
-export function closeFTSDb(): void {
-  if (_ftsDb) {
-    _ftsDb.close();
-    _ftsDb = null;
-  }
-}
-
-/**
- * FTS5 search result
- */
-export interface FTSResult {
-  path: string;
-  filename: string;
-  area: string;
-  category: string;
-  extension: string;
-  fileSize: number;
-  modifiedAt: string;
-  snippet: string;
-  rank: number;
-}
+// Re-export FTSResult type for backward compatibility
+export type { FTSResult };
 
 /**
  * Combined hybrid search result
@@ -52,70 +30,24 @@ export interface HybridResult {
   area: string;
   category: string;
   snippet: string;
-  source: "file" | "email" | "slack";
+  source: "file" | "transcript" | "email" | "slack";
   combinedScore: number;
   ftsScore: number;
   semanticScore: number;
   speakers?: string[];
 }
 
+// Re-export UnifiedFTSResult for server.ts
+export type { UnifiedFTSResult };
+
 /**
- * Perform FTS5 full-text search
+ * Perform keyword search using PostgreSQL FTS
  */
-export function keywordSearch(
+export async function keywordSearch(
   query: string,
   options: { limit?: number; offset?: number; area?: string; pathPrefix?: string } = {}
-): FTSResult[] {
-  const { limit = 20, offset = 0, area, pathPrefix } = options;
-  const db = getFTSDb();
-
-  let results: any[];
-
-  // Build dynamic WHERE clause based on filters
-  let whereClause = "files_fts MATCH $query";
-  const params: any = { $query: query, $limit: limit, $offset: offset };
-
-  if (area) {
-    whereClause += " AND files.area = $area";
-    params.$area = area;
-  }
-
-  if (pathPrefix) {
-    whereClause += " AND files.path LIKE $pathPrefix";
-    params.$pathPrefix = pathPrefix + '%';
-  }
-
-  const stmt = db.prepare(`
-    SELECT
-      files.path,
-      files.filename,
-      files.area,
-      files.category,
-      files.extension,
-      files.file_size,
-      files.modified_at,
-      snippet(files_fts, 2, '→', '←', '...', 40) as snippet,
-      rank
-    FROM files_fts
-    JOIN files ON files_fts.rowid = files.id
-    WHERE ${whereClause}
-    ORDER BY rank
-    LIMIT $limit
-    OFFSET $offset
-  `);
-  results = stmt.all(params);
-
-  return results.map(r => ({
-    path: r.path,
-    filename: r.filename,
-    area: r.area,
-    category: r.category,
-    extension: r.extension,
-    fileSize: r.file_size,
-    modifiedAt: r.modified_at,
-    snippet: r.snippet,
-    rank: r.rank
-  }));
+): Promise<FTSResult[]> {
+  return pgKeywordSearch(query, options);
 }
 
 /**
@@ -127,18 +59,7 @@ function rrfScore(rank: number, k: number = 60): number {
 }
 
 /**
- * Normalize scores to 0-1 range
- */
-function normalizeScores(scores: number[]): number[] {
-  if (scores.length === 0) return [];
-  const max = Math.max(...scores);
-  const min = Math.min(...scores);
-  const range = max - min || 1;
-  return scores.map(s => (s - min) / range);
-}
-
-/**
- * Perform hybrid search combining FTS5 and pgvector
+ * Perform hybrid search combining PostgreSQL FTS and pgvector
  *
  * Strategy options:
  * - "rrf": Reciprocal Rank Fusion (default, best for diverse results)
@@ -153,9 +74,10 @@ export async function hybridSearch(
     semanticWeight?: number;
     strategy?: "rrf" | "weighted" | "max";
     area?: string;
-    sources?: ("file" | "email" | "slack")[];
+    sources?: ("file" | "transcript" | "email" | "slack")[];
     semanticThreshold?: number;
     pathPrefix?: string;
+    speaker?: string;
   } = {}
 ): Promise<HybridResult[]> {
   const {
@@ -164,31 +86,37 @@ export async function hybridSearch(
     semanticWeight = 0.6,
     strategy = "rrf",
     area,
-    sources = ["file", "email", "slack"],
+    sources = ["file", "transcript", "email", "slack"],
     semanticThreshold = 0.5,
-    pathPrefix
+    pathPrefix,
+    speaker
   } = options;
 
   // Fetch more results than needed for better fusion
   const fetchLimit = limit * 3;
 
+  // Map sources for semantic search (transcript maps to file source in pg-client)
+  const semanticSources = sources.map(s => s === "transcript" ? "file" : s) as ("file" | "email" | "slack")[];
+  const uniqueSemanticSources = [...new Set(semanticSources)];
+
   // Run both searches in parallel
   const [ftsResults, vectorResults] = await Promise.all([
-    Promise.resolve(keywordSearch(query, { limit: fetchLimit, area, pathPrefix })),
-    semanticSearch(query, { limit: fetchLimit, sources, threshold: semanticThreshold, area, pathPrefix })
+    unifiedKeywordSearch(query, { limit: fetchLimit, sources, area, speaker }),
+    semanticSearch(query, { limit: fetchLimit, sources: uniqueSemanticSources, threshold: semanticThreshold, area, pathPrefix })
   ]);
 
   // Score map: path -> scores
   const scoreMap = new Map<string, {
     ftsRank: number | null;
     semanticRank: number | null;
-    ftsResult: FTSResult | null;
+    ftsResult: UnifiedFTSResult | null;
     vectorResult: VectorSearchResult | null;
   }>();
 
-  // Add FTS results with rank
+  // Add FTS results with rank (use path as key, may include source type prefix for uniqueness)
   ftsResults.forEach((result, index) => {
-    scoreMap.set(result.path, {
+    const key = `${result.source}:${result.path}`;
+    scoreMap.set(key, {
       ftsRank: index,
       semanticRank: null,
       ftsResult: result,
@@ -198,7 +126,9 @@ export async function hybridSearch(
 
   // Add semantic results with rank
   vectorResults.forEach((result, index) => {
-    const key = result.filePath;
+    // Determine source type for key matching
+    const sourceType = result.source || "file";
+    const key = `${sourceType}:${result.filePath}`;
     const existing = scoreMap.get(key);
     if (existing) {
       existing.semanticRank = index;
@@ -216,7 +146,10 @@ export async function hybridSearch(
   // Calculate combined scores based on strategy
   const combined: HybridResult[] = [];
 
-  for (const [path, data] of scoreMap) {
+  for (const [key, data] of scoreMap) {
+    // Extract actual path from key (format: "source:path")
+    const colonIndex = key.indexOf(":");
+    const path = colonIndex >= 0 ? key.substring(colonIndex + 1) : key;
     let ftsScore = 0;
     let semanticScore = 0;
     let combinedScore = 0;
@@ -253,17 +186,23 @@ export async function hybridSearch(
     const fts = data.ftsResult;
     const vec = data.vectorResult;
 
+    // Determine filename - use title for unified results, filename for vector
+    const filename = fts?.title || vec?.filename || path.split("/").pop() || "";
+
+    // Determine source - prioritize FTS source (which includes transcript), fallback to vector
+    const resultSource = fts?.source || vec?.source || "file";
+
     combined.push({
       path,
-      filename: fts?.filename || vec?.filename || path.split("/").pop() || "",
+      filename,
       area: fts?.area || vec?.area || "Unknown",
       category: fts?.category || vec?.category || "",
       snippet: fts?.snippet || vec?.chunkText?.substring(0, 200) || "",
-      source: vec?.source || "file",
+      source: resultSource as "file" | "transcript" | "email" | "slack",
       combinedScore,
       ftsScore,
       semanticScore,
-      speakers: vec?.speakers || undefined
+      speakers: fts?.metadata?.speakers || vec?.speakers || undefined
     });
   }
 
@@ -290,7 +229,7 @@ export async function explainSearch(
   const { limit = 10 } = options;
 
   const [ftsResults, vectorResults, hybridResults] = await Promise.all([
-    Promise.resolve(keywordSearch(query, { limit: limit * 2 })),
+    pgKeywordSearch(query, { limit: limit * 2 }),
     semanticSearch(query, { limit: limit * 2, threshold: 0.5 }),
     hybridSearch(query, { limit })
   ]);
@@ -362,9 +301,9 @@ export async function multiQuerySearch(
 }
 
 /**
- * Get file metadata from FTS database
+ * Get file metadata from PostgreSQL
  */
-export function getFileMetadata(path: string): {
+export async function getFileMetadata(path: string): Promise<{
   path: string;
   filename: string;
   area: string;
@@ -373,91 +312,56 @@ export function getFileMetadata(path: string): {
   fileSize: number;
   modifiedAt: string;
   content: string | null;
-} | null {
-  const db = getFTSDb();
-  const stmt = db.prepare("SELECT * FROM files WHERE path = $path");
-  const result = stmt.get({ $path: path }) as any;
-
-  if (!result) return null;
+} | null> {
+  const doc = await getDocument(path);
+  if (!doc) return null;
 
   return {
-    path: result.path,
-    filename: result.filename,
-    area: result.area,
-    category: result.category,
-    extension: result.extension,
-    fileSize: result.file_size,
-    modifiedAt: result.modified_at,
-    content: result.content
+    path: doc.path,
+    filename: doc.filename,
+    area: doc.area,
+    category: doc.category,
+    extension: doc.extension,
+    fileSize: doc.fileSize,
+    modifiedAt: doc.modifiedAt,
+    content: doc.content
   };
 }
 
 /**
- * Browse files by area using FTS database
+ * Browse files by area using PostgreSQL
  */
-export function browseByArea(
+export async function browseByArea(
   area: string,
   options: { limit?: number } = {}
-): Array<{
+): Promise<Array<{
   path: string;
   filename: string;
   category: string;
   extension: string;
   fileSize: number;
   modifiedAt: string;
-}> {
-  const { limit = 50 } = options;
-  const db = getFTSDb();
-
-  const stmt = db.prepare(`
-    SELECT path, filename, category, extension, file_size, modified_at
-    FROM files
-    WHERE area = $area
-    ORDER BY modified_at DESC
-    LIMIT $limit
-  `);
-
-  const results = stmt.all({ $area: area, $limit: limit }) as any[];
-
-  return results.map(r => ({
-    path: r.path,
-    filename: r.filename,
-    category: r.category,
-    extension: r.extension,
-    fileSize: r.file_size,
-    modifiedAt: r.modified_at
-  }));
+}>> {
+  return pgBrowseByArea(area, options);
 }
 
 /**
- * Get FTS database statistics
+ * Get FTS database statistics from PostgreSQL
  */
-export function getFTSStats(): {
+export async function getFTSStats(): Promise<{
   totalFiles: number;
   totalSize: number;
   areas: number;
   categories: number;
   lastIndexed: string;
-} {
-  const db = getFTSDb();
+}> {
+  return pgGetFTSStats();
+}
 
-  const stmt = db.prepare(`
-    SELECT
-      COUNT(*) as total_files,
-      SUM(file_size) as total_size,
-      COUNT(DISTINCT area) as areas,
-      COUNT(DISTINCT category) as categories,
-      MAX(indexed_at) as last_indexed
-    FROM files
-  `);
-
-  const result = stmt.get() as any;
-
-  return {
-    totalFiles: result.total_files,
-    totalSize: result.total_size,
-    areas: result.areas,
-    categories: result.categories,
-    lastIndexed: result.last_indexed
-  };
+/**
+ * No-op for backward compatibility - PostgreSQL connections are managed by pg-client
+ */
+export function closeFTSDb(): void {
+  // PostgreSQL connection management is handled by pg-client.ts
+  // This function remains for backward compatibility
 }

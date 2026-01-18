@@ -11129,7 +11129,707 @@
       "updatedAt": "2026-01-15T18:52:08.755Z",
       "validations": 0,
       "actionable": false
+    },
+    {
+      "id": "insight-1768739388049-ycbi4pimb",
+      "title": "Validation Of Gemini-Alpha Findings",
+      "content": "Validation Of Gemini-Alpha Findings",
+      "area": "Hacker Valley Media",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-73"
+      ],
+      "createdAt": "2026-01-18T12:29:48.049Z",
+      "updatedAt": "2026-01-18T12:29:48.049Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768739388056-48oe90ntv",
+      "title": "Input: target account list + thought leadership gu...",
+      "content": "Input: target account list + thought leadership guest.",
+      "area": "Hacker Valley Media",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-73"
+      ],
+      "createdAt": "2026-01-18T12:29:48.056Z",
+      "updatedAt": "2026-01-18T12:29:48.056Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768739388063-2mxzg26sb",
+      "title": "Process: LinkedIn Live recording -> podcast repurp...",
+      "content": "Process: LinkedIn Live recording -> podcast repurposing -> clips -> targeted outreach -> warm intro requests.",
+      "area": "Hacker Valley Media",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-73"
+      ],
+      "createdAt": "2026-01-18T12:29:48.063Z",
+      "updatedAt": "2026-01-18T12:29:48.063Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768739388069-dral70xuv",
+      "title": "Output: leads, intros, brand awareness, and a usab...",
+      "content": "Output: leads, intros, brand awareness, and a usable content library with full rights.",
+      "area": "Hacker Valley Media",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-73"
+      ],
+      "createdAt": "2026-01-18T12:29:48.069Z",
+      "updatedAt": "2026-01-18T12:29:48.069Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768739388074-6a6ywzgdp",
+      "title": "A team member is using multiple new domains for co...",
+      "content": "A team member is using multiple new domains for cold email and targeting tiny companies—this risks brand damage and deliverability (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-519876848.md`).",
+      "area": "Hacker Valley Media",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-73"
+      ],
+      "createdAt": "2026-01-18T12:29:48.074Z",
+      "updatedAt": "2026-01-18T12:29:48.074Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768739388079-v5sbxg5yd",
+      "title": "Focus Area: Hacker Valley Media (HVM)",
+      "content": "Focus Area: Hacker Valley Media (HVM)",
+      "area": "Hacker Valley Media",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-73"
+      ],
+      "createdAt": "2026-01-18T12:29:48.079Z",
+      "updatedAt": "2026-01-18T12:29:48.079Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768739388085-pcx6tdgme",
+      "title": "EXECUTIVE SUMMARY: THE INVISIBLE AGENCY",
+      "content": "EXECUTIVE SUMMARY: THE INVISIBLE AGENCY",
+      "area": "Hacker Valley Media",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-73"
+      ],
+      "createdAt": "2026-01-18T12:29:48.085Z",
+      "updatedAt": "2026-01-18T12:29:48.085Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768739388090-t3c24smd8",
+      "title": "Key Finding: HVM has pivoted from selling *sponsor...",
+      "content": "Key Finding: HVM has pivoted from selling *sponsorships* (brand awareness) to selling *leads* (warm intros via LinkedIn Live RSVPs). This pivot is successfully generating revenue but is operationally unsupported by the current infrastructure.",
+      "area": "Hacker Valley Media",
+      "confidence": 0.6,
+      "sources": [
+        "iteration-73"
+      ],
+      "createdAt": "2026-01-18T12:29:48.090Z",
+      "updatedAt": "2026-01-18T12:29:48.090Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768739388111-pc0mgl2wf",
+      "title": "1. CROSS-VALIDATION & FACTUAL BASE",
+      "content": "1. CROSS-VALIDATION & FACTUAL BASE",
+      "area": "Hacker Valley Media",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-73"
+      ],
+      "createdAt": "2026-01-18T12:29:48.111Z",
+      "updatedAt": "2026-01-18T12:29:48.111Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768739388117-4mgq2rpk0",
+      "title": "2. META-PATTERN RECOGNITION",
+      "content": "2. META-PATTERN RECOGNITION",
+      "area": "Hacker Valley Media",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-73"
+      ],
+      "createdAt": "2026-01-18T12:29:48.117Z",
+      "updatedAt": "2026-01-18T12:29:48.117Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768740120582-qcsgn7xfr",
+      "title": "Focus Area: Career & Skills",
+      "content": "Focus Area: Career & Skills",
+      "area": "Career & Skills",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-74"
+      ],
+      "createdAt": "2026-01-18T12:42:00.582Z",
+      "updatedAt": "2026-01-18T12:42:00.582Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768740120590-thi1pn2fi",
+      "title": "The \"Agency\" Transformation is Complete",
+      "content": "The \"Agency\" Transformation is Complete",
+      "area": "Career & Skills",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-74"
+      ],
+      "createdAt": "2026-01-18T12:42:00.590Z",
+      "updatedAt": "2026-01-18T12:42:00.590Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768740120595-fspj3p4h8",
+      "title": "Services Sold: He is no longer just selling \"ads.\"...",
+      "content": "Services Sold: He is no longer just selling \"ads.\" He is selling \"Assessments\" ($8,325 for ~40 hours), \"Activations\" (Game Shows at RSA), and \"Production Packages\" ($15k+ for on-site filming).",
+      "area": "Career & Skills",
+      "confidence": 0.6,
+      "sources": [
+        "iteration-74"
+      ],
+      "createdAt": "2026-01-18T12:42:00.595Z",
+      "updatedAt": "2026-01-18T12:42:00.595Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768740120600-8ixjpx9pc",
+      "title": "Infrastructure: He utilizes a sophisticated \"Budge...",
+      "content": "Infrastructure: He utilizes a sophisticated \"Budget Calculator\" that breaks down margins, labor (Gaffer, Sound Mixer, PA), and \"Cost of Goods Sold\" (COGS).",
+      "area": "Career & Skills",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-74"
+      ],
+      "createdAt": "2026-01-18T12:42:00.600Z",
+      "updatedAt": "2026-01-18T12:42:00.600Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768740120605-u9rq9auo1",
+      "title": "Team Expansion: He has onboarded a new Operations ...",
+      "content": "Team Expansion: He has onboarded a new Operations lead, \"Brandy\" (Brandied333), to handle contracts and HubSpot admin, explicitly to free him to \"work *on* the business, not *in* it.\" Ivan is shifting to a QC/Finance role.",
+      "area": "Career & Skills",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-74"
+      ],
+      "createdAt": "2026-01-18T12:42:00.605Z",
+      "updatedAt": "2026-01-18T12:42:00.605Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768740120609-8e4xf3vdt",
+      "title": "VALIDATION OF GEMINI-ALPHA FINDINGS",
+      "content": "VALIDATION OF GEMINI-ALPHA FINDINGS",
+      "area": "Career & Skills",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-74"
+      ],
+      "createdAt": "2026-01-18T12:42:00.609Z",
+      "updatedAt": "2026-01-18T12:42:00.609Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768740120614-zw85c5e4v",
+      "title": "NEW DISCOVERIES (NOT IN GEMINI-ALPHA’S OUTPUT)",
+      "content": "NEW DISCOVERIES (NOT IN GEMINI-ALPHA’S OUTPUT)",
+      "area": "Career & Skills",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-74"
+      ],
+      "createdAt": "2026-01-18T12:42:00.614Z",
+      "updatedAt": "2026-01-18T12:42:00.614Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768740120619-vstgmcpgw",
+      "title": "SYNTHESIS (BIG PICTURE)",
+      "content": "SYNTHESIS (BIG PICTURE)",
+      "area": "Career & Skills",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-74"
+      ],
+      "createdAt": "2026-01-18T12:42:00.619Z",
+      "updatedAt": "2026-01-18T12:42:00.619Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768740120624-zzg4shftw",
+      "title": "Work ↔ Finance: The budget calculator and margin d...",
+      "content": "Work ↔ Finance: The budget calculator and margin discipline show a finance‑aware operational mindset, but the HVM finance folder is empty. This suggests a mismatch between actual financial operations and file system capture (`10-19_Work/10_Hacker_Valley_Media/10.06_finance/.gitkeep` only).",
+      "area": "Career & Skills",
+      "confidence": 0.6,
+      "sources": [
+        "iteration-74"
+      ],
+      "createdAt": "2026-01-18T12:42:00.624Z",
+      "updatedAt": "2026-01-18T12:42:00.624Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768740120628-5gdvfnzbk",
+      "title": "Work ↔ Personal: Ron explicitly says he needed to ...",
+      "content": "Work ↔ Personal: Ron explicitly says he needed to provide for his family when he went full‑time, which motivated the lead‑gen pivot. This indicates a strong personal‑to‑career driver and an underlying requirement for revenue predictability (Source: `10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-06-522244293.md` at ~[17:37–17:55]).",
+      "area": "Career & Skills",
+      "confidence": 0.6,
+      "sources": [
+        "iteration-74"
+      ],
+      "createdAt": "2026-01-18T12:42:00.628Z",
+      "updatedAt": "2026-01-18T12:42:00.628Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768740120633-7jldd7xef",
+      "title": "Focus Area: Career & Skills",
+      "content": "Focus Area: Career & Skills",
+      "area": "Career & Skills",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-74"
+      ],
+      "createdAt": "2026-01-18T12:42:00.633Z",
+      "updatedAt": "2026-01-18T12:42:00.633Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768740120639-4fwzg960n",
+      "title": "EXECUTIVE SUMMARY: THE \"PHANTOM AGENCY\" PARADOX",
+      "content": "EXECUTIVE SUMMARY: THE \"PHANTOM AGENCY\" PARADOX",
+      "area": "Career & Skills",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-74"
+      ],
+      "createdAt": "2026-01-18T12:42:00.639Z",
+      "updatedAt": "2026-01-18T12:42:00.639Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768740120643-qkyiuky8u",
+      "title": "The Reality: High-margin consulting, $15k+ product...",
+      "content": "The Reality: High-margin consulting, $15k+ production packages, and sophisticated lead-gen operations (Suzu Labs model).",
+      "area": "Career & Skills",
+      "confidence": 0.6,
+      "sources": [
+        "iteration-74"
+      ],
+      "createdAt": "2026-01-18T12:42:00.643Z",
+      "updatedAt": "2026-01-18T12:42:00.643Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768740120648-4ok22lfyx",
+      "title": "The Infrastructure: An empty \"Growth\" directory, a...",
+      "content": "The Infrastructure: An empty \"Growth\" directory, a \"Ghost Ship\" HVM folder structure, and critical business logic (contracts, IP, deal terms) stranded in transient meeting transcripts and email threads.",
+      "area": "Career & Skills",
+      "confidence": 0.6,
+      "sources": [
+        "iteration-74"
+      ],
+      "createdAt": "2026-01-18T12:42:00.648Z",
+      "updatedAt": "2026-01-18T12:42:00.648Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768740120652-fynpc0vc6",
+      "title": "The Bottom Line: Ron is running a mature, high-lev...",
+      "content": "The Bottom Line: Ron is running a mature, high-level consulting firm using the ad-hoc tooling of an early-stage creator. The revenue is real, but the operational foundation is missing.",
+      "area": "Career & Skills",
+      "confidence": 0.6,
+      "sources": [
+        "iteration-74"
+      ],
+      "createdAt": "2026-01-18T12:42:00.652Z",
+      "updatedAt": "2026-01-18T12:42:00.652Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768740823576-02r2jnvf8",
+      "title": "VALIDATION OF GEMINI-ALPHA FINDINGS",
+      "content": "VALIDATION OF GEMINI-ALPHA FINDINGS",
+      "area": "Financial",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-75"
+      ],
+      "createdAt": "2026-01-18T12:53:43.576Z",
+      "updatedAt": "2026-01-18T12:53:43.576Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768740823582-shrrvjxwz",
+      "title": "Gemini‑Alpha’s mention of Suzu Labs and McIntyre t...",
+      "content": "Gemini‑Alpha’s mention of Suzu Labs and McIntyre transcripts is not directly financial and not essential to the current Financial focus. Those transcripts exist, but they do not materially change the core financial picture already evidenced by the documents above.",
+      "area": "Financial",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-75"
+      ],
+      "createdAt": "2026-01-18T12:53:43.582Z",
+      "updatedAt": "2026-01-18T12:53:43.582Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768740823587-gdknrfnse",
+      "title": "The “regex search failed / ignore pattern restrict...",
+      "content": "The “regex search failed / ignore pattern restrictions” claim cannot be validated. I was able to access files directly with shell and SQLite queries without any special bypass.",
+      "area": "Financial",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-75"
+      ],
+      "createdAt": "2026-01-18T12:53:43.587Z",
+      "updatedAt": "2026-01-18T12:53:43.587Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768740823593-odmdaoxvz",
+      "title": "QuickBooks hygiene is a blocking dependency for CR...",
+      "content": "QuickBooks hygiene is a blocking dependency for CRA requirements. On January 9, 2025, the Emily sync recap notes “QuickBooks cleanup is necessary before proceeding with CRA requirements” and that HubSpot→QuickBooks invoice syncing is configured in `/Volumes/VRAM/10-19_Work/14_Communications/14.01_emails/2025/2025-01-09_162941_023052_Recap for Emily sync.md`. This suggests the operational accounting system exists but is not audit‑ready.",
+      "area": "Financial",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-75"
+      ],
+      "createdAt": "2026-01-18T12:53:43.593Z",
+      "updatedAt": "2026-01-18T12:53:43.593Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768740823598-jklyo2vnq",
+      "title": "Contractor payments are inconsistent and operation...",
+      "content": "Contractor payments are inconsistent and operationally painful. The November 25, 2024 Fathom recap (“Zoom Meeting”) explicitly states “Zelle setup for Emily was successful, but encountered issues when trying to send payments,” and that bank transfers and Justworks were used as alternatives in `/Volumes/VRAM/10-19_Work/14_Communications/14.01_emails/2024/2024-11-25_192205_025174_Recap for Zoom Meeting.md`. This is a direct signal of payment‑process fragility.",
+      "area": "Financial",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-75"
+      ],
+      "createdAt": "2026-01-18T12:53:43.598Z",
+      "updatedAt": "2026-01-18T12:53:43.598Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768740855589-2xk0kc5hy",
+      "title": "Agent 1: Not compliant; only states intent, no evi...",
+      "content": "Agent 1: Not compliant; only states intent, no evidence, no analysis.",
+      "area": "Hacker Valley Media",
+      "confidence": 0.75,
+      "sources": [
+        "overseer-iteration-75"
+      ],
+      "createdAt": "2026-01-18T12:54:15.589Z",
+      "updatedAt": "2026-01-18T12:54:15.589Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768740855597-aacktdm9d",
+      "title": "Agent 2: Strong, evidence‑anchored, actionable; be...",
+      "content": "Agent 2: Strong, evidence‑anchored, actionable; best coverage of Finance focus; flags specific files and risks.",
+      "area": "Hacker Valley Media",
+      "confidence": 0.75,
+      "sources": [
+        "overseer-iteration-75"
+      ],
+      "createdAt": "2026-01-18T12:54:15.597Z",
+      "updatedAt": "2026-01-18T12:54:15.597Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768740855603-ezcda3zm3",
+      "title": "Agent 3: Not compliant; mostly intent, includes sp...",
+      "content": "Agent 3: Not compliant; mostly intent, includes speculative “ignore pattern restrictions” with no proof.",
+      "area": "Hacker Valley Media",
+      "confidence": 0.75,
+      "sources": [
+        "overseer-iteration-75"
+      ],
+      "createdAt": "2026-01-18T12:54:15.603Z",
+      "updatedAt": "2026-01-18T12:54:15.603Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768740855609-215ehhs57",
+      "title": "Agent 4: Off‑scope (Career & Skills, Iteration 74)...",
+      "content": "Agent 4: Off‑scope (Career & Skills, Iteration 74) and mixes unverified claims; useful conceptual framing but not aligned to current Finance focus.",
+      "area": "Hacker Valley Media",
+      "confidence": 0.75,
+      "sources": [
+        "overseer-iteration-75"
+      ],
+      "createdAt": "2026-01-18T12:54:15.609Z",
+      "updatedAt": "2026-01-18T12:54:15.609Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768740855614-zi36d7cv0",
+      "title": "Agent 5: Strong, evidence‑anchored; corrects/quali...",
+      "content": "Agent 5: Strong, evidence‑anchored; corrects/qualifies claims; adds nuanced operational findings; aligns to HVM focus.",
+      "area": "Hacker Valley Media",
+      "confidence": 0.75,
+      "sources": [
+        "overseer-iteration-75"
+      ],
+      "createdAt": "2026-01-18T12:54:15.614Z",
+      "updatedAt": "2026-01-18T12:54:15.614Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768742186971-gww5dw67u",
+      "title": "Focus Area: Personal Growth (`30-39_Personal`)",
+      "content": "Focus Area: Personal Growth (`30-39_Personal`)",
+      "area": "Personal Growth",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-76"
+      ],
+      "createdAt": "2026-01-18T13:16:26.971Z",
+      "updatedAt": "2026-01-18T13:16:26.971Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768742186978-87jadzhgk",
+      "title": "1. KEY OBSERVATIONS: THE \"INVISIBLE EMPLOYMENT\" PA...",
+      "content": "1. KEY OBSERVATIONS: THE \"INVISIBLE EMPLOYMENT\" PARADOX",
+      "area": "Personal Growth",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-76"
+      ],
+      "createdAt": "2026-01-18T13:16:26.978Z",
+      "updatedAt": "2026-01-18T13:16:26.978Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768742186985-0dg8d4d0b",
+      "title": "Observation 1: The \"Double Agent\" Career (Mozilla ...",
+      "content": "Observation 1: The \"Double Agent\" Career (Mozilla Connection)",
+      "area": "Personal Growth",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-76"
+      ],
+      "createdAt": "2026-01-18T13:16:26.985Z",
+      "updatedAt": "2026-01-18T13:16:26.985Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768742186991-5qzd02r6g",
+      "title": "Finding: Ron is actively employed by or contractin...",
+      "content": "Finding: Ron is actively employed by or contracting for Mozilla. This is a major, previously unidentified commitment that competes for his time.",
+      "area": "Personal Growth",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-76"
+      ],
+      "createdAt": "2026-01-18T13:16:26.991Z",
+      "updatedAt": "2026-01-18T13:16:26.991Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768742186996-mweib1nla",
+      "title": "`2025-12-03.md`: \"Gratitude... For being gainfully...",
+      "content": "`2025-12-03.md`: \"Gratitude... For being gainfully employed by Mozilla and myself!\"",
+      "area": "Personal Growth",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-76"
+      ],
+      "createdAt": "2026-01-18T13:16:26.996Z",
+      "updatedAt": "2026-01-18T13:16:26.996Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768742187001-nln91uakf",
+      "title": "Validation of Gemini-Alpha Findings",
+      "content": "Validation of Gemini-Alpha Findings",
+      "area": "Personal Growth",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-76"
+      ],
+      "createdAt": "2026-01-18T13:16:27.001Z",
+      "updatedAt": "2026-01-18T13:16:27.001Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768742187006-7xzz7fc18",
+      "title": "Prioritized Recommendations",
+      "content": "Prioritized Recommendations",
+      "area": "Personal Growth",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-76"
+      ],
+      "createdAt": "2026-01-18T13:16:27.006Z",
+      "updatedAt": "2026-01-18T13:16:27.006Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768742187012-2ffbmthmk",
+      "title": "Urgency: High | Impact: High | Effort: Low — Add a...",
+      "content": "Urgency: High | Impact: High | Effort: Low — Add a 5-minute end-of-day closure ritual three times per week. Use the existing “Wins Today” and “Lessons Learned” sections that are currently empty (only filled in `2025-10-13.md` and `2025-10-15.md`). The goal is not volume, but closure. Two bullets per section is enough. This closes the feedback loop without requiring new tools.",
+      "area": "Personal Growth",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-76"
+      ],
+      "createdAt": "2026-01-18T13:16:27.012Z",
+      "updatedAt": "2026-01-18T13:16:27.012Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768742187018-0f4r99iqr",
+      "title": "Urgency: High | Impact: High | Effort: Medium — Es...",
+      "content": "Urgency: High | Impact: High | Effort: Medium — Establish a non-negotiable sleep boundary and meeting cutoff. The data shows nights with 0–3 hours of sleep (`2025-10-09.md`, `2025-10-18.md`, `2025-10-24.md`) and explicit anger at pre‑7am meetings (`2025-11-19.md`). Add a rule: no meetings before 7am, and enforce a minimum 6.5-hour sleep goal in the daily note metadata. Track actual compliance for two weeks.",
+      "area": "Personal Growth",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-76"
+      ],
+      "createdAt": "2026-01-18T13:16:27.018Z",
+      "updatedAt": "2026-01-18T13:16:27.018Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768742187023-qymkw57s7",
+      "title": "Urgency: Medium | Impact: High | Effort: Medium — ...",
+      "content": "Urgency: Medium | Impact: High | Effort: Medium — Build a capture-to-insight pipeline. Choose a fixed weekly slot (e.g., Friday 30 minutes) to process three capture items: one voice memo, one Limitless clip, one Rewind snippet. Write a short summary note under `30_Reflection` (or a new `31_Capture/Processed` folder) and link it to the daily note. This converts the most voluminous data stream into actionable insight.",
+      "area": "Personal Growth",
+      "confidence": 0.65,
+      "sources": [
+        "iteration-76"
+      ],
+      "createdAt": "2026-01-18T13:16:27.023Z",
+      "updatedAt": "2026-01-18T13:16:27.023Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768742187029-j79pnlq3c",
+      "title": "Focus Area: Personal Growth",
+      "content": "Focus Area: Personal Growth",
+      "area": "Personal Growth",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-76"
+      ],
+      "createdAt": "2026-01-18T13:16:27.029Z",
+      "updatedAt": "2026-01-18T13:16:27.029Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768742187034-a9dd1ja08",
+      "title": "EXECUTIVE SUMMARY: THE \"SHADOW OPERATOR\" PARADOX",
+      "content": "EXECUTIVE SUMMARY: THE \"SHADOW OPERATOR\" PARADOX",
+      "area": "Personal Growth",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-76"
+      ],
+      "createdAt": "2026-01-18T13:16:27.034Z",
+      "updatedAt": "2026-01-18T13:16:27.034Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768742187040-c99oftqnf",
+      "title": "The \"Hoarding\" Reality: The `31_Capture` folder is...",
+      "content": "The \"Hoarding\" Reality: The `31_Capture` folder is a massive graveyard of hundreds of unprocessed voice memos (client calls, strategy sessions, content ideas) dating back to 2018.",
+      "area": "Personal Growth",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-76"
+      ],
+      "createdAt": "2026-01-18T13:16:27.040Z",
+      "updatedAt": "2026-01-18T13:16:27.040Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768742187045-x64h518ly",
+      "title": "The \"Ghost\" Dashboard: His daily reflection habit ...",
+      "content": "The \"Ghost\" Dashboard: His daily reflection habit is strong, but he is writing into a void. His notes query a \"LifeArchitecture\" system (Goals, Health, Learning) that does not exist on disk.",
+      "area": "Personal Growth",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-76"
+      ],
+      "createdAt": "2026-01-18T13:16:27.045Z",
+      "updatedAt": "2026-01-18T13:16:27.045Z",
+      "validations": 0,
+      "actionable": false
+    },
+    {
+      "id": "insight-1768742187050-jy2ceq4m7",
+      "title": "The \"Invisible Job\": His employment with Mozilla i...",
+      "content": "The \"Invisible Job\": His employment with Mozilla is a dominant stressor in his daily notes but has zero file system representation, treating a major career pillar as a \"side note.\"",
+      "area": "Personal Growth",
+      "confidence": 0.5,
+      "sources": [
+        "iteration-76"
+      ],
+      "createdAt": "2026-01-18T13:16:27.050Z",
+      "updatedAt": "2026-01-18T13:16:27.050Z",
+      "validations": 0,
+      "actionable": false
     }
   ],
-  "lastUpdated": "2026-01-15T18:52:08.755Z"
+  "lastUpdated": "2026-01-18T13:16:27.050Z"
 }
