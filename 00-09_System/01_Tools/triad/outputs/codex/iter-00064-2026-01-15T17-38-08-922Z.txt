@@ -1,0 +1,35 @@
+Reviewed `/Volumes/VRAM/00-09_System/00_Index/search.db` for cross‑area patterns. No `AGENTS.md` found at `/Volumes/VRAM`; used default instructions.
+
+**Key Observations**
+- Index is overwhelmingly Work: `Work=177,167`, `System=4,445`, `Personal=42`; no `Family` area indexed.
+- Categories are dominated by `Communications=170,010` and `Meetings=7,157`; `Reflection=42` aligns exactly with the tiny Personal slice.
+- Personal themes live inside Work content: e.g., `family` appears in `Work=71,575` files vs `Personal=40`; `health` in `Work=4,955` vs `Personal=40`.
+- Index coverage is narrow: only `.json`, `.md`, `.txt` show up, so PDFs, images, spreadsheets, etc. are invisible.
+- FTS integrity issue: FTS queries fail when joining content (missing row in `files`), indicating index drift.
+
+**Insights**
+- VRAM behaves primarily as a work‑communication archive, with personal/family signals embedded in work transcripts rather than in their intended areas.
+- The System area is tool‑heavy (outputs, state, plans) but those tools are not feeding Personal/Family areas yet.
+- The “scaffold without substrate” pattern persists: strong structure for Personal/Family but minimal capture.
+
+**Opportunities**
+- Auto‑route personal/family/health mentions from work transcripts into `30-39_Personal` and `40-49_Family`.
+- Use existing System planning artifacts (weekly summaries, discoveries digest) to populate reflection and goals.
+- Broaden indexing to include non‑text file metadata so discoveries aren’t text‑only.
+
+**Connections**
+- Work ↔ Personal: goals, health, family, and travel topics exist, but are stored in Work files rather than Personal/Family.
+- System ↔ Work: Triad tooling already plans summary/digest outputs that could summarize Work into Personal.
+- Personal ↔ Family: the Personal reflection stream exists; Family area remains empty, suggesting capture routing is the missing link.
+
+**Recommendations**
+- Rebuild or repair the search index to fix the FTS/content mismatch; add an integrity check step to Triad’s indexer.
+- Implement a capture router (simple keyword/tag rules) to create Personal/Family stubs from Work transcripts.
+- Expand index coverage to additional file types and areas (especially `40-49_Family` and any financial/health docs).
+- Start a weekly cross‑area digest that explicitly surfaces “non‑work” themes found inside Work transcripts.
+
+**Triad Improvements**
+- Add FTS rebuild/integrity verification to the indexing pipeline to prevent missing‑row errors.
+- Expose a “routing rules” layer in Triad so cross‑area extraction is first‑class instead of manual.
+
+If you want, I can draft the routing rules spec or identify the top 20 family/health‑related transcripts to seed the Family area.

@@ -1,0 +1,215 @@
+# =============================================================================
+# VRAM Personal Data Asset Management System - Git Ignore
+# =============================================================================
+# This repo includes: System tools, search engine, and documentation structure
+# This repo excludes: Personal data, databases, backups, and large media
+# =============================================================================
+
+# =============================================================================
+# PERSONAL DATA DIRECTORIES (EXCLUDE CONTENTS, KEEP STRUCTURE)
+# =============================================================================
+# Johnny.Decimal organized personal/work data - too large and private for git
+10-19_Work/**
+!10-19_Work/
+!10-19_Work/**/
+!10-19_Work/**/.gitkeep
+
+20-29_Finance/**
+!20-29_Finance/
+!20-29_Finance/**/
+!20-29_Finance/**/.gitkeep
+
+30-39_Personal/**
+!30-39_Personal/
+!30-39_Personal/**/
+!30-39_Personal/**/.gitkeep
+
+40-49_Family/**
+!40-49_Family/
+!40-49_Family/**/
+!40-49_Family/**/.gitkeep
+
+50-59_Social/**
+!50-59_Social/
+!50-59_Social/**/
+!50-59_Social/**/.gitkeep
+
+60-69_Growth/**
+!60-69_Growth/
+!60-69_Growth/**/
+!60-69_Growth/**/.gitkeep
+
+70-79_Lifestyle/**
+!70-79_Lifestyle/
+!70-79_Lifestyle/**/
+!70-79_Lifestyle/**/.gitkeep
+
+80-89_Resources/**
+!80-89_Resources/
+!80-89_Resources/**/
+!80-89_Resources/**/.gitkeep
+
+90-99_Archive/**
+!90-99_Archive/
+!90-99_Archive/**/
+!90-99_Archive/**/.gitkeep
+
+# =============================================================================
+# BACKUP & DUPLICATE DIRECTORIES (FULL EXCLUDE)
+# =============================================================================
+Backup/
+tools/
+projects/
+
+# =============================================================================
+# EXCLUDED TOOLS (too large or external projects)
+# =============================================================================
+00-09_System/01_Tools/Agent_Tools/
+00-09_System/01_Tools/Maestro/
+
+# =============================================================================
+# GENERATED DATABASES (EXCLUDE - MASSIVE FILES)
+# =============================================================================
+# Search index databases (13GB+)
+00-09_System/00_Index/*.db
+00-09_System/00_Index/*.db-shm
+00-09_System/00_Index/*.db-wal
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# =============================================================================
+# DEPENDENCIES & PACKAGE MANAGERS
+# =============================================================================
+node_modules/
+.bun/
+bun.lockb
+*.bun
+
+# Optional: Keep lock files for reproducible builds
+# Uncomment the next 3 lines to exclude lock files
+# package-lock.json
+# bun.lock
+# yarn.lock
+
+# =============================================================================
+# BUILD OUTPUTS & COMPILED CODE
+# =============================================================================
+dist/
+build/
+out/
+release/
+*.tsbuildinfo
+.next/
+.nuxt/
+.cache/
+.parcel-cache/
+
+# =============================================================================
+# ENVIRONMENT & SECRETS
+# =============================================================================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+*.pem
+*.key
+credentials.json
+secrets.json
+config.local.json
+
+# =============================================================================
+# IDE & EDITOR
+# =============================================================================
+.vscode/
+.idea/
+.cursor/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# =============================================================================
+# OS FILES
+# =============================================================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd/
+.TemporaryItems/
+.DocumentRevisions-V100/
+ehthumbs.db
+Thumbs.db
+
+# =============================================================================
+# LOGS & TEMP FILES
+# =============================================================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.pid
+*.seed
+tmp/
+temp/
+scratch/
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# =============================================================================
+# TEST & COVERAGE
+# =============================================================================
+coverage/
+*.lcov
+.nyc_output/
+test-results/
+test-reports/
+playwright-report/
+e2e-results/
+
+# =============================================================================
+# MEDIA & LARGE FILES (OPTIONAL - uncomment if needed)
+# =============================================================================
+# *.mp3
+# *.mp4
+# *.wav
+# *.m4a
+# *.mov
+# *.avi
+# *.mkv
+# *.zip
+# *.tar.gz
+# *.rar
+
+# =============================================================================
+# TRANSCRIPTION APP SPECIFIC
+# =============================================================================
+00-09_System/01_Tools/transcription-app/uploads/*
+!00-09_System/01_Tools/transcription-app/uploads/.gitkeep
+00-09_System/01_Tools/transcription-app/data/output/*
+!00-09_System/01_Tools/transcription-app/data/output/.gitkeep
+00-09_System/01_Tools/transcription-app/data/wavs/*
+!00-09_System/01_Tools/transcription-app/data/wavs/.gitkeep
+# Large ML models (>100MB)
+00-09_System/01_Tools/transcription-app/models/
+
+# =============================================================================
+# LARGE FILES (>50MB)
+# =============================================================================
+*.onnx
+
+# =============================================================================
+# PERSONAL DOCUMENTS AT ROOT
+# =============================================================================
+Triad_Analysis_Personal_Growth.md

@@ -1,0 +1,14 @@
+async function bGA(A){
+let Q=new Map,B=new Map,G=new Map,Z=new Map,Y=new Map;
+try{
+let J=await xv(A);
+for(let I of J)if(I.type==="user"||I.type==="assistant"||I.type==="attachment"||I.type==="system")Q.set(I.uuid,I);
+else if(I.type==="summary"&&I.leafUuid)B.set(I.leafUuid,I.summary);
+else if(I.type==="custom-title"&&I.sessionId)G.set(I.sessionId,I.customTitle);
+else if(I.type==="tag"&&I.sessionId)Z.set(I.sessionId,I.tag);
+else if(I.type==="file-history-snapshot")Y.set(I.messageId,I)}
+catch{
+}
+return{
+messages:Q,summaries:B,customTitles:G,tags:Z,fileHistorySnapshots:Y}
+}

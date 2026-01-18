@@ -1,0 +1,28 @@
+{
+  "name": "transcription-app",
+  "version": "1.0.0",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "DYLD_LIBRARY_PATH=./node_modules/sherpa-onnx-darwin-arm64:$DYLD_LIBRARY_PATH bun run index.ts",
+    "dev": "DYLD_LIBRARY_PATH=./node_modules/sherpa-onnx-darwin-arm64:$DYLD_LIBRARY_PATH bun --watch run index.ts",
+    "start:linux": "LD_LIBRARY_PATH=./node_modules/sherpa-onnx-linux-x64:$LD_LIBRARY_PATH bun run index.ts",
+    "typecheck": "bun x tsc --noEmit",
+    "test": "bun test"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "sherpa-onnx-darwin-arm64": "^1.12.20",
+    "sherpa-onnx-node": "^1.12.20"
+  }
+}

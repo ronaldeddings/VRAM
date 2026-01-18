@@ -1,0 +1,38 @@
+**Key Observations**
+- 10,293 files in `10-19_Work/13_Meetings`, split across `10-19_Work/13_Meetings/13.01_transcripts` (2,424 `.md` + 1,595 `.json`), `10-19_Work/13_Meetings/13.02_recordings` (3,136 `.mp4`), and `10-19_Work/13_Meetings/13.03_metadata` (3,138 `.json`).
+- All 2,424 transcript IDs have metadata; 714 metadata entries lack transcripts; 2 metadata entries lack recordings.
+- Cadence: 2024 has 1,187 transcripts, 2025 has 934, 2026‑to‑date has 32; peaks at 2024‑07 (133) and 2025‑10 (122), with a late‑2025 dip.
+- Meeting duration median is 31 minutes (p25 21, p75 51) and participant median is 5 (p25 4, p75 6); max duration 949 minutes suggests a left‑running recording.
+- Titles are often generic (316 “Zoom Meeting”, 143 “Impromptu Zoom Meeting”) and heavily “sync/weekly” (1,304 sync; 361 weekly); discovery (138) and onboarding (56) exist, but proposal/contract/renewal appear rarely.
+- Partner signals appear mostly in titles using “<>” (476 titles, ~15.2%); frequent partners include Interpres, CyberProof, SANS, Orchid, 7AI, Picus, Tines, Nagomi, NetSPI, Deepwatch, Brightside AI.
+
+**Insights**
+- Metadata `participants.company` is effectively empty (only “Hacker Valley Media”), so client identity must be inferred from titles and transcript content.
+- The title taxonomy shows mature, recurring relationships (sync/weekly) but weak explicit lifecycle labeling (proposal/contract/renewal), which hides pipeline stage visibility.
+- Transcript keyword density is strong for operational/commercial terms (budget, scope, deliverable, contract, follow‑up), so relationship intelligence is available but unstructured.
+- Generic titles materially reduce searchability and client recall; simple naming discipline would unlock immediate intelligence gains without new tooling.
+- Dormant partner signals are visible via title‑based recency (e.g., Interpres last 2024‑12‑17; BQ 2024‑01‑05; Uno 2024‑06‑14; ThreatLocker 2024‑03‑20).
+
+**Opportunities**
+- Build a lightweight client relationship index from title patterns + transcript cues (partner name, meeting type, last contact date, action items).
+- Launch re‑engagement for dormant partners identified above; prioritize those with prior high cadence.
+- Standardize meeting titles to include partner + stage (e.g., “Client <> HVM | Discovery”) to improve future analytics.
+- Auto‑extract action items/next steps into a follow‑up queue; these phrases appear in 226 and 377 transcripts respectively.
+- Flag anomalous recordings (very long duration or high participant count) for cleanup or special handling.
+
+**Connections**
+- Finance: repeated budget/pricing/payment/invoice language aligns with `20-29_Finance` planning and revenue tracking.
+- Growth: discovery/strategy/onboarding in titles aligns with `60-69_Growth` and content partnerships (SANS/RSA/ISSA mentions).
+- Operations: “sync/weekly/DSU” cadence mirrors internal rhythms, suggesting a chance to align client updates with internal DSUs.
+- Business development: partner set overlaps known industry ecosystems; relationship intelligence can feed the bizdev pipeline.
+- Triad roadmap: directly supports client‑profile and relationship‑health items in `00-09_System/01_Tools/triad/docs/plans/implementation-plan-v3.md`.
+
+**Recommendations**
+- Implement a partner extraction pass prioritizing “<>” titles plus HV/HVM patterns, then enrich with transcript keywords (budget/scope/deliverables) to infer stage.
+- Build a “last‑contact + cadence” dashboard per partner and a dormant list for outreach; start with Interpres, CyberProof, SANS, Orchid, 7AI, Picus.
+- Establish a naming template for new meetings and backfill recent high‑value partner titles (last 3–6 months).
+- Add a transcript‑driven follow‑up rollup (action items + next steps + owner) to reduce lost tasks.
+- Triad improvement: `files_fts` in `00-09_System/00_Index/search.db` throws `fts5: missing row ...` on full‑text queries; rebuild/repair the FTS index.
+- Triad improvement: consolidate duplicate metadata sources (`13.01_transcripts` `.json` vs `13.03_metadata`) and document a canonical source to prevent drift.
+
+If you want, I can extract a concrete dormant‑partner list with last‑meeting dates and meeting counts, or draft a title‑naming convention doc to roll out.

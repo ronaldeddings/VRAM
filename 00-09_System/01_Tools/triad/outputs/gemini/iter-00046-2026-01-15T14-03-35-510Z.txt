@@ -1,0 +1,1 @@
+I will verify the contents of the `20-29_Finance` directory and search for financial terms like "invoice," "SOW," and "budget" within the `10-19_Work` directory to identify scattered financial documents.

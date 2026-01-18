@@ -1,0 +1,2 @@
+async function TLB(A){
+return(await GAA())[A]||null}

@@ -1,0 +1,39 @@
+Pulled evidence from `search.db` plus a few recent Hacker Valley Media meeting summaries/emails to ground the analysis.
+
+**Key Observations**
+- The Hacker Valley Media area is a “skeleton folder”: `10-19_Work/10_Hacker_Valley_Media` has only empty subfolders and a `.DS_Store`, no working content.
+- “Hacker Valley” lives almost entirely in Communications/Meetings, not the HVM folder: 53,951 hits in Work/Communications and 6,290 in Work/Meetings via `content LIKE '%Hacker Valley%'`.
+- “Hacker Valley Media” is referenced heavily (36,803 hits via `content LIKE '%Hacker Valley Media%'`), which implies active operations but scattered storage.
+- Recent meeting summaries show a consistent service package: livestream → edited episode → short clips, $10k/month for 30 credits (eSentire), and a “Gold Package” with lead gen + full content rights (McIntyre).
+- The 2021 media kit thread captures brand proof (awards, top episodes, 20k monthly listens), but it likely needs updates.
+
+**Insights**
+- There is a clear “empty bucket, full pipeline” paradox: the business is active, but its knowledge base is trapped in comms rather than a central HVM repository.
+- Pricing, audience mix, and delivery model are consistent across time, but not consolidated—creating avoidable rework and increased follow‑up friction.
+- Partnership data (budgets, competitors, positioning) is present in meeting summaries but not converted into reusable sales artifacts.
+
+**Opportunities**
+- Build a single HVM source of truth (offerings, audience stats, case studies, assets, process docs) to reduce re‑extraction from comms.
+- Convert meeting summaries into a lightweight pipeline tracker to prevent deal loss and repeat intros.
+- Update/normalize the media kit with current metrics, customer examples, and a “package selector” page.
+
+**Connections**
+- Finance: package pricing ($10k/mo, $12k/quarter benchmarks) and sponsorship models connect to `20-29_Finance` planning.
+- Growth/Marketing: audience stats, lead-gen numbers, and awards directly fuel sponsorship and sales collateral.
+- Operations: the livestream‑to‑podcast‑to‑clip workflow is a strong SOP candidate for `10.05_operations`.
+- System/Tools: heavy dependence on Slack + Fathom indicates automations could harvest insights into structured docs.
+
+**Recommendations**
+- Create a “HVM HQ” set of docs under `10-19_Work/10_Hacker_Valley_Media`:
+  - `10.03_marketing/Media_Kit.md` with version/date, latest metrics, awards, top episodes.
+  - `10.04_partnerships/Offerings.md` (packages, pricing, deliverables, lead‑gen stats).
+  - `10.05_operations/Production_SOP.md` (livestream → episode → clips).
+- Establish a simple pipeline tracker (spreadsheet or CRM) and weekly review cadence:
+  - fields: lead, source, package, next step, last touch, follow‑up date.
+- Extract action items from key summaries (e.g., eSentire, McIntyre) into the tracker and schedule follow‑ups.
+- Archive a “competitive/market notes” doc (e.g., Cybersecurity Ventures benchmark) for sales positioning.
+
+**Triad Improvement Noted**
+- `search.db` FTS index appears inconsistent (`fts5: missing row ... from content table 'files'`). Consider adding a periodic FTS integrity check/rebuild step in Triad’s indexing pipeline to avoid query errors or missing results.
+
+If you want, I can draft a lightweight HVM folder structure and a starter media kit outline (read‑only suggestions only).

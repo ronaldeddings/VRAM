@@ -1,0 +1,3 @@
+Hello! 👋
+
+How can I help you today? I'm ready to assist with software engineering tasks, code analysis, debugging, or any other development work you need help with.

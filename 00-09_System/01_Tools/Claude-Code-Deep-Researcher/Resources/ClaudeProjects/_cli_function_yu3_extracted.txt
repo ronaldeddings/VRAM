@@ -1,0 +1,7 @@
+function yu3(A){
+let Q=jn1(A);
+if(Q){
+let B=Q.replace(/\n/g," ").trim();
+if(B.length>200)B=B.slice(0,200).trim()+"…";
+return B}
+return"No prompt"}

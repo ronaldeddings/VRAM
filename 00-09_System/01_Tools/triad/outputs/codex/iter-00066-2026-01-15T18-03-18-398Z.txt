@@ -1,0 +1,31 @@
+**Key Observations**
+- Corpus scale: 7,157 files in `/Volumes/VRAM/10-19_Work/13_Meetings` (2,424 `.md` transcripts, 4,733 `.json` metadata); 588 distinct meeting days; ~4.12 transcripts per active day and ~12.17 total files per active day.
+- Weekday concentration (transcripts): Mon 520 (21.5%), Tue 541 (22.3%), Thu 487 (20.1%), Fri 428 (17.7%), Wed 414 (17.1%), weekends ~1.4% total.
+- Service mix is video‑heavy: podcast (1,476), event (1,408), editing (1,281), post production (1,094), shoot (707), testimonial (555), conference (625), livestream (271).
+- Sales + delivery signals are frequent in transcripts: client (845), contract (860), budget (732), proposal (550), retainer (496), invoice (305), onboarding (542), decision (551), approval (511).
+- Meeting hygiene is strong: “next steps” (1,212), “follow up” (1,513), “action items” (334), “recap” (304).
+
+**Insights**
+- The transcript layer already encodes a full sales → delivery → retention lifecycle; term co‑occurrence supports this (contract+budget 355, proposal+budget 246, decision+approval 177).
+- Relationship health signals are present and measurable: risk/issue/problem/blocked appear regularly (issue 1,013; problem 1,210; blocked 762), while positive signals are even more common (thank* 2,167; excited 1,296; happy 1,248).
+- Stakeholder mix suggests direct access to decision‑makers (CEO 591, founder 525, marketing director 354, producer 933), which can materially improve close rates and renewals when tracked intentionally.
+- Pipeline motion is observable at scale (intro call 668, discovery 233, demo 466, pitch 534), indicating enough data to build reliable stage classification and conversion analytics.
+
+**Opportunities**
+- Convert transcript signals into a “client relationship health” score by combining positive/negative sentiment cues with delivery risk terms (delay, blocked, change order).
+- Build a renewal/expansion trigger system: retainer/recurring references are common (retainer 496, recurring 106) but explicit renewal/upsell language is relatively low (renewal 93, upsell 59).
+- Leverage referrals and partner language (recommend 910, partner 709, intro 694) to seed a structured referral pipeline.
+- Normalize decision‑making and action ownership by extracting decisions, approvals, and follow‑ups into a consistent schema.
+
+**Connections**
+- **Finance**: budget/contract/invoice/cost language is pervasive and could link to `/Volumes/VRAM/20-29_Finance` for revenue forecasting.
+- **Operations**: schedule/time‑zone and delivery coordination terms (schedule 3,644; time zone 571 in all files; travel 611) tie into workload planning in `/Volumes/VRAM/70-79_Lifestyle` or `/Volumes/VRAM/60-69_Growth`.
+- **Systems/Tools**: references to HubSpot, Notion, and Slack (hubspot 418, notion 607, slack 803) suggest integrations could automate follow‑ups and CRM updates.
+
+**Recommendations**
+- Define a `client_profile` extractor for transcripts: company name, key roles, decision maker, budget, contract type, renewal date, and current stage; backfill from `/Volumes/VRAM/10-19_Work/13_Meetings`.
+- Add a “meeting outcome” pass that captures decision, approval, next steps, and owner + due date; persist as structured JSON alongside transcripts.
+- Create a lightweight relationship‑health score using risk/issue/blocker terms vs positive language; flag accounts with high “risk” density and low “next steps.”
+- Triad improvement: implement a `client-relationship-intel` pipeline (stage classifier + health scorer + action extractor) and link outputs to CRM notes or `/Volumes/VRAM/20-29_Finance` for revenue forecasting.
+
+If you want, I can draft a concrete extraction schema and scoring rubric next.

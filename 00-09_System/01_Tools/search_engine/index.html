@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VRAM Search</title>
+  <!-- Phase 3: Load marked.js from CDN for markdown rendering -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a2e;
+      color: #eee;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    .container { max-width: 900px; margin: 0 auto; }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: #00d4ff;
+      text-align: center;
+    }
+    .search-box {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    input[type="text"] {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      border: 2px solid #333;
+      border-radius: 8px;
+      background: #16213e;
+      color: #eee;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input[type="text"]:focus { border-color: #00d4ff; }
+    button {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      background: #00d4ff;
+      color: #1a1a2e;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    button:hover { background: #00a8cc; }
+    .filters {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .filter-group { display: flex; align-items: center; gap: 0.5rem; }
+    .filter-group label { font-size: 0.875rem; color: #888; }
+    select {
+      padding: 0.5rem;
+      background: #16213e;
+      color: #eee;
+      border: 1px solid #333;
+      border-radius: 4px;
+      outline: none;
+    }
+    .stats {
+      font-size: 0.875rem;
+      color: #888;
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+      background: #16213e;
+      border-radius: 4px;
+    }
+    .results { display: flex; flex-direction: column; gap: 1rem; }
+    /* Phase 4: Add cursor pointer to result cards */
+    .result {
+      padding: 1rem;
+      background: #16213e;
+      border-radius: 8px;
+      border-left: 4px solid #00d4ff;
+      transition: transform 0.1s, background 0.1s;
+      cursor: pointer;
+    }
+    .result:hover {
+      transform: translateX(4px);
+      background: #1a2744;
+    }
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.5rem;
+    }
+    .result-title {
+      font-weight: 600;
+      color: #00d4ff;
+      word-break: break-word;
+    }
+    .result-meta {
+      font-size: 0.75rem;
+      color: #666;
+      display: flex;
+      gap: 0.5rem;
+    }
+    .result-meta span {
+      background: #0f3460;
+      padding: 0.125rem 0.5rem;
+      border-radius: 4px;
+    }
+    .result-path {
+      font-size: 0.8rem;
+      color: #888;
+      margin-bottom: 0.5rem;
+      word-break: break-all;
+    }
+    .result-snippet {
+      font-size: 0.875rem;
+      color: #ccc;
+      line-height: 1.5;
+    }
+    .result-snippet mark {
+      background: #00d4ff33;
+      color: #00d4ff;
+      padding: 0 2px;
+      border-radius: 2px;
+    }
+    .no-results {
+      text-align: center;
+      padding: 2rem;
+      color: #666;
+    }
+    .loading {
+      text-align: center;
+      padding: 2rem;
+      color: #00d4ff;
+    }
+    .error {
+      background: #ff4444;
+      color: #fff;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+    .copy-btn {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+      background: #333;
+      color: #888;
+      border-radius: 4px;
+    }
+    .copy-btn:hover { background: #444; color: #eee; }
+
+    /* Embedding server status indicator */
+    .embedding-status {
+      font-size: 0.8rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+    .embedding-status.connected {
+      background: #1a3d1a;
+      color: #4caf50;
+    }
+    .embedding-status.disconnected {
+      background: #3d1a1a;
+      color: #ff6666;
+    }
+
+    /* Phase 5: Slider styling */
+    input[type="range"] {
+      width: 100px;
+      accent-color: #00d4ff;
+    }
+    #weightLabel {
+      min-width: 2rem;
+      text-align: center;
+      color: #00d4ff;
+    }
+
+    /* Multi-select source filter */
+    .source-checkboxes {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+    .source-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      cursor: pointer;
+    }
+    .source-checkbox input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: #00d4ff;
+      cursor: pointer;
+    }
+    .source-checkbox label {
+      font-size: 0.875rem;
+      color: #ccc;
+      cursor: pointer;
+    }
+    .source-checkbox input:checked + label {
+      color: #00d4ff;
+    }
+
+    /* Phase 5: Score badges for hybrid results */
+    .score-badge {
+      font-size: 0.7rem;
+      padding: 0.15rem 0.4rem;
+      border-radius: 3px;
+      margin-left: 0.25rem;
+    }
+    .score-combined { background: #00d4ff33; color: #00d4ff; }
+    .score-fts { background: #4caf5033; color: #4caf50; }
+    .score-semantic { background: #ff980033; color: #ff9800; }
+    .score-distance { background: #9c27b033; color: #ce93d8; }
+
+    /* Phase 2: Modal Overlay Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 1rem;
+    }
+
+    /* Phase 2: Modal Container Styles */
+    .modal {
+      background: #16213e;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 900px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #333;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Phase 2: Modal Header Styles */
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid #333;
+      gap: 1rem;
+    }
+    .modal-title {
+      flex: 1;
+      min-width: 0;
+    }
+    .modal-filename {
+      font-weight: 600;
+      color: #00d4ff;
+      font-size: 1.1rem;
+      display: block;
+      word-break: break-word;
+    }
+    .modal-path {
+      font-size: 0.75rem;
+      color: #666;
+      display: block;
+      word-break: break-all;
+      margin-top: 0.25rem;
+    }
+    .modal-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-shrink: 0;
+    }
+    .modal-btn {
+      font-size: 0.8rem;
+      padding: 0.5rem 0.75rem;
+      background: #333;
+      color: #ccc;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+    .modal-btn:hover { background: #444; color: #fff; }
+    .modal-close {
+      background: #442222;
+      color: #ff6666;
+      font-weight: bold;
+      padding: 0.5rem 0.75rem;
+    }
+    .modal-close:hover { background: #663333; color: #ff8888; }
+
+    /* Phase 2: Modal Content Area */
+    .modal-content {
+      padding: 1.5rem;
+      overflow-y: auto;
+      flex: 1;
+      line-height: 1.7;
+    }
+
+    /* Phase 2: Markdown Content Styles */
+    .modal-content h1,
+    .modal-content h2,
+    .modal-content h3,
+    .modal-content h4,
+    .modal-content h5,
+    .modal-content h6 {
+      color: #00d4ff;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+    .modal-content h1 { font-size: 1.75rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+    .modal-content h2 { font-size: 1.5rem; border-bottom: 1px solid #333; padding-bottom: 0.3rem; }
+    .modal-content h3 { font-size: 1.25rem; }
+    .modal-content h1:first-child,
+    .modal-content h2:first-child,
+    .modal-content h3:first-child { margin-top: 0; }
+
+    .modal-content p {
+      margin-bottom: 1rem;
+    }
+
+    .modal-content a {
+      color: #00d4ff;
+      text-decoration: underline;
+    }
+    .modal-content a:hover { color: #66e0ff; }
+
+    .modal-content code {
+      background: #0f3460;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+      font-size: 0.9em;
+    }
+
+    .modal-content pre {
+      background: #0f3460;
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin-bottom: 1rem;
+      border: 1px solid #1a4a7a;
+    }
+    .modal-content pre code {
+      background: none;
+      padding: 0;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    .modal-content ul,
+    .modal-content ol {
+      margin-bottom: 1rem;
+      padding-left: 1.75rem;
+    }
+    .modal-content li {
+      margin-bottom: 0.35rem;
+    }
+    .modal-content li > ul,
+    .modal-content li > ol {
+      margin-top: 0.35rem;
+      margin-bottom: 0;
+    }
+
+    .modal-content blockquote {
+      border-left: 4px solid #00d4ff;
+      padding: 0.5rem 1rem;
+      margin: 0 0 1rem 0;
+      background: #0f3460;
+      border-radius: 0 8px 8px 0;
+      color: #aaa;
+    }
+    .modal-content blockquote p:last-child { margin-bottom: 0; }
+
+    .modal-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1rem;
+    }
+    .modal-content th,
+    .modal-content td {
+      border: 1px solid #333;
+      padding: 0.5rem 0.75rem;
+      text-align: left;
+    }
+    .modal-content th {
+      background: #0f3460;
+      color: #00d4ff;
+    }
+    .modal-content tr:nth-child(even) {
+      background: #1a2744;
+    }
+
+    .modal-content hr {
+      border: none;
+      border-top: 1px solid #333;
+      margin: 1.5rem 0;
+    }
+
+    .modal-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    /* Match highlight in modal */
+    .match-highlight {
+      background: linear-gradient(135deg, #00d4ff33 0%, #00d4ff22 100%);
+      border-left: 3px solid #00d4ff;
+      padding: 0.75rem 1rem;
+      margin: 0.5rem 0;
+      border-radius: 0 8px 8px 0;
+      animation: highlightPulse 2s ease-in-out;
+    }
+    @keyframes highlightPulse {
+      0% { background: #00d4ff44; }
+      50% { background: #00d4ff22; }
+      100% { background: linear-gradient(135deg, #00d4ff33 0%, #00d4ff22 100%); }
+    }
+    .match-highlight-inline {
+      background: #00d4ff33;
+      color: #00d4ff;
+      padding: 0.1rem 0.3rem;
+      border-radius: 3px;
+      font-weight: 500;
+    }
+
+    /* Phase 2: Responsive Styles */
+    @media (max-width: 600px) {
+      body { padding: 1rem; }
+      .filters { flex-direction: column; }
+      .modal-header {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      .modal-actions {
+        width: 100%;
+        justify-content: flex-end;
+      }
+      .modal-content {
+        padding: 1rem;
+      }
+      .modal-content h1 { font-size: 1.4rem; }
+      .modal-content h2 { font-size: 1.25rem; }
+      .modal-content pre {
+        padding: 0.75rem;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔍 VRAM Search</h1>
+
+    <div class="search-box">
+      <input type="text" id="query" placeholder="Search files..." autofocus>
+      <button onclick="search()">Search</button>
+    </div>
+
+    <div class="filters">
+      <div class="filter-group">
+        <label>Search:</label>
+        <select id="searchType" onchange="onSearchTypeChange()">
+          <option value="keyword">Keyword (FTS)</option>
+          <option value="semantic">Semantic</option>
+          <option value="hybrid">Hybrid</option>
+        </select>
+      </div>
+      <div class="filter-group" id="weightGroup" style="display: none;">
+        <label>FTS Weight:</label>
+        <input type="range" id="ftsWeight" min="0" max="1" step="0.1" value="0.5" onchange="updateWeightLabel()">
+        <span id="weightLabel">0.5</span>
+      </div>
+      <div class="filter-group">
+        <label>Area:</label>
+        <select id="area">
+          <option value="">All Areas</option>
+          <option value="Work">Work</option>
+          <option value="Finance">Finance</option>
+          <option value="Personal">Personal</option>
+          <option value="Archive">Archive</option>
+          <option value="System">System</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Type:</label>
+        <select id="type">
+          <option value="">All Types</option>
+          <option value="md">Markdown</option>
+          <option value="txt">Text</option>
+          <option value="json">JSON</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Limit:</label>
+        <select id="limit">
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+      <div class="filter-group" id="sourcesGroup" style="display: none;">
+        <label>Sources:</label>
+        <div class="source-checkboxes">
+          <span class="source-checkbox">
+            <input type="checkbox" id="sourceFiles" value="file" checked>
+            <label for="sourceFiles">📄 Files</label>
+          </span>
+          <span class="source-checkbox">
+            <input type="checkbox" id="sourceTranscripts" value="transcript">
+            <label for="sourceTranscripts">🎙️ Transcripts</label>
+          </span>
+          <span class="source-checkbox">
+            <input type="checkbox" id="sourceEmails" value="email" checked>
+            <label for="sourceEmails">📧 Emails</label>
+          </span>
+          <span class="source-checkbox">
+            <input type="checkbox" id="sourceSlack" value="slack" checked>
+            <label for="sourceSlack">💬 Slack</label>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="embedding-status" id="embeddingStatus" style="display: none;"></div>
+
+    <div class="stats" id="stats">Loading stats...</div>
+    <div class="results" id="results"></div>
+  </div>
+
+  <!-- Phase 1: Modal HTML Structure -->
+  <div class="modal-overlay" id="modal" style="display: none;">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">
+          <span class="modal-filename" id="modal-filename"></span>
+          <span class="modal-path" id="modal-path"></span>
+        </div>
+        <div class="modal-actions">
+          <button class="modal-btn" onclick="openInFinder()">Open in Finder</button>
+          <button class="modal-btn" onclick="copyModalPath()">Copy Path</button>
+          <button class="modal-btn modal-close" onclick="closeModal()">✕</button>
+        </div>
+      </div>
+      <div class="modal-content" id="modal-content"></div>
+    </div>
+  </div>
+
+  <script>
+    const API = 'http://localhost:3000';
+    const queryInput = document.getElementById('query');
+    const areaSelect = document.getElementById('area');
+    const typeSelect = document.getElementById('type');
+    const limitSelect = document.getElementById('limit');
+    const resultsDiv = document.getElementById('results');
+    const statsDiv = document.getElementById('stats');
+    const searchTypeSelect = document.getElementById('searchType');
+    const weightGroup = document.getElementById('weightGroup');
+    const ftsWeightInput = document.getElementById('ftsWeight');
+    const weightLabel = document.getElementById('weightLabel');
+    const embeddingStatusDiv = document.getElementById('embeddingStatus');
+
+    // Modal state
+    let currentFilePath = null;
+    // Embedding server availability
+    let embeddingServerConnected = false;
+
+    // Search type change handler
+    function onSearchTypeChange() {
+      const searchType = searchTypeSelect.value;
+      const sourcesGroup = document.getElementById('sourcesGroup');
+      weightGroup.style.display = searchType === 'hybrid' ? 'flex' : 'none';
+
+      // Show sources filter only for semantic/hybrid (keyword only searches files)
+      sourcesGroup.style.display = (searchType === 'semantic' || searchType === 'hybrid') ? 'flex' : 'none';
+
+      // Update type filter availability based on selected sources
+      updateTypeFilterState();
+
+      // Show warning if semantic search selected but embedding server unavailable
+      if ((searchType === 'semantic' || searchType === 'hybrid') && !embeddingServerConnected) {
+        embeddingStatusDiv.style.display = 'block';
+        embeddingStatusDiv.className = 'embedding-status disconnected';
+        embeddingStatusDiv.textContent = '⚠️ Embedding server not connected - semantic search unavailable';
+      } else if (searchType === 'keyword') {
+        embeddingStatusDiv.style.display = 'none';
+      } else if (embeddingServerConnected) {
+        embeddingStatusDiv.style.display = 'block';
+        embeddingStatusDiv.className = 'embedding-status connected';
+        embeddingStatusDiv.textContent = '✓ Embedding server connected (Qwen3-Embedding-8B)';
+      }
+    }
+
+    // Transcript path prefix
+    const TRANSCRIPT_PATH = '10-19_Work/13_Meetings/13.01_transcripts';
+
+    // Get selected sources from checkboxes
+    function getSelectedSources() {
+      const sources = [];
+      if (document.getElementById('sourceFiles').checked) sources.push('file');
+      if (document.getElementById('sourceEmails').checked) sources.push('email');
+      if (document.getElementById('sourceSlack').checked) sources.push('slack');
+      return sources;
+    }
+
+    // Check if transcripts filter is selected
+    function isTranscriptsSelected() {
+      return document.getElementById('sourceTranscripts').checked;
+    }
+
+    // Update type filter based on selected sources
+    function updateTypeFilterState() {
+      const searchType = searchTypeSelect.value;
+      const sources = getSelectedSources();
+      const transcriptsSelected = isTranscriptsSelected();
+      const hasFiles = sources.includes('file') || transcriptsSelected;
+
+      // Type filter only makes sense when searching files
+      if (searchType === 'semantic' || searchType === 'hybrid') {
+        typeSelect.disabled = !hasFiles;
+        if (!hasFiles) {
+          typeSelect.value = ''; // Reset to "All Types"
+        }
+      } else {
+        typeSelect.disabled = false;
+      }
+    }
+
+    // Add change listeners to source checkboxes
+    document.getElementById('sourceFiles').addEventListener('change', updateTypeFilterState);
+    document.getElementById('sourceTranscripts').addEventListener('change', updateTypeFilterState);
+    document.getElementById('sourceEmails').addEventListener('change', updateTypeFilterState);
+    document.getElementById('sourceSlack').addEventListener('change', updateTypeFilterState);
+
+    function updateWeightLabel() {
+      weightLabel.textContent = ftsWeightInput.value;
+    }
+
+    // Check embedding server status
+    async function checkEmbeddingStatus() {
+      try {
+        const res = await fetch(`${API}/embedding/status`);
+        const data = await res.json();
+        embeddingServerConnected = data.available;
+
+        if (embeddingServerConnected) {
+          embeddingStatusDiv.className = 'embedding-status connected';
+          embeddingStatusDiv.textContent = `✓ Embedding server connected (${data.model || 'Qwen3-Embedding-8B'})`;
+        } else {
+          embeddingStatusDiv.className = 'embedding-status disconnected';
+          embeddingStatusDiv.textContent = '⚠️ Embedding server not connected - semantic search unavailable';
+        }
+
+        // Only show status for semantic/hybrid modes
+        const searchType = searchTypeSelect.value;
+        embeddingStatusDiv.style.display = (searchType !== 'keyword') ? 'block' : 'none';
+      } catch (e) {
+        embeddingServerConnected = false;
+        embeddingStatusDiv.className = 'embedding-status disconnected';
+        embeddingStatusDiv.textContent = '⚠️ Could not check embedding server status';
+      }
+    }
+
+    // Load stats on page load
+    async function loadStats() {
+      try {
+        const res = await fetch(`${API}/stats`);
+        const data = await res.json();
+        const sizeMB = data.total_size ? (data.total_size / 1024 / 1024).toFixed(2) : '0.00';
+        let statsText = `${data.total_files.toLocaleString()} files indexed (${sizeMB} MB)`;
+
+        // Show embedding stats if available
+        if (data.embeddings && data.embeddings.total_chunks) {
+          statsText += ` | ${data.embeddings.total_chunks.toLocaleString()} embeddings`;
+          statsText += ` (${data.embeddings.file_chunks.toLocaleString()} files, ${data.embeddings.email_chunks.toLocaleString()} emails, ${data.embeddings.slack_chunks.toLocaleString()} slack)`;
+        } else if (data.embeddings === null) {
+          statsText += ` | embeddings: pgvector not connected`;
+        }
+
+        statsDiv.textContent = statsText;
+      } catch (e) {
+        statsDiv.textContent = 'Could not load stats - is the server running?';
+        statsDiv.style.color = '#ff4444';
+      }
+    }
+
+    async function search() {
+      const query = queryInput.value.trim();
+      if (!query) {
+        resultsDiv.innerHTML = '<div class="no-results">Enter a search query</div>';
+        return;
+      }
+
+      const searchType = searchTypeSelect.value;
+      resultsDiv.innerHTML = '<div class="loading">Searching...</div>';
+
+      // Phase 5: Build endpoint URL based on search type
+      let endpoint = '/search';
+      const params = new URLSearchParams({ q: query, limit: limitSelect.value });
+
+      if (searchType === 'semantic') {
+        endpoint = '/semantic';
+        if (areaSelect.value) params.set('area', areaSelect.value);
+
+        // Get selected sources
+        let sources = getSelectedSources();
+        const transcriptsOnly = isTranscriptsSelected() && !sources.includes('file');
+
+        // If transcripts selected, we need to include 'file' source with path filter
+        if (isTranscriptsSelected()) {
+          if (!sources.includes('file')) {
+            sources = ['file', ...sources.filter(s => s !== 'file')];
+          }
+          params.set('pathPrefix', TRANSCRIPT_PATH);
+        }
+
+        if (sources.length > 0 && sources.length < 3) {
+          params.set('sources', sources.join(','));
+        }
+
+        // If type filter selected and files included, filter by extension
+        if (typeSelect.value && (sources.includes('file') || isTranscriptsSelected())) {
+          params.set('extension', typeSelect.value);
+        }
+      } else if (searchType === 'hybrid') {
+        endpoint = '/hybrid';
+        params.set('fts_weight', ftsWeightInput.value);
+        if (areaSelect.value) params.set('area', areaSelect.value);
+        if (typeSelect.value) params.set('type', typeSelect.value);
+
+        // Get selected sources for hybrid search
+        let sources = getSelectedSources();
+
+        // If transcripts selected, we need to include 'file' source with path filter
+        if (isTranscriptsSelected()) {
+          if (!sources.includes('file')) {
+            sources = ['file', ...sources.filter(s => s !== 'file')];
+          }
+          params.set('pathPrefix', TRANSCRIPT_PATH);
+        }
+
+        if (sources.length > 0 && sources.length < 3) {
+          params.set('sources', sources.join(','));
+        }
+
+        // If type filter selected and files included, filter by extension
+        if (typeSelect.value && (sources.includes('file') || isTranscriptsSelected())) {
+          params.set('extension', typeSelect.value);
+        }
+      } else {
+        // Keyword search
+        if (areaSelect.value) params.set('area', areaSelect.value);
+        if (typeSelect.value) params.set('type', typeSelect.value);
+      }
+
+      try {
+        const res = await fetch(`${API}${endpoint}?${params}`);
+        const data = await res.json();
+
+        if (data.error) {
+          resultsDiv.innerHTML = `<div class="error">${escapeHtml(data.error)}${data.details ? ': ' + escapeHtml(data.details) : ''}</div>`;
+          return;
+        }
+
+        if (!data.results || data.results.length === 0) {
+          resultsDiv.innerHTML = '<div class="no-results">No results found</div>';
+          return;
+        }
+
+        // Phase 5: Render results with appropriate score badges
+        // Clear previous search results before populating new ones
+        window._searchResults = {};
+
+        resultsDiv.innerHTML = data.results.map((r, idx) => {
+          // Store raw snippet for highlighting in modal
+          const rawSnippet = r.snippet || '';
+          let snippet = rawSnippet
+            ? rawSnippet.replace(/→/g, '<mark>').replace(/←/g, '</mark>')
+            : '';
+          const escapedPath = escapeHtml(r.path).replace(/'/g, "\\'");
+
+          // Store result data for modal access (use original path as key)
+          window._searchResults[r.path] = {
+            snippet: rawSnippet,
+            query: query
+          };
+
+          // Build score badges based on search type
+          let scoreBadges = '';
+          if (searchType === 'hybrid') {
+            scoreBadges = `
+              <span class="score-badge score-combined">${r.combined_score}</span>
+              <span class="score-badge score-fts">FTS: ${r.fts_score}</span>
+              <span class="score-badge score-semantic">Sem: ${r.semantic_score}</span>
+            `;
+          } else if (searchType === 'semantic' && r.similarity !== undefined) {
+            const simPct = (r.similarity * 100).toFixed(1);
+            scoreBadges = `<span class="score-badge score-semantic">${simPct}%</span>`;
+            if (r.source) scoreBadges += `<span class="score-badge score-fts">${r.source}</span>`;
+          }
+
+          return `
+            <div class="result" onclick="openPreview('${escapedPath}')">
+              <div class="result-header">
+                <span class="result-title">${escapeHtml(r.filename || r.path.split('/').pop())}${scoreBadges}</span>
+                <div class="result-meta">
+                  ${r.area ? `<span>${r.area}</span>` : ''}
+                  ${r.category ? `<span>${r.category}</span>` : ''}
+                </div>
+              </div>
+              <div class="result-path">${escapeHtml(r.path)}</div>
+              ${snippet ? `<div class="result-snippet">${snippet}</div>` : ''}
+              <button class="copy-btn" onclick="event.stopPropagation(); copyPath('${escapedPath}')">Copy Path</button>
+            </div>
+          `;
+        }).join('');
+
+        // Show search metadata
+        const metaInfo = `Found ${data.count} results in ${data.time_ms}ms (${data.search_type})`;
+        resultsDiv.insertAdjacentHTML('afterbegin', `<div class="stats" style="margin-bottom: 1rem;">${metaInfo}</div>`);
+      } catch (e) {
+        resultsDiv.innerHTML = `<div class="error">Search failed: ${escapeHtml(e.message)}</div>`;
+      }
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function copyPath(path) {
+      navigator.clipboard.writeText(path).then(() => {
+        // Brief visual feedback
+        event.target.textContent = 'Copied!';
+        setTimeout(() => event.target.textContent = 'Copy Path', 1000);
+      });
+    }
+
+    // Helper to decode HTML entities
+    function decodeHtmlEntities(str) {
+      const txt = document.createElement('textarea');
+      txt.innerHTML = str;
+      return txt.value;
+    }
+
+    // Phase 3: Implement openPreview(path) function
+    async function openPreview(path) {
+      // Decode HTML entities to get original path (onclick passes escaped path)
+      const originalPath = decodeHtmlEntities(path);
+      currentFilePath = originalPath;
+      const modal = document.getElementById('modal');
+      const content = document.getElementById('modal-content');
+      const filename = document.getElementById('modal-filename');
+      const pathEl = document.getElementById('modal-path');
+
+      // Get stored search context for this result (use original path)
+      const searchContext = window._searchResults?.[originalPath] || {};
+      const matchSnippet = searchContext.snippet || '';
+      const searchQuery = searchContext.query || '';
+
+      // Show modal with loading state
+      modal.style.display = 'flex';
+      content.innerHTML = '<div class="loading">Loading...</div>';
+      filename.textContent = originalPath.split('/').pop();
+      pathEl.textContent = originalPath;
+
+      try {
+        const res = await fetch(`${API}/file?path=${encodeURIComponent(originalPath)}&content=true`);
+        const data = await res.json();
+
+        if (data.error) {
+          content.innerHTML = `<div class="error">${escapeHtml(data.error)}</div>`;
+          return;
+        }
+
+        // Phase 3: Implement content rendering by file type (md, json, txt)
+        const ext = (data.extension || '').toLowerCase();
+        let fileContent = data.content || '';
+
+        // Extract clean text from snippet (remove FTS markers)
+        const cleanSnippet = matchSnippet.replace(/→/g, '').replace(/←/g, '').trim();
+
+        // Find a unique searchable portion from the snippet (middle 50 chars for better matching)
+        let searchText = '';
+        if (cleanSnippet.length > 60) {
+          const mid = Math.floor(cleanSnippet.length / 2);
+          searchText = cleanSnippet.substring(mid - 30, mid + 30).trim();
+        } else {
+          searchText = cleanSnippet;
+        }
+
+        if (ext === 'md') {
+          // Render markdown, then highlight
+          let html = marked.parse(fileContent);
+
+          // Add highlight wrapper around matched section
+          if (searchText && fileContent.includes(searchText.substring(0, 40))) {
+            // Find the paragraph/section containing the match
+            html = highlightMatchInHtml(html, searchText, searchQuery);
+          }
+
+          content.innerHTML = html;
+        } else if (ext === 'json') {
+          // Format and display JSON
+          try {
+            const formatted = JSON.stringify(JSON.parse(fileContent), null, 2);
+            let html = `<pre><code>${escapeHtml(formatted)}</code></pre>`;
+            if (searchText) {
+              html = highlightMatchInHtml(html, searchText, searchQuery);
+            }
+            content.innerHTML = html;
+          } catch {
+            let html = `<pre><code>${escapeHtml(fileContent)}</code></pre>`;
+            if (searchText) {
+              html = highlightMatchInHtml(html, searchText, searchQuery);
+            }
+            content.innerHTML = html;
+          }
+        } else {
+          // Plain text display
+          let html = `<pre>${escapeHtml(fileContent)}</pre>`;
+          if (searchText) {
+            html = highlightMatchInHtml(html, searchText, searchQuery);
+          }
+          content.innerHTML = html;
+        }
+
+        // Scroll to highlighted match after render
+        requestAnimationFrame(() => {
+          const highlight = content.querySelector('.match-highlight');
+          if (highlight) {
+            highlight.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        });
+      } catch (e) {
+        content.innerHTML = `<div class="error">Failed to load file: ${escapeHtml(e.message)}</div>`;
+      }
+    }
+
+    // Highlight matched text in HTML content
+    function highlightMatchInHtml(html, searchText, query) {
+      // Create a temporary element to work with the HTML
+      const temp = document.createElement('div');
+      temp.innerHTML = html;
+
+      let foundBlock = false;
+
+      // Only try to find snippet match if we have enough text
+      if (searchText && searchText.length >= 10) {
+        // Get all text nodes
+        const walker = document.createTreeWalker(temp, NodeFilter.SHOW_TEXT, null, false);
+        const textNodes = [];
+        while (walker.nextNode()) {
+          textNodes.push(walker.currentNode);
+        }
+
+        // Find the text node containing part of our search text
+        const searchLower = searchText.toLowerCase();
+        const searchStart = searchText.substring(0, Math.min(40, searchText.length)).toLowerCase();
+
+        for (const node of textNodes) {
+          const text = node.textContent;
+          const textLower = text.toLowerCase();
+
+          // Look for the start of our snippet in this text node
+          const idx = textLower.indexOf(searchStart);
+          if (idx !== -1) {
+            // Found it! Wrap the parent element with highlight
+            const parent = node.parentElement;
+            if (parent && !parent.classList.contains('match-highlight')) {
+              // Find the closest block-level parent
+              let blockParent = parent;
+              while (blockParent && !['P', 'DIV', 'LI', 'PRE', 'BLOCKQUOTE', 'TD', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes(blockParent.tagName)) {
+                blockParent = blockParent.parentElement;
+              }
+
+              if (blockParent) {
+                blockParent.classList.add('match-highlight');
+                foundBlock = true;
+
+                // Also highlight the specific query terms inline within the block
+                if (query) {
+                  const terms = query.split(/\s+/).filter(t => t.length > 2);
+                  for (const term of terms) {
+                    const regex = new RegExp(`(${escapeRegex(term)})`, 'gi');
+                    blockParent.innerHTML = blockParent.innerHTML.replace(regex, '<span class="match-highlight-inline">$1</span>');
+                  }
+                }
+              }
+            }
+            break;
+          }
+        }
+      }
+
+      // For semantic search: if no block found but we have a query, highlight first occurrence of query terms
+      if (!foundBlock && query) {
+        const terms = query.split(/\s+/).filter(t => t.length > 2);
+        let firstMatchElement = null;
+
+        // Find all block elements and highlight first match
+        const blocks = temp.querySelectorAll('p, div, li, pre, blockquote, td, h1, h2, h3, h4, h5, h6');
+        for (const block of blocks) {
+          const blockText = block.textContent.toLowerCase();
+          const hasMatch = terms.some(term => blockText.includes(term.toLowerCase()));
+
+          if (hasMatch && !firstMatchElement) {
+            block.classList.add('match-highlight');
+            firstMatchElement = block;
+
+            // Highlight the terms inline
+            for (const term of terms) {
+              const regex = new RegExp(`(${escapeRegex(term)})`, 'gi');
+              block.innerHTML = block.innerHTML.replace(regex, '<span class="match-highlight-inline">$1</span>');
+            }
+            break; // Only highlight first matching block
+          }
+        }
+      }
+
+      return temp.innerHTML;
+    }
+
+    // Helper to escape regex special characters
+    function escapeRegex(str) {
+      return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    // Phase 3: Implement closeModal() function
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+      currentFilePath = null;
+    }
+
+    // Phase 3: Implement copyModalPath() function
+    function copyModalPath() {
+      if (currentFilePath) {
+        navigator.clipboard.writeText(currentFilePath).then(() => {
+          const btn = event.target;
+          btn.textContent = 'Copied!';
+          setTimeout(() => btn.textContent = 'Copy Path', 1000);
+        });
+      }
+    }
+
+    // Open file in Finder (macOS)
+    function openInFinder() {
+      if (currentFilePath) {
+        // Can't actually open Finder from browser, but show helpful message
+        const dirname = currentFilePath.substring(0, currentFilePath.lastIndexOf('/'));
+        alert(`To open in Finder, run in Terminal:\n\nopen "${dirname}"`);
+      }
+    }
+
+    // Phase 3: Add Escape key listener to close modal
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // Phase 3: Add overlay click listener to close modal
+    document.getElementById('modal').addEventListener('click', (e) => {
+      if (e.target.classList.contains('modal-overlay')) closeModal();
+    });
+
+    // Enter key triggers search
+    queryInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') search();
+    });
+
+    // Load stats and check embedding server on page load
+    loadStats();
+    checkEmbeddingStatus();
+  </script>
+</body>
+</html>

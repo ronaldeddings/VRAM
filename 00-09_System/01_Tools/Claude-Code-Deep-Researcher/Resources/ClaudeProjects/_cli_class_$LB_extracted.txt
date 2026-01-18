@@ -1,0 +1,224 @@
+class $LB{
+summaries;
+customTitles;
+tags;
+messages;
+fileHistorySnapshots;
+didLoad=!1;
+sessionFile=null;
+remoteIngressUrl=null;
+pendingWriteCount=0;
+flushResolvers=[];
+constructor(){
+this.summaries=new Map,this.customTitles=new Map,this.tags=new Map,this.messages=new Map,this.fileHistorySnapshots=new Map}
+incrementPendingWrites(){
+this.pendingWriteCount++}
+decrementPendingWrites(){
+if(this.pendingWriteCount--,this.pendingWriteCount===0){
+for(let A of this.flushResolvers)A();
+this.flushResolvers=[]}
+}
+async trackWrite(A){
+this.incrementPendingWrites();
+try{
+return await A()}
+finally{
+this.decrementPendingWrites()}
+}
+async flush(){
+if(this.pendingWriteCount===0)return;
+return new Promise((A)=>{
+this.flushResolvers.push(A)}
+)}
+async removeMessageByUuid(A){
+return this.trackWrite(async()=>{
+if(this.messages.delete(A),this.sessionFile!==null)try{
+let B=(await Pu3(this.sessionFile,{
+encoding:"utf-8"}
+)).split(`
+`).filter((G)=>{
+if(!G.trim())return!0;
+try{
+return JSON.parse(G).uuid!==A}
+catch{
+return!0}
+}
+);
+await Su3(this.sessionFile,B.join(`
+`),{
+encoding:"utf8"}
+)}
+catch{
+}
+}
+)}
+async insertMessageChain(A,Q=!1,B,G){
+return this.trackWrite(async()=>{
+let Z=G??null,Y;
+try{
+Y=await If()}
+catch{
+Y=void 0}
+let J=W0(),I=CWA().get(J);
+for(let X of A){
+let W=Nb(X),K={
+parentUuid:W?null:Z,logicalParentUuid:W?Z:void 0,isSidechain:Q,isTeammate:sp()||void 0,userType:ULB(),cwd:r1(),sessionId:J,version:{
+ISSUES_EXPLAINER:"report the issue at https://github.com/anthropics/claude-code/issues",PACKAGE_URL:"@anthropic-ai/claude-code",README_URL:"https://code.claude.com/docs/en/overview",VERSION:"2.0.69",FEEDBACK_CHANNEL:"https://github.com/anthropics/claude-code/issues",BUILD_TIME:"2025-12-13T00:32:01Z"}
+.VERSION,gitBranch:Y,agentId:B,slug:I,...X}
+;
+this.messages.set(X.uuid,K),await this.appendEntry(K),Z=X.uuid}
+}
+)}
+async insertFileHistorySnapshot(A,Q,B){
+return this.trackWrite(async()=>{
+let G={
+type:"file-history-snapshot",messageId:A,snapshot:Q,isSnapshotUpdate:B}
+;
+await this.appendEntry(G)}
+)}
+async insertQueueOperation(A){
+return this.trackWrite(async()=>{
+await this.appendEntry(A)}
+)}
+async appendEntry(A){
+let Q=process.env.TEST_ENABLE_SESSION_PERSISTENCE==="true";
+if(xu3()==="test"&&!Q||NQ()?.cleanupPeriodDays===0||Ra())return;
+let B=jA();
+if(this.sessionFile===null){
+let Z=KH(tp);
+try{
+B.statSync(Z)}
+catch{
+B.mkdirSync(Z)}
+this.sessionFile=vGA();
+try{
+B.statSync(this.sessionFile)}
+catch{
+B.writeFileSync(this.sessionFile,"",{
+encoding:"utf8",flush:!0,mode:384}
+)}
+}
+if(this.sessionFile!==null)try{
+B.statSync(this.sessionFile)}
+catch{
+let Z=KH(tp);
+try{
+B.statSync(Z)}
+catch{
+B.mkdirSync(Z)}
+B.writeFileSync(this.sessionFile,"",{
+encoding:"utf8",flush:!0,mode:384}
+)}
+let G=W0();
+if(A.type==="summary")B.appendFileSync(this.sessionFile,JSON.stringify(A)+`
+`,{
+mode:384}
+);
+else if(A.type==="custom-title")B.appendFileSync(this.sessionFile,JSON.stringify(A)+`
+`,{
+mode:384}
+);
+else if(A.type==="tag")B.appendFileSync(this.sessionFile,JSON.stringify(A)+`
+`,{
+mode:384}
+);
+else if(A.type==="file-history-snapshot")B.appendFileSync(this.sessionFile,JSON.stringify(A)+`
+`,{
+mode:384}
+);
+else{
+let Z=await MLB(G);
+if(A.type==="queue-operation")B.appendFileSync(this.sessionFile,JSON.stringify(A)+`
+`,{
+mode:384}
+);
+else{
+let Y=A.isSidechain&&A.agentId!==void 0,J=Y?kGA(A.agentId):this.sessionFile;
+if(Y)try{
+B.statSync(J)}
+catch{
+let I=KH(tp);
+try{
+B.statSync(I)}
+catch{
+B.mkdirSync(I)}
+B.writeFileSync(J,"",{
+encoding:"utf8",flush:!0,mode:384}
+)}
+if(!Z.has(A.uuid)){
+if(B.appendFileSync(J,JSON.stringify(A)+`
+`,{
+mode:384}
+),Z.add(A.uuid),this.remoteIngressUrl&&Rn1(A))await this.persistToRemote(G,A)}
+}
+}
+}
+async persistToRemote(A,Q){
+if(!this.remoteIngressUrl)return;
+if(!await DLB(A,Q,this.remoteIngressUrl))throw r("tengu_session_persistence_failed",{
+}
+),Error("Failed to persist session log to remote")}
+setRemoteIngressUrl(A){
+this.remoteIngressUrl=A,f(`Remote persistence enabled with URL: ${
+A}
+`)}
+async getAllTranscripts(A){
+await this.loadAllSessions(A);
+let Q=[...this.messages.values()],B=new Set(Q.map((G)=>G.parentUuid));
+return Q.filter((G)=>!B.has(G.uuid)).map((G)=>this.getTranscript(G)).filter((G)=>G.length)}
+getTranscript(A){
+return atA(this.messages,A)}
+async getLastLog(A){
+let{
+messages:Q}
+=await yn1(A);
+if(Q.size===0)return null;
+let G=Array.from(Q.values()).filter((Y)=>!Y.isSidechain).sort((Y,J)=>new Date(J.timestamp).getTime()-new Date(Y.timestamp).getTime())[0];
+if(!G)return null;
+return atA(Q,G)}
+loadAllSessions=Z0(async(A)=>{
+let Q=KH(tp),B=jA();
+if(this.didLoad&&!A)return this;
+try{
+B.statSync(Q)}
+catch{
+return this}
+let Z=B.readdirSync(Q).filter((J)=>J.isFile()&&J.name.endsWith(".jsonl")).map((J)=>tS(Q,J.name));
+if(A)Z=Z.sort((J,I)=>{
+let X=B.statSync(J);
+return B.statSync(I).mtime.getTime()-X.mtime.getTime()}
+).slice(0,A);
+let Y=await Promise.all(Z.sort((J,I)=>{
+let X=B.statSync(J),W=B.statSync(I);
+return X.mtime.getTime()-W.mtime.getTime()}
+).map(async(J)=>{
+let I=QC(ju3(J,".jsonl"));
+if(!I)return{
+sessionId:I,sessionMessages:new Set}
+;
+let X=new Map,W=new Map,K=new Map,V=new Map,E=new Map;
+try{
+await B.stat(J);
+for(let D of await xv(J))if(D.type==="user"||D.type==="assistant"||D.type==="attachment"||D.type==="system")X.set(D.uuid,D);
+else if(D.type==="summary"&&D.leafUuid)W.set(D.leafUuid,D.summary);
+else if(D.type==="custom-title"&&D.sessionId)K.set(D.sessionId,D.customTitle);
+else if(D.type==="tag"&&D.sessionId)V.set(D.sessionId,D.tag);
+else if(D.type==="file-history-snapshot")E.set(D.messageId,D)}
+catch{
+}
+return{
+sessionId:I,sessionMessages:X,summaries:W,customTitles:K,tags:V,fileHistorySnapshots:E}
+}
+));
+for(let{
+sessionId:J,sessionMessages:I,summaries:X,customTitles:W,tags:K,fileHistorySnapshots:V}
+of Y){
+if(!J)continue;
+for(let[E,D]of I.entries())this.messages.set(E,D);
+for(let[E,D]of X.entries())this.summaries.set(E,D);
+for(let[E,D]of W.entries())this.customTitles.set(E,D);
+for(let[E,D]of K.entries())this.tags.set(E,D);
+for(let[E,D]of V.entries())this.fileHistorySnapshots.set(E,D)}
+if(!A)this.didLoad=!0;
+return this}
+,(A)=>A?.toString()||"all")}

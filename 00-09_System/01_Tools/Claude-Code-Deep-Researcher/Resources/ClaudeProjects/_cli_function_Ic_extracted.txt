@@ -1,0 +1,14 @@
+async function Ic(A){
+let Q=Date.now(),{
+stdout:B,code:G}
+=await L3("git",["worktree","list","--porcelain"],{
+cwd:A,preserveOutputOnError:!1}
+),Z=Date.now()-Q;
+if(G!==0)return r("tengu_worktree_detection",{
+duration_ms:Z,worktree_count:0,success:!1}
+),[];
+let Y=B.split(`
+`).filter((J)=>J.startsWith("worktree ")).map((J)=>J.slice(9));
+return r("tengu_worktree_detection",{
+duration_ms:Z,worktree_count:Y.length,success:!0}
+),Y}

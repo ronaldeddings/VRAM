@@ -1,0 +1,22 @@
+{
+  "name": "vram-search",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "bun run start.ts",
+    "serve": "bun run server.ts",
+    "index": "bun run indexer.ts",
+    "watch": "bun run watcher.ts",
+    "search": "bun run cli.ts",
+    "embed-files": "bun run pgvector-indexer.ts",
+    "embed-emails": "bun run email-indexer.ts",
+    "embed-slack": "bun run slack-indexer.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}

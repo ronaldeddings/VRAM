@@ -1,0 +1,4 @@
+I will analyze the "Career & Skills" area by first exploring the directory structure of `/Volumes/VRAM/10-19_Work` to reconcile the report of 180k files with the expected subdirectory structure. Then, I will sample the content of the abundant markdown files and search for keywords related to skills, learning, and specific roles like "Mozilla" to construct a detailed career profile.
+
+I will list the contents of the `11_Mozilla`, `12_Clients`, and `13_Meetings` directories to gauge the activity levels and types of documents present. Simultaneously, I will perform a text search for "Bio", "Resume", "CV", and skill-related keywords like "learning" and "AI" across the `10-19_Work` directory to identify key career documents and current upskilling focus.
+

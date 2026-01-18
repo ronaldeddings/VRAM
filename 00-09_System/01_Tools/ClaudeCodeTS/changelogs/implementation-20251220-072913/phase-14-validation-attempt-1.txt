@@ -1,0 +1,247 @@
+== VALIDATION: phase 14 ==
+
+$ bun test tests/phase14*
+bun test v1.3.4 (5eb2145b)
+
+tests/phase14-integration.test.ts:
+(pass) Phase 14: integration tests (engine + host adapters) > engine boots on node/web/RN-like hosts and emits ready/stopped [3.89ms]
+
+tests/phase14-no-subprocess-core.test.ts:
+(pass) Phase 14: no-subprocess enforcement (portable core) > core avoids subprocess APIs/imports [23.22ms]
+(pass) Phase 14: no-subprocess enforcement (portable core) > node host adapter can disable subprocess-backed secret persistence (dev/test guard) [0.98ms]
+
+tests/phase14-scheduler-properties.test.ts:
+(pass) Phase 14: scheduler/cancellation property-like tests (deterministic) > cancelling a parent task cancels all its descendants (randomized trees) [3.29ms]
+
+tests/phase14-mcp-simulator.test.ts:
+(pass) Phase 14: MCP portable transport simulator > simulated transport can delay deterministically via scheduler/clock
+
+tests/phase14-regression-harness.test.ts:
+(pass) Phase 14: legacy regression harness (portable, deterministic) > fixture corpus replays and matches expected outputs [4.00ms]
+(pass) Phase 14: legacy regression harness (portable, deterministic) > replaying the same scenario twice is stable [0.56ms]
+
+tests/phase14-tool-conformance.test.ts:
+(pass) Phase 14: tool conformance tests (capabilities, cancellation, schema) > tool host view policy-denies non-granted capabilities (typed denial surface) [1.12ms]
+(pass) Phase 14: tool conformance tests (capabilities, cancellation, schema) > cancellation terminates streams with a cancelled outcome [0.54ms]
+(pass) Phase 14: tool conformance tests (capabilities, cancellation, schema) > invalid output is surfaced as a typed ToolError [0.24ms]
+
+ 10 pass
+ 0 fail
+ 985 expect() calls
+Ran 10 tests across 6 files. [68.00ms]
+
+$ bun test
+bun test v1.3.4 (5eb2145b)
+
+tests/phase6-settings.test.ts:
+(pass) Phase 6: settings system > enabled sources flag parser matches legacy [0.18ms]
+(pass) Phase 6: settings system > enabled file sources always include policy+flag (and preserve legacy order)
+(pass) Phase 6: settings system > patch semantics: delete on undefined + arrays replace
+(pass) Phase 6: settings system > storage-backed settings manager merges enabled sources and suppresses self-triggered watch events [1.63ms]
+(pass) Phase 6: settings system > export/import bundle captures per-source settings objects [0.22ms]
+(pass) Phase 6: settings system > invalid policy settings fail-closed in EffectiveConfig [0.21ms]
+(pass) Phase 6: settings system > remote policy refresh writes to cache (storage) [0.20ms]
+
+tests/phase3-event-bus.test.ts:
+(pass) Phase 3: event bus semantics > emits monotonic seq per channel and supports cursors [1.01ms]
+(pass) Phase 3: event bus semantics > recording helper captures envelopes and can be stopped [0.24ms]
+(pass) Phase 3: event bus semantics > includeSnapshot yields a snapshot envelope before live events [0.08ms]
+(pass) Phase 3: event bus semantics > coalescing policy can replace queued events deterministically [0.16ms]
+
+tests/phase4-leak-prevention.test.ts:
+(pass) Phase 4: capability leak prevention heuristics > no module-level HostCapabilities singletons in portable src/core [5.14ms]
+
+tests/phase3-replay-adapters.test.ts:
+(pass) Phase 3: replay/adapter conformance > event streams roundtrip through web/node/RN adapter shapes [2.90ms]
+(pass) Phase 3: replay/adapter conformance > diff classifier treats UI-only differences as benign_ui [0.09ms]
+
+tests/phase12-no-subprocess.test.ts:
+(pass) Phase 12: no-subprocess constraint (CLI host adapter) > CLI host adapter code avoids subprocess helpers [3.59ms]
+
+tests/phase4-capabilities.test.ts:
+(pass) Phase 4: host capabilities > requireCapability throws typed errors [0.05ms]
+(pass) Phase 4: host capabilities > capability view can policy-deny individual caps [0.11ms]
+(pass) Phase 4: host capabilities > capability compliance report flags missing required [0.26ms]
+(pass) Phase 4: host capabilities > node storage provides CAS semantics [1.87ms]
+(pass) Phase 4: host capabilities > portable path normalization is POSIX-like [0.10ms]
+(pass) Phase 4: host capabilities > retry/backoff is deterministic with injected RNG [0.19ms]
+
+tests/phase1-5-e2e-baseline.test.ts:
+(pass) Phases 1–5: end-to-end baseline > engine boots, emits app state, accepts user input, and preserves deterministic event ordering [1.64ms]
+
+tests/phase9-hooks.test.ts:
+(pass) Phase 9: hooks system redesign > normalizeHooksConfig is deterministic and compiles matchers [0.84ms]
+(pass) Phase 9: hooks system redesign > normalizeHooksConfig reports invalid regex with source attribution [0.11ms]
+(pass) Phase 9: hooks system redesign > ToolRunner integrates PreToolUse/PostToolUse via createToolPipelineHooks [2.01ms]
+(pass) Phase 9: hooks system redesign > ToolRunner calls afterToolFailure on tool error [0.25ms]
+(pass) Phase 9: hooks system redesign > applyHookEffects rejects conflicting merge updates [0.24ms]
+(pass) Phase 9: hooks system redesign > applyHookEffects dedupes transcript appends and permission updates; denies unsupported IO effects [0.07ms]
+(pass) Phase 9: hooks system redesign > applyHookEffects applies first BlockContinuation and keeps status line/file suggestions first-win
+(pass) Phase 9: hooks system redesign > HookEngine enforces allowNestedToolRuns for RunTool [0.38ms]
+(pass) Phase 9: hooks system redesign > legacy async hook stdout mapping detects async:true and clamps timeout [0.06ms]
+(pass) Phase 9: hooks system redesign > legacy async hook parser matches legacy heuristics (parse only when stdout is JSON-shaped)
+(pass) Phase 9: hooks system redesign > loadPluginHooks reads plugins/*/hooks/hooks.json and merges [1.72ms]
+
+tests/phase3-replay-conformance.test.ts:
+(pass) Phase 3: replay-style conformance (kernel/event bus baseline) > deterministic scenario produces identical normalized outputs across runs [1.92ms]
+
+tests/phase12-cli-adapter.test.ts:
+(pass) Phase 12: CLI adapter wiring > feeds user input into engine and supports transcript toggle [0.45ms]
+
+tests/phase14-integration.test.ts:
+(pass) Phase 14: integration tests (engine + host adapters) > engine boots on node/web/RN-like hosts and emits ready/stopped [1.60ms]
+
+tests/phase13-observability.test.ts:
+(pass) Phase 13: observability/logging/telemetry boundaries > telemetry dedupe suppresses usage events in endpoint mode (legacy MCP CLI behavior) [0.31ms]
+(pass) Phase 13: observability/logging/telemetry boundaries > diagnostic bundle redacts secret-looking settings fields and passes lint [0.43ms]
+(pass) Phase 13: observability/logging/telemetry boundaries > runtime kernel emits span lifecycle events to an injected trace buffer [0.18ms]
+
+tests/phase14-no-subprocess-core.test.ts:
+(pass) Phase 14: no-subprocess enforcement (portable core) > core avoids subprocess APIs/imports [5.80ms]
+(pass) Phase 14: no-subprocess enforcement (portable core) > node host adapter can disable subprocess-backed secret persistence (dev/test guard) [0.72ms]
+
+tests/phase5-queues-and-viewmodels.test.ts:
+(pass) Phase 5: queues, lifecycle, and UI adapter view models > tool permission queue resolves deterministically and can request persistence [0.24ms]
+(pass) Phase 5: queues, lifecycle, and UI adapter view models > elicitation cancellation propagates via effects [0.16ms]
+(pass) Phase 5: queues, lifecycle, and UI adapter view models > backgrounding clears ephemeral UI queues and emits cancellation effects [0.23ms]
+(pass) Phase 5: queues, lifecycle, and UI adapter view models > multi-session model enforces a single active session [0.09ms]
+(pass) Phase 5: queues, lifecycle, and UI adapter view models > UI view models share identical transcript semantics across adapters [0.13ms]
+
+tests/phase12-node-auth.test.ts:
+(pass) Phase 12: Node auth token discovery > CLAUDE_CODE_SESSION_ACCESS_TOKEN is exposed via secrets capability [0.49ms]
+
+tests/phase12-chrome-native-host.test.ts:
+(pass) Phase 12: Chrome native host framing > NativeHostReader reads length-prefixed JSON messages across chunks [0.75ms]
+(pass) Phase 12: Chrome native host framing > NativeHostReader returns null on invalid length [0.78ms]
+(pass) Phase 12: Chrome native host framing > NativeHostWriter writes framed payloads and honors backpressure [1.29ms]
+
+tests/phase5-notifications-and-redaction.test.ts:
+(pass) Phase 5: deterministic queues and redaction > notification drain is deterministic for equal priority [0.14ms]
+(pass) Phase 5: deterministic queues and redaction > transcript redaction removes sensitive nodes and produces a stable hash [0.46ms]
+(pass) Phase 5: deterministic queues and redaction > session export omits out-of-line attachment payloads [0.10ms]
+
+tests/phase12-cli-entrypoint.test.ts:
+(pass) Phase 12: runnable CLI entrypoint (repo-level) > --version fast path prints a version and exits 0 [34.16ms]
+(pass) Phase 12: runnable CLI entrypoint (repo-level) > --help prints usage and exits 0 [30.14ms]
+(pass) Phase 12: runnable CLI entrypoint (repo-level) > --print-frame boots engine and prints one frame [32.02ms]
+(pass) Phase 12: runnable CLI entrypoint (repo-level) > -p sends a prompt and prints model output (non-interactive) [44.17ms]
+(pass) Phase 12: runnable CLI entrypoint (repo-level) > -p without any credentials exits non-zero with a meaningful error [29.64ms]
+(pass) Phase 12: runnable CLI entrypoint (repo-level) > --mcp-cli is gated (disabled => main help; enabled => mcp-cli help) [60.39ms]
+(pass) Phase 12: runnable CLI entrypoint (repo-level) > --ripgrep finds matches via portable search.grep (no subprocess) [35.09ms]
+
+tests/phase10-mcp.test.ts:
+(pass) Phase 10: MCP integration > MCP CLI feature gate parsing treats ENABLE_MCP_CLI_ENDPOINT=off as disabled [0.02ms]
+(pass) Phase 10: MCP integration > manifest cache detects schema drift by hash [0.38ms]
+(pass) Phase 10: MCP integration > retry/backoff retries retryable MCP errors deterministically
+(pass) Phase 10: MCP integration > cancelled MCP requests stop cleanly [1.14ms]
+(pass) Phase 10: MCP integration > MCP tools run through ToolRunner hooks, and endpoint-missing warning is warn-once [1.44ms]
+
+tests/phase5-state.test.ts:
+(pass) Phase 5: app/session state model > create session command sets active session when requested [0.20ms]
+(pass) Phase 5: app/session state model > overlay selection reflects queue state deterministically [0.12ms]
+(pass) Phase 5: app/session state model > transcript semantic renderer produces stable summaries [0.13ms]
+(pass) Phase 5: app/session state model > snapshotPersisted + restoreFromSnapshot roundtrip preserves sessions and transcript [0.27ms]
+
+tests/phase1-fixtures.test.ts:
+(pass) Phase 1 fixtures: sanitization > fixtures do not contain obvious secrets [3.01ms]
+
+tests/phase3-runtime.test.ts:
+(pass) Phase 3: deterministic runtime kernel > task yields and resumes deterministically [0.32ms]
+(pass) Phase 3: deterministic runtime kernel > timeouts abort tasks and resolve as timeout results [0.36ms]
+(pass) Phase 3: deterministic runtime kernel > concurrency limiter blocks and unblocks deterministically [0.24ms]
+(pass) Phase 3: deterministic runtime kernel > streams emit sequenced events and snapshot tracks them [0.27ms]
+(pass) Phase 3: deterministic runtime kernel > tool streams block producers under backpressure by default [0.13ms]
+(pass) Phase 3: deterministic runtime kernel > closing a scope cancels in-flight tasks without leaking timers [0.16ms]
+(pass) Phase 3: deterministic runtime kernel > parent task cancellation fans out to explicitly-parented child tasks [0.15ms]
+(pass) Phase 3: deterministic runtime kernel > fail-fast task errors cancel the rest of the scope deterministically [0.23ms]
+(pass) Phase 3: deterministic runtime kernel > hang detector fires once per category until progress resumes [0.08ms]
+(pass) Phase 3: deterministic runtime kernel > scheduler fairness: low priority is not starved by high priority [0.11ms]
+
+tests/phase12-cli-overlay-precedence.test.ts:
+(pass) Phase 12: CLI overlay precedence (semantic rendering) > message-selector > sandbox-permission > tool-permission > elicitation [0.74ms]
+
+tests/phase1-legacy-spec.test.ts:
+(pass) Phase 1: legacy spec carry-over > overlay precedence matches captured legacy order
+(pass) Phase 1: legacy spec carry-over > permission rule parse/format roundtrip [0.09ms]
+(pass) Phase 1: legacy spec carry-over > bundle env vars include legacy MCP CLI toggles [26.46ms]
+(pass) Phase 1: legacy spec carry-over > bundle contains canonical settings-source precedence list [9.70ms]
+(pass) Phase 1: legacy spec carry-over > bundle contains canonical permission rule-source precedence list [45.23ms]
+(pass) Phase 1: legacy spec carry-over > bundle contains hook event names captured in v3 spec [53.79ms]
+(pass) Phase 1: legacy spec carry-over > MCP CLI env gates match observed bundle behavior [0.14ms]
+(pass) Phase 1: legacy spec carry-over > bundle `--mcp-cli` is gated by ENABLE_EXPERIMENTAL_MCP_CLI [776.44ms]
+(pass) Phase 1: legacy spec carry-over > both bundles agree on MCP CLI gating snapshot (env/flag mapping) [1599.93ms]
+
+tests/phase12-cli-overlays.test.ts:
+(pass) Phase 12: CLI overlay interactions (minimum viable) > tool permission overlay renders and accepts y/n [0.47ms]
+(pass) Phase 12: CLI overlay interactions (minimum viable) > elicitation overlay accepts a text response and dequeues [0.22ms]
+
+tests/phase3-shutdown-summary.test.ts:
+(pass) Phase 3: scope shutdown summaries > closing a session scope can emit a bounded shutdown summary event [0.56ms]
+
+tests/phase7-permissions.test.ts:
+(pass) Phase 7: permissions engine > rule parsing/stringifying matches legacy grammar [0.07ms]
+(pass) Phase 7: permissions engine > plain rules: first match wins by legacy source order; content rules overwrite later sources [0.03ms]
+(pass) Phase 7: permissions engine > decision pipeline preserves legacy ordering (deny > ask > tool-specific > mode override > allow > fallback) [0.52ms]
+(pass) Phase 7: permissions engine > settings-driven context builder reads permissions.* from per-source settings [0.41ms]
+(pass) Phase 7: permissions engine > permission updates persist via SettingsManager.updateSource and preserve array operations [0.82ms]
+(pass) Phase 7: permissions engine > network target canonicalization and local-network classification work [0.07ms]
+(pass) Phase 7: permissions engine > network approvals can be enforced by permission-gated network capability [0.37ms]
+(pass) Phase 7: permissions engine > network approval persistence suggests legacy WebFetch(domain:host) rule updates
+(pass) Phase 7: permissions engine > decision cache stores allow/deny but not ask by default [0.16ms]
+(pass) Phase 7: permissions engine > applyPermissionUpdates is deterministic [0.02ms]
+
+tests/phase14-scheduler-properties.test.ts:
+(pass) Phase 14: scheduler/cancellation property-like tests (deterministic) > cancelling a parent task cancels all its descendants (randomized trees) [1.50ms]
+
+tests/phase2-architecture-boundaries.test.ts:
+(pass) Phase 2: architecture/boundaries > import boundary script passes [41.55ms]
+(pass) Phase 2: architecture/boundaries > host capability smoke check reports missing required
+(pass) Phase 2: architecture/boundaries > host capability smoke check passes for provided adapters (node/rn/web) [0.27ms]
+(pass) Phase 2: architecture/boundaries > canonical JSON stringification is stable (key order) [0.01ms]
+
+tests/phase14-mcp-simulator.test.ts:
+(pass) Phase 14: MCP portable transport simulator > simulated transport can delay deterministically via scheduler/clock [0.46ms]
+
+tests/phase4-mobile-safe-conformance.test.ts:
+(pass) Phase 4: minimal mobile-safe conformance > boots with no filesystem/process/local endpoints and core subsystems still function [0.32ms]
+
+tests/phase8-tools.test.ts:
+(pass) Phase 8: tool execution layer > ToolRunner validates schemas and emits a close event [0.40ms]
+(pass) Phase 8: tool execution layer > search.grep golden output matches fixtures (normalized ordering) [2.20ms]
+(pass) Phase 8: tool execution layer > patch.apply previewOnly does not write; apply writes and produces a diff attachment [2.62ms]
+(pass) Phase 8: tool execution layer > engine core tool layer does not use subprocess APIs [0.87ms]
+
+tests/phase11-agents.test.ts:
+(pass) Phase 11: background agents + long-running tasks > prompt suggestion suppression heuristics are stable [0.50ms]
+(pass) Phase 11: background agents + long-running tasks > magic docs parsing and template rendering match legacy behavior [0.14ms]
+(pass) Phase 11: background agents + long-running tasks > agent manager cancels background agents on host backgrounded [0.92ms]
+(pass) Phase 11: background agents + long-running tasks > worker capability filtering never exposes secrets/ipc
+(pass) Phase 11: background agents + long-running tasks > durable task document is stable via canonical JSON and decodes
+
+tests/phase3-determinism.test.ts:
+(pass) Phase 3: determinism helpers > seeded random produces stable UUIDs for a given seed [0.08ms]
+(pass) Phase 3: determinism helpers > kernel snapshot is stable and sorted [0.27ms]
+(pass) Phase 3: determinism helpers > core stream summary uses hash + counters (no raw transcript storage) [0.61ms]
+(pass) Phase 3: determinism helpers > node filesystem adapter returns deterministic directory listings [0.99ms]
+
+tests/phase14-regression-harness.test.ts:
+(pass) Phase 14: legacy regression harness (portable, deterministic) > fixture corpus replays and matches expected outputs [1.52ms]
+(pass) Phase 14: legacy regression harness (portable, deterministic) > replaying the same scenario twice is stable [0.52ms]
+
+tests/phase14-tool-conformance.test.ts:
+(pass) Phase 14: tool conformance tests (capabilities, cancellation, schema) > tool host view policy-denies non-granted capabilities (typed denial surface) [0.80ms]
+(pass) Phase 14: tool conformance tests (capabilities, cancellation, schema) > cancellation terminates streams with a cancelled outcome [0.34ms]
+(pass) Phase 14: tool conformance tests (capabilities, cancellation, schema) > invalid output is surfaced as a typed ToolError [0.18ms]
+
+ 128 pass
+ 0 fail
+ 1705 expect() calls
+Ran 128 tests across 36 files. [2.95s]
+
+$ bun run typecheck
+$ tsc -p tsconfig.json --noEmit
+
+$ bun run check:boundaries
+$ node scripts/check-import-boundaries.mjs
+Import boundary check passed.
+

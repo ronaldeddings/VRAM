@@ -1,0 +1,38 @@
+async function WU(A,Q){
+let B=[],G=[];
+if(GA1())f("Skipping plugin hooks - allowManagedHooksOnly is enabled");
+else try{
+await El()}
+catch(Z){
+let Y=Z instanceof Error?Error(`Failed to load plugin hooks during ${
+A}
+: ${
+Z.message}
+`):Error(`Failed to load plugin hooks during ${
+A}
+: ${
+String(Z)}
+`);
+if(Z instanceof Error&&Z.stack)Y.stack=Z.stack;
+s(Y);
+let J=Z instanceof Error?Z.message:String(Z),I="";
+if(J.includes("Failed to clone")||J.includes("network")||J.includes("ETIMEDOUT")||J.includes("ENOTFOUND"))I="This appears to be a network issue. Check your internet connection and try again.";
+else if(J.includes("Permission denied")||J.includes("EACCES")||J.includes("EPERM"))I="This appears to be a permissions issue. Check file permissions on ~/.claude/plugins/";
+else if(J.includes("Invalid")||J.includes("parse")||J.includes("JSON")||J.includes("schema"))I="This appears to be a configuration issue. Check your plugin settings in .claude/settings.json";
+else I="Please fix the plugin configuration or remove problematic plugins from your settings.";
+f(`Warning: Failed to load plugin hooks. SessionStart hooks from plugins will not execute. Error: ${
+J}
+. ${
+I}
+`,{
+level:"warn"}
+)}
+for await(let Z of Ho1(A,Q)){
+if(Z.message)B.push(Z.message);
+if(Z.additionalContexts&&Z.additionalContexts.length>0)G.push(...Z.additionalContexts)}
+if(G.length>0){
+let Z=A4({
+type:"hook_additional_context",content:G,hookName:"SessionStart",toolUseID:"SessionStart",hookEvent:"SessionStart"}
+);
+B.push(Z)}
+return B}

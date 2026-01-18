@@ -1,0 +1,5 @@
+I will begin by analyzing the email JSON structure and checking for any 2026 data to assess the most current state of communication volume. Then, I will quantify the "noise" in the inbox by searching for newsletter indicators and look for signs of operational friction by searching for keywords related to the known tooling transitions (Notion/Reich) and urgency.
+
+I will inspect the schema of the search database to identify the correct table names for querying. Simultaneously, I will list the contents of the `2025` directory and read a sample email from it to understand the JSON structure for further analysis.
+
+I will now query the search database to quantify the volume of email communication in 2025, specifically isolating "noise" from newsletters and notifications, and identifying stress indicators like "urgent" or "overdue" to build a data-driven picture of the team's communication health.

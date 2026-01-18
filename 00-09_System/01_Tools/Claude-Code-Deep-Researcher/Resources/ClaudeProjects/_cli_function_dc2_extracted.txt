@@ -1,0 +1,4 @@
+function dc2(A,Q){
+if(A&&A.length>0)mGA(A,(B)=>Q((G)=>({
+...G,fileHistory:B}
+)))}

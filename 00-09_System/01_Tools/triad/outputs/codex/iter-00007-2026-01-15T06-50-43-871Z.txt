@@ -1,0 +1,40 @@
+AGENTS.md not found under `/Volumes/VRAM`, so I proceeded without extra local instructions.
+
+**Key Observations**
+- Reflection is the only active Personal Growth stream: 40 daily notes (20 in Oct, 14 in Nov, 3 in Dec, 3 in Jan) plus 2 weekly notes in `/Volumes/VRAM/30-39_Personal/30_Reflection/30.01_daily` and `/Volumes/VRAM/30-39_Personal/30_Reflection/30.02_weekly`.
+- Most other personal-growth folders are empty aside from `.DS_Store` (`/Volumes/VRAM/30-39_Personal/30_Journals`, `/Volumes/VRAM/30-39_Personal/32_Health`, `/Volumes/VRAM/30-39_Personal/33_Learning`, `/Volumes/VRAM/30-39_Personal/34_Goals`, `/Volumes/VRAM/30-39_Personal/35_Messages`).
+- Capture volume is massive and likely underutilized: 59,158 Rewind files, 33,541 Limitless files, 332 voice memos in `/Volumes/VRAM/30-39_Personal/31_Capture/31.03_rewind`, `/Volumes/VRAM/30-39_Personal/31_Capture/31.02_limitless`, `/Volumes/VRAM/30-39_Personal/31_Capture/31.01_voice_memos`.
+- A template shift begins around 2025‑10‑28 with structured end‑of‑day metrics and guidance, but later entries are more blank (`/Volumes/VRAM/30-39_Personal/30_Reflection/30.01_daily/2025-10-28.md`, `/Volumes/VRAM/30-39_Personal/30_Reflection/30.01_daily/2026-01-09.md`).
+- Themes recur around health and self‑regulation (keto, alcohol‑free, sleep, substances) and inner work (forgiveness, boundaries) (`/Volumes/VRAM/30-39_Personal/30_Reflection/30.01_daily/2025-10-19.md`, `/Volumes/VRAM/30-39_Personal/30_Reflection/30.01_daily/2025-10-18.md`, `/Volumes/VRAM/30-39_Personal/30_Reflection/30.01_daily/2025-11-25.md`).
+- Weekly intention appears once with a strong boundary‑setting focus (shed dead skin / terminate draining relationships) in `/Volumes/VRAM/30-39_Personal/30_Reflection/30.02_weekly/2025-W42.md`.
+
+**Insights**
+- Morning reflection is the strongest habit (gratitude filled in ~90% of daily notes), while end‑of‑day learning loops are mostly empty; this limits feedback and momentum capture.
+- Sleep appears as the primary constraint: average logged sleep is ~5.8 hours with several very low nights, and sleep_quality uses mixed scales (1–10 vs 70/95), making trends unreliable.
+- Health experimentation (keto, alcohol‑free, substances) is active but not rigorously tracked, so it’s hard to correlate with energy or mood.
+- Personal growth is intertwined with work execution (proposals, shoots, task push), suggesting productivity and boundary management are core growth vectors.
+- Massive capture streams exist without a visible summarization step, implying potential insight loss between raw data and reflection.
+
+**Opportunities**
+- Introduce a “minimum viable” nightly reflection (1 win, 1 lesson, 1 intention) to close the loop without high friction.
+- Normalize metrics to a single scale (sleep_quality 1–10, energy 1–5) and treat blanks as “unknown” rather than “false.”
+- Distill capture feeds into weekly reflection (e.g., 3 highlights from Rewind/Limitless, 1 voice memo insight).
+- Activate the empty Goals/Learning/Health folders with small, consistent artifacts (weekly goals, short learning logs, health experiments).
+- Turn the diffuser/meditation/coffee ritual into a tracked anchor habit to tie energy and focus to a repeatable routine.
+
+**Connections**
+- Work: personal notes mirror work goals (pushes on proposals/shoots) and align with the professional growth themes in `/Volumes/VRAM/10-19_Work/14_Communications/14.01_emails/2025/2025-09-25_182644_005222_Recap for Impromptu Zoom Meeting.md`.
+- Family: gratitude and support from Monika/Ava/Marco show up repeatedly, yet `family_time_done` is rarely marked true, suggesting a tracking mismatch.
+- Health: sleep deficit, keto, alcohol‑free, and weight entries map cleanly to the dormant `/Volumes/VRAM/30-39_Personal/32_Health` area.
+- Finance: personal gratitude around money appears (`/Volumes/VRAM/30-39_Personal/30_Reflection/30.01_daily/2025-10-31.md`), while Finance remains empty per other agents; this is a natural alignment point.
+
+**Recommendations**
+- Add a 5‑minute nightly “Close the Day” block in the daily note template (1 win, 1 lesson, 1 tomorrow intention) and set a recurring reminder.
+- Keep only 3 daily metrics (sleep hours, workout, meditation) until consistency improves; expand later.
+- Start a 2‑week health experiment log (sleep, keto compliance, alcohol/caffeine, energy) to validate which levers work.
+- Use a weekly review (e.g., Sunday) to set a theme, log 3 wins, and pick top 3 priorities; reuse `/Volumes/VRAM/30-39_Personal/30_Reflection/30.02_weekly/2025-W42.md` as the template.
+- Promote one personal goal into `/Volumes/VRAM/30-39_Personal/34_Goals` and connect it to daily habits so progress is visible.
+
+**Triad Improvements**
+- The system summary reports “0 subdirectories” for `/Volumes/VRAM/30-39_Personal`, but it contains multiple subfolders; the directory summary logic likely miscounts.
+- The search index has only 42 Personal files while capture volume is ~93k; consider indexing metadata or sampling capture data so Personal Growth analyses don’t miss the richest stream.

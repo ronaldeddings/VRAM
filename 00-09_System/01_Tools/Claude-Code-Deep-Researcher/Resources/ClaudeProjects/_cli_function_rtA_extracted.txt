@@ -1,0 +1,6 @@
+async function rtA(A,Q){
+await rW().appendEntry({
+type:"custom-title",customTitle:Q,sessionId:A}
+),rW().customTitles.set(A,Q),r("tengu_session_renamed",{
+}
+)}

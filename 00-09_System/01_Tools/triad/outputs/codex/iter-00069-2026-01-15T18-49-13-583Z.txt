@@ -1,0 +1,40 @@
+Parsed 74,497 email JSON files in `/Volumes/VRAM/10-19_Work/14_Communications/14.01b_emails_json` and used `/Volumes/VRAM/00-09_System/00_Index/search.db` FTS keyword counts for content signals.
+
+**Key Observations**
+- Volume growth is steep then flattening: 2020 1,549 → 2021 5,350 → 2022 6,970 → 2023 14,750 → 2024 22,047 → 2025 23,831 (~65/day in 2025; March–April peak at 2.5–2.6k each).
+- Half the mailbox is unread: 37,394 messages (50.2%) have `Unread`; nearly all are `Archived` (98.8%).
+- Inbound-heavy: `Sent` is 12,727 (17.1%); internal senders are 28.3% of total, led by `ron@hackervalley.com`, `staff@hackervalley.com`, `emily@hackervalley.com`, `chris@hackervalley.com`.
+- System/ops tooling dominates external senders: `fathom.video`, `mail.notion.so`, `zoom.us`, `notifications.hubspot.com`, `email.crunchbase.com`, `justworks.com`, `sans.org`, `crowdstrike.com`, `substack.com`.
+- Content signals skew to meetings/notifications: FTS counts show `meeting` (23,603), `calendar` (15,578), `invitation` (4,898), `update` (4,103), `alert` (4,118), `security` (20,031), `policy` (11,837).
+- Marketing/newsletter footprint is large: `unsubscribe` appears in 25,716 files; `Category Promotions` is 10,990 (14.8%) and `*Newsletter or Marketing` is 2,697.
+- Attachments are common: 16,987 emails (22.8%) include attachments; ~96% have HTML versions.
+
+**Insights**
+- Email is acting as a system notification bus (meeting tools, CRM, docs, alerts), not just person‑to‑person communication; this inflates volume and unread backlog.
+- The unread share suggests “low‑stakes” messages are filling attention bandwidth, increasing the risk of missing high‑stakes items.
+- The internal share + high `Important` labels (32.4%) implies critical internal ops are still email‑centric, which can be fragile without tight triage.
+- Strong “security/policy/alert” signal aligns with the cybersecurity domain and likely compliance workload; these deserve dedicated handling to avoid alert fatigue.
+
+**Opportunities**
+- Reduce notification noise by consolidating system senders into digest flows or alternative channels (Slack/Notion).
+- Separate finance/ops receipts and vendor invoices into a single labeled stream for faster reconciliation.
+- Create a strict “VIP/Deal/Partner” priority view to protect relationship and revenue signals from newsletter traffic.
+- Leverage aliases for newsletters to keep primary inbox operational.
+
+**Connections**
+- Operations & tooling: Notion, HubSpot, Zoom, Fathom, and Crunchbase indicate a heavy ops + sales/prospecting workflow; email hygiene affects pipeline execution.
+- Content/podcast production likely drives invite/meeting load (recording + scheduling tools).
+- Security domain: high alert/policy volume relates to industry compliance and partner communications; missing these could have reputational or contractual consequences.
+- Personal bandwidth: sustained high unread counts can erode focus and create hidden stress.
+
+**Recommendations**
+- Build 3 auto‑filter lanes: `System Notifications` (Fathom/Zoom/Notion/HubSpot), `Finance` (invoice/receipt/payment/declined), `Marketing` (unsubscribe/newsletter/promo) and default them to skip inbox.
+- Add a “VIP/Partner” filter for critical senders (key clients, partners, internal execs) and use Gmail Priority Inbox or a label‑based view.
+- Run a 30‑minute weekly unsubscribe sprint targeting top recurring domains; start with the top 20 non‑essential senders.
+- Set a daily 2‑pass triage: first pass for high‑priority labels/senders, second pass for bulk notifications; aim to reduce unread to <15% within 4–6 weeks.
+- For attachments >20% of mail, enforce “Drive‑link‑only” for internal sends and create auto‑labels for files to speed retrieval.
+
+**Triad Improvement Noted**
+- The “Contents: 74498 files in 0 subdirectories” line appears inaccurate; the email directory is organized into year subfolders (2020–2025). Suggest updating the directory scan logic to count subdirectories and surface year splits for more accurate summaries.
+
+If you want, I can draft concrete Gmail filter rules (based on the top sender list) or a prioritized unsubscribe list pulled from the 2025 corpus.

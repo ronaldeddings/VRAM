@@ -1,0 +1,32 @@
+Focused on the Relationships & Family signals across VRAM; the dedicated Family area is empty, but family is a recurring value and event theme elsewhere (work transcripts + daily reflections).
+
+**Key Observations**
+- The Family archive is structurally present but empty (no memories, events, photos, or documents beyond `.DS_Store`) in `/Volumes/VRAM/40-49_Family`.
+- A recurring family tradition exists but is only captured in work transcripts: annual Orlando trip, third year running, ~20 family members present (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-06-522244293.md:33`).
+- Ron explicitly prioritizes more family time in conversation, but that signal isn’t reflected in the Family area (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-07-523682405.md:55`).
+- Daily reflections show strong family values (support, love, wife, kids), e.g. “support my family” and “get our family on track for success” (`/Volumes/VRAM/30-39_Personal/30_Reflection/30.01_daily/2025-10-12.md:30`, `/Volumes/VRAM/30-39_Personal/30_Reflection/30.01_daily/2025-10-12.md:40`), “deeply in love with my family” (`/Volumes/VRAM/30-39_Personal/30_Reflection/30.01_daily/2025-10-15.md:34`), and “wife I can lean on” (`/Volumes/VRAM/30-39_Personal/30_Reflection/30.01_daily/2025-12-03.md:31`).
+- Family time is tracked but rarely marked done: 4/40 daily notes show `family_time_done: true` (only Oct 11–14), with the field present in daily notes like `/Volumes/VRAM/30-39_Personal/30_Reflection/30.01_daily/2025-10-11.md:11`.
+
+**Insights**
+- There’s a clear “value vs. capture” gap: family is frequently expressed as important, yet the Family system has no artifacts, which risks memory loss and weakens planning.
+- The family-time metric appears underused or hard to complete; either family time is getting squeezed or the measurement is too coarse to reflect real interactions.
+- The Orlando tradition is a strong anchor event that could seed the Family archive and create a repeatable cadence for capture.
+
+**Opportunities**
+- Establish a minimal capture pipeline: a single “family highlight” entry per week/month stored in `41_Events` or `40_Memories`.
+- Backfill the Orlando trip as a seed event and create a recurring annual entry (e.g., `41_Events/Orlando-Trip-2026.md`) to institutionalize the tradition.
+- Add a lightweight “family highlight” prompt to daily/weekly reflections to make the `family_time_done` field more actionable.
+
+**Connections**
+- Work ↔ Family: desire for more family time appears during work meetings, and work travel (RSA) immediately follows the Orlando recap (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-06-522244293.md:51`).
+- Personal Growth ↔ Family: the reflection habit exists, but like Family, much of the supporting structure is empty or unutilized.
+- Finance ↔ Family: daily reflections frame income and stability explicitly as support for family (`/Volumes/VRAM/30-39_Personal/30_Reflection/30.01_daily/2025-10-12.md:30`).
+
+**Recommendations**
+- Create a recurring “Family Log” (weekly or monthly) with 3 bullet highlights and store it in `41_Events` to start building the archive.
+- Seed the Family area with the 2026 Orlando trip: include attendees, photos, and a short retrospective; mark it as a recurring annual event.
+- Make the daily template ask for a “family highlight” or “family moment” to turn `family_time_done` into a concrete, recallable artifact.
+- Add a short quarterly “family review” note to surface patterns (time together, trips, traditions) and inform work scheduling.
+
+**Triad Improvement Note**
+- Querying `search.db` with FTS5 raised `fts5: missing row ...` errors, which suggests the search index is inconsistent; consider rebuilding the index for reliable relationship/family search.

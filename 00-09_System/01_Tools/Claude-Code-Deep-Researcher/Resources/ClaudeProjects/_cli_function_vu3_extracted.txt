@@ -1,0 +1,7 @@
+function vu3(A){
+return A.map((Q)=>{
+let{
+isSidechain:B,parentUuid:G,...Z}
+=Q;
+return Z}
+)}

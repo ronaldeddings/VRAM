@@ -1,0 +1,57 @@
+{
+  "weekStart": "2026-01-08",
+  "weekEnd": "2026-01-15",
+  "generatedAt": "2026-01-15T12:12:54.026Z",
+  "executiveSummary": "This week, Triad completed 0 analysis iterations, generating 335 insights with 0 rated as actionable. The system continues to deepen its understanding of your life areas and identify opportunities for improvement.",
+  "insightsByArea": {
+    "Hacker Valley Media": {
+      "count": 90,
+      "avgConfidence": 0.5755555555555556,
+      "topInsight": "**2) Consolidate proof and package consistency:** ..."
+    },
+    "Career & Skills": {
+      "count": 65,
+      "avgConfidence": 0.5015384615384616,
+      "topInsight": "Financial Discipline: Executed a $55k/year cost re..."
+    },
+    "Financial": {
+      "count": 45,
+      "avgConfidence": 0.5211111111111111,
+      "topInsight": "External content sources highlight finance/economy..."
+    },
+    "Personal Growth": {
+      "count": 55,
+      "avgConfidence": 0.5,
+      "topInsight": "The Reflection System: A Tale of Two Halves"
+    },
+    "Relationships & Family": {
+      "count": 45,
+      "avgConfidence": 0.5088888888888888,
+      "topInsight": "9 subdirectories exist: `40_Memories`, `41_Events`..."
+    },
+    "Meta Analysis": {
+      "count": 35,
+      "avgConfidence": 0.5028571428571429,
+      "topInsight": "Finance in Work: Personal financial values (\"Havin..."
+    }
+  },
+  "totalIterations": 0,
+  "totalInsights": 335,
+  "confidenceDistribution": {
+    "high": 0,
+    "medium": 43,
+    "low": 0
+  },
+  "topActionItems": [],
+  "systemHealth": {
+    "uptime": 0,
+    "healingAttempts": 0,
+    "successRate": 1
+  },
+  "weeklyTrends": [
+    "Areas needing attention: Hacker Valley Media, Career & Skills, Financial, Personal Growth, Relationships & Family, Meta Analysis"
+  ],
+  "recommendations": [
+    "Continue building baseline understanding across all areas"
+  ]
+}

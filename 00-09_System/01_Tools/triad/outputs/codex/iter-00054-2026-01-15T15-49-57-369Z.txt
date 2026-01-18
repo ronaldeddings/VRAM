@@ -1,0 +1,39 @@
+Reviewed the email corpus under `10-19_Work/14_Communications/14.01b_emails_json` (74,498 JSON files) and used `00-09_System/00_Index/search.db` for keyword frequency to quantify volume, sender mix, labels, attachments, and content themes.
+
+**Key Observations**
+- Volume surged from 1,549 (2020) → 23,831 (2025); 2023–2025 account for ~82% of all mail.
+- Sender mix is tool- and automation-heavy: top domains include `hackervalley.com` (28.3% of all “from”), `google.com`, `fathom.video`, `mail.notion.so`, `zoom.us`, and `notifications.hubspot.com`.
+- Labels show heavy triage load: `Archived` 98.8%, `Unread` 50.2%, `Important` 32.4%, `Category Personal` 36.8%, `Sent` 17.1%.
+- Content keywords in the search index are dominated by workflow + marketing: “unsubscribe” in 34.6% of emails, “meeting” 25.4%, “calendar” 20.9%, “podcast” 19.8%.
+- Collaboration signal is moderate: replies/forwards are ~22.2% of subjects; attachments appear in 22.8% of messages.
+
+**Insights**
+- The inbox is a high-volume operations hub driven by notifications and tooling; this skews attention toward reactive workflows.
+- Unread volume at ~50% suggests backlog risk and lower response reliability for high‑signal threads.
+- Meeting/podcast volume implies heavy scheduling overhead; likely a productivity drag without automation.
+- Finance/legal signals are non‑trivial (“invoice” 4.2%, “contract” 5.6%, “payment” 7.5%) and should be protected from noise.
+- Internal comms are sizable but still minority by “from” domain, implying external inbound dominates daily attention.
+
+**Opportunities**
+- Convert noisy tool notifications to digests and route low‑signal senders away from the primary inbox.
+- Introduce shared inboxes for sponsorships/partnerships/podcasts to reduce personal load and improve SLA.
+- Build better filters for finance/legal keywords to protect revenue and compliance items.
+- Systematically prune marketing/newsletters (unsubscribe prevalence is high) to reduce cognitive load.
+- Standardize attachment handling (drive links + auto‑save) to minimize scattered assets.
+
+**Connections**
+- Operations: Notion/HubSpot/Zoom/Wrike volume mirrors tooling/process overhead mentioned elsewhere.
+- Growth/revenue: podcast/sponsorship/proposal traffic connects directly to business development pipelines.
+- Finance/legal: invoice/contract/payment signals tie to financial management and risk control.
+- Personal boundaries: high `Category Personal` share suggests personal mail blending into work load.
+- Team health: volume + unread rate align with overload/throughput pressure risks.
+
+**Recommendations**
+- Implement inbox triage rules for top automated domains and labels; route to a “Read Later” or weekly digest folder.
+- Create a dedicated finance/legal label + alert rule for “invoice/contract/payment,” with a 24‑hour review SLA.
+- Move sponsorship/podcast traffic into a shared mailbox with templates and CRM tagging.
+- Run a quarterly subscription audit targeting the highest‑frequency “unsubscribe” domains; aim to cut marketing noise by 30–50%.
+- Establish a twice‑weekly “zero‑to‑inbox” ritual focused on `Unread` + `Important` to keep backlog down.
+
+**Triad Improvements**
+- `files_fts` in `00-09_System/00_Index/search.db` throws `fts5: missing row ... from content table` during MATCH queries, indicating an out‑of‑sync FTS index; recommend reindex or integrity checks in the indexing pipeline.

@@ -1,0 +1,35 @@
+**Key Observations**
+- `search.db` only indexes three areas (Work 177,167 files, System 4,359 files, Personal 42 files), so cross‑area search is structurally blind to Finance/Family/Growth/Social/Lifestyle content even if it exists. ` /Volumes/VRAM/00-09_System/00_Index/search.db`
+- Triad has produced 410 insights with 0 actionable items; confidence is heavily clustered at 0.5–0.6 with no 0.9+ outcomes. ` /Volumes/VRAM/00-09_System/01_Tools/triad/state/insights.json` ` /Volumes/VRAM/00-09_System/01_Tools/triad/state/confidence.json`
+- Family signals appear inside work transcripts (e.g., annual Orlando trip, “time for my family”), while the Family area itself remains empty (per prior outputs). ` /Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-06-522244293.md` ` /Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-07-523682405.md`
+- Personal reflection is present but thin (42 files), with structured intentions but limited downstream synthesis. ` /Volumes/VRAM/30-39_Personal/30_Reflection/30.01_daily/2025-10-29.md` ` /Volumes/VRAM/30-39_Personal/30_Reflection/30.02_weekly/2025-W42.md`
+- The Triad roadmap itself recognizes missing outputs (daily/weekly reports, opportunities, action items) despite strong source data volume. ` /Volumes/VRAM/00-09_System/01_Tools/triad/docs/plans/implementation-plan-v3.md`
+
+**Insights**
+- VRAM operates as a work‑first system: life signals (family/finance/health) are embedded inside work artifacts rather than being captured in their dedicated areas, creating “signal leakage” instead of ownership.
+- The capture→synthesis loop is the bottleneck: massive capture volume with minimal reflection output implies a system optimized for retention, not comprehension.
+- Triad’s analysis layer is isolated from life areas: insights accumulate in `state/` and `outputs/` without feeding Personal/Family/Finance folders, so value never lands where it can be used.
+- Actionability is blocked by missing validation cycles; without human confirmation loops, the 0.9 threshold is unreachable, leaving the system observational rather than directive.
+
+**Opportunities**
+- Expand indexing to include all life areas, so cross‑area insights can be discovered and linked consistently (Finance/Family/Growth/Social/Lifestyle currently absent from search).
+- Seed each empty area with a single “first file” to activate templates and Dataview queries; the system is already structured for this.
+- Turn Triad outputs into weekly summaries and area‑specific highlights (Family/Finance/Health) to close the synthesis loop.
+- Introduce an explicit validation channel (simple confirm/reject prompts) to lift confidence scores into actionable range.
+
+**Connections**
+- Work ↔ Personal: daily reflections mirror work priorities, while work transcripts contain personal and family narratives; the data already links these domains, but the folder structure does not.
+- Work ↔ Finance: the implementation plan prioritizes communications and meeting extraction for revenue intelligence, implying financial insights are most likely to originate in Work. ` /Volumes/VRAM/00-09_System/01_Tools/triad/docs/plans/implementation-plan-v3.md`
+- System ↔ Life Areas: Triad has the pipeline components (reports, insights, confidence tracking) but no delivery mechanism into Personal/Family/Finance, so System is decoupled from outcomes.
+
+**Recommendations**
+- 1) Rebuild or extend the index to cover all VRAM areas so cross‑area discovery is real, not theoretical. ` /Volumes/VRAM/00-09_System/00_Index/search.db`
+- 2) Create one seed file per empty life area (Goal, Family memory, Finance snapshot) to unlock existing templates and queries; this is the highest‑leverage “single‑file” activation.
+- 3) Route Triad outputs into weekly summaries under Personal and Family (e.g., `30_Reflection/30.02_weekly/` and `40-49_Family/41_Events/`) so insights land in the system that governs life decisions.
+- 4) Require every insight to include at least one file citation (path + snippet reference) to reduce unverified claims and increase trust. ` /Volumes/VRAM/00-09_System/01_Tools/triad/state/overseer-report.json`
+- 5) Add a lightweight validation loop (approve/reject tags on insights) to move confidence beyond the 0.9 actionability threshold.
+
+If you want me to proceed, I can:
+1) Draft a minimal seed‑file pack (paths + template content) for each empty life area.  
+2) Design a triage flow for validating insights to unlock actionability.  
+3) Outline an indexing expansion plan so cross‑area search becomes complete.

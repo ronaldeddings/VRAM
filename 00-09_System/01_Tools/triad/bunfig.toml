@@ -1,0 +1,17 @@
+# Bun configuration for Triad
+
+[run]
+# Enable hot reload for development
+hot = true
+
+[install]
+# Use exact versions for reproducibility
+exact = true
+
+[install.cache]
+# Cache packages locally
+dir = ".bun-cache"
+
+[test]
+# Test configuration
+coverage = true

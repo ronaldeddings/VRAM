@@ -1,0 +1,18 @@
+Usage: mcp-cli [options] [command]
+
+Interact with MCP servers and tools
+
+Options:
+  -V, --version                    output the version number
+  -h, --help                       display help for command
+
+Commands:
+  servers [options]                List all connected MCP servers
+  tools [options] [server]         List all available tools
+  info [options] <tool>            Get detailed information about a tool
+  call [options] <tool> <args>     Invoke an MCP tool
+  grep [options] <pattern>         Search tool names and descriptions using
+                                   regex patterns
+  resources [options] [server]     List MCP resources
+  read [options] <resource> [uri]  Read an MCP resource
+  help [command]                   display help for command

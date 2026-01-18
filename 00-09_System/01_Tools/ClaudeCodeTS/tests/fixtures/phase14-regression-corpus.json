@@ -1,0 +1,174 @@
+{
+  "scenarios": [
+    {
+      "name": "deny-precedence-and-managed-hooks",
+      "workspaceId": "ws_phase14",
+      "sources": {
+        "userSettings": {
+          "permissions": {
+            "deny": ["Bash"]
+          },
+          "hooks": {
+            "PostToolUse": [
+              {
+                "matcher": "*",
+                "hooks": [
+                  {
+                    "type": "workflow",
+                    "hookId": "hk_user",
+                    "actions": []
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "localSettings": {
+          "permissions": {
+            "allow": ["Bash"]
+          }
+        },
+        "policySettings": {
+          "allowManagedHooksOnly": true,
+          "permissions": {
+            "allowBypassPermissionsMode": false,
+            "allowSandboxOverride": false,
+            "allowLocalNetwork": false,
+            "restrictPersistenceDestinations": ["localSettings"]
+          },
+          "hooks": {
+            "PostToolUse": [
+              {
+                "matcher": "*",
+                "hooks": [
+                  {
+                    "type": "workflow",
+                    "hookId": "hk_policy",
+                    "actions": [
+                      {
+                        "kind": "UpdateToolOutput",
+                        "mode": "merge_data",
+                        "value": { "note": "policy" }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "flagSettings": {}
+      },
+      "toolInvocation": { "toolName": "Bash", "input": "echo hi" },
+      "mcpModeSelection": {
+        "serverId": "srv1",
+        "preferredMode": "endpoint",
+        "endpointAllowed": true,
+        "endpointPresent": false,
+        "directAvailable": true
+      },
+      "hookResolution": {
+        "effectiveSettings": {
+          "hooks": {
+            "PostToolUse": [
+              {
+                "matcher": "*",
+                "hooks": [
+                  {
+                    "type": "workflow",
+                    "hookId": "hk_user",
+                    "actions": []
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "policySettings": {
+          "hooks": {
+            "PostToolUse": [
+              {
+                "matcher": "*",
+                "hooks": [
+                  {
+                    "type": "workflow",
+                    "hookId": "hk_policy",
+                    "actions": [
+                      {
+                        "kind": "UpdateToolOutput",
+                        "mode": "merge_data",
+                        "value": { "note": "policy" }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "effectiveConfig": { "hooks": { "disabled": false, "managedOnly": true } }
+      },
+      "expected": {
+        "effectiveSettings": {
+          "allowManagedHooksOnly": true,
+          "permissions": {
+            "allow": ["Bash"],
+            "allowBypassPermissionsMode": false,
+            "allowLocalNetwork": false,
+            "allowSandboxOverride": false,
+            "deny": ["Bash"],
+            "restrictPersistenceDestinations": ["localSettings"]
+          }
+        },
+        "policy": {
+          "allowBypassPermissionsMode": false,
+          "allowLocalNetwork": false,
+          "allowSandboxOverride": false,
+          "canPersistTo": { "localSettings": true, "projectSettings": false, "userSettings": false },
+          "managedOnly": true,
+          "policyOrigin": "local",
+          "schemaVersion": 1
+        },
+        "toolPermissionDecision": {
+          "attribution": {
+            "matchedRule": {
+              "ruleBehavior": "deny",
+              "ruleValue": { "toolName": "Bash" },
+              "source": "userSettings"
+            },
+            "sources": ["userSettings"]
+          },
+          "behavior": "deny",
+          "reasonCode": "rule_deny"
+        },
+        "hooksCanonical": {
+          "PostToolUse": [
+            {
+              "hooks": [
+                {
+                  "actions": [
+                    {
+                      "kind": "UpdateToolOutput",
+                      "mode": "merge_data",
+                      "value": { "note": "policy" }
+                    }
+                  ],
+                  "concurrency": "sequential",
+                  "definitionVersion": 1,
+                  "hookId": "hk_906d9ac846872eec",
+                  "priority": 0,
+                  "source": "settings",
+                  "type": "workflow"
+                }
+              ],
+              "matcher": "*",
+              "matcherCompiled": { "kind": "match_all", "original": "*" },
+              "source": "settings"
+            }
+          ]
+        },
+        "mcpSelectedMode": "direct"
+      }
+    }
+  ]
+}

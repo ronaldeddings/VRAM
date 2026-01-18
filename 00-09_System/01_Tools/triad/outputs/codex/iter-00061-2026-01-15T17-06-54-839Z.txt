@@ -1,0 +1,37 @@
+AGENTS.md was not found under `/Volumes/VRAM`, so I proceeded with the default instructions.
+
+**Key Observations**
+- `/Volumes/VRAM/20-29_Finance` is fully scaffolded (banking/investments/taxes/insurance/real estate) but contains no documents beyond `.DS_Store`, so the finance area is effectively empty. `/Volumes/VRAM/20-29_Finance`
+- Personal reflections repeatedly mention gratitude for having money and “money in the bank,” but those references live in Personal notes rather than Finance. `/Volumes/VRAM/30-39_Personal/30_Reflection/30.01_daily/2025-10-07.md` `/Volumes/VRAM/30-39_Personal/30_Reflection/30.01_daily/2025-10-12.md` `/Volumes/VRAM/30-39_Personal/30_Reflection/30.01_daily/2025-11-11.md`
+- Business finance operations are active and discussed (QuickBooks spend audit, Bank of America access for tax prep, subscription cuts). `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-520901749.md`
+- A sizeable business tools expense ($55k) and tax write-off discussion exists in Work transcripts, not in Finance. `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-520901749.md`
+- Retirement/benefits planning exists in Work communications (401k plan email thread), but is not captured in Finance. `/Volumes/VRAM/10-19_Work/14_Communications/14.01_emails/2021/2021-09-10_155753_068915_Re Hacker Valley 401k Plan.md`
+
+**Insights**
+- Financial information exists but is scattered across Work transcripts/emails and Personal reflections; Finance is not functioning as the system of record.
+- Business finance appears operationally mature (QuickBooks, audits, cost-cutting), yet lacks a centralized decision log or document archive in Finance.
+- Retirement/benefits planning is present but likely under-documented for future retrieval (e.g., 401k plan thread lives in Work email).
+
+**Opportunities**
+- Build a lightweight capture pipeline to route finance-relevant items from Work/Personal into `/Volumes/VRAM/20-29_Finance`.
+- Establish a recurring “finance snapshot” note (monthly or quarterly) to consolidate balances, liabilities, and key changes.
+- Store QuickBooks exports (P&L, category summaries) under the current tax year folder to align with tax prep.
+- Consolidate benefits/retirement artifacts into `21_Investments/21.02_retirement` and `23_Insurance/23.01_health`.
+- Track recurring tools/subscriptions as a cost-control ledger tied to documented decisions.
+
+**Connections**
+- Personal reflections show money as a strong emotional and family-security theme; tying that to a financial dashboard could reinforce motivation. `/Volumes/VRAM/30-39_Personal/30_Reflection/30.01_daily/2025-10-31.md`
+- Work operations already include spending audits and QuickBooks hygiene, which can feed directly into Finance as formal records. `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-520901749.md`
+- Finance intersects with Business strategy (tool spend, tax planning) but isn’t archived where financial decisions are expected to live.
+
+**Recommendations**
+- Create a single capture point (e.g., `20-29_Finance/INBOX.md` or a dated log) and add a monthly “sweep” from Work/Personal finance mentions into the correct subfolders.
+- Export and file a monthly QuickBooks P&L + category detail into `22_Taxes/22.04_2026` to align audit/tax readiness with the active tax year.
+- Move retirement/benefits threads (e.g., 401k plan emails) into `21_Investments/21.02_retirement` and link them from a short index note.
+- Add a “Finance Decisions” log to record subscription cuts, tool reductions, and tax strategy changes for future reference.
+
+**Triad Improvements**
+- The search index reports an FTS integrity error (`fts5: missing row 549975`) when querying `files_fts`, indicating the index is out of sync and needs a rebuild or integrity check.
+- The session header reports “0 files in 0 subdirectories,” but `/Volumes/VRAM/20-29_Finance` contains multiple subdirectories; directory enumeration in Triad likely needs to be refreshed or corrected.
+
+If you want, I can draft a proposed Finance index template and a monthly snapshot schema to operationalize this quickly.

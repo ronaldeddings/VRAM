@@ -1,0 +1,8 @@
+function LoA(A){
+let Q=A.messages.find((G)=>G.slug)?.slug;
+if(!Q)return!1;
+ZM3(W0(),Q);
+let B=ZwA(rz(),`${
+Q}
+.md`);
+return jA().existsSync(B)}

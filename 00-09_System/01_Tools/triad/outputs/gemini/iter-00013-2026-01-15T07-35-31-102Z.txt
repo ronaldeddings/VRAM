@@ -1,0 +1,71 @@
+I will start by listing the contents of the `/Volumes/VRAM/10-19_Work` directory to clarify the structure and then inspect the database schema to verify the table names for querying content.
+
+I will list the contents of the `/Volumes/VRAM/10-19_Work/11_Mozilla` directory to assess the nature of the work stored there. Then, I will query the database for files containing "resume" or "bio" in their filename to identify self-descriptions.
+
+I will read the file "2023-05-12_130121_055495_Beyond the Resume The Art Of Crafting A Dynamic Di.md" to understand his career philosophy. I will also list the contents of the `/Volumes/VRAM/10-19_Work/11_Mozilla/11.01_projects` directory to identify his specific work projects.
+
+I will query the database for files containing "Mozilla" or "deliverable" to uncover the specifics of Ron's work and output, as his project folders are empty.
+
+I will read the meeting transcripts from January 2026 (`2026-01-08-526140322.md` and `2026-01-05-522568815.md`) and December 2023 (`2023-12-21-56363911.md`) to understand the nature of Ron's recent work with Mozilla, his specific role, and the topics of discussion.
+
+I will search for "Mozilla" within the file `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-08-526140322.md` to clarify the context of its mention.
+
+I will search for "Mozilla" within the `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/` directory to locate the specific file and context of the mention.
+
+I have analyzed the "Career & Skills" focus area for Ron Eddings.
+
+**Key Findings:**
+1.  **Dual Professional Identity:** Ron balances a public role as **CEO of Hacker Valley Media (HVM)** with a "deep work" role at **Mozilla**.
+    *   **Mozilla (Jan 2026):** Active engagement. Mozilla provides significant hardware (Mac Studio) and covers AI tooling costs (OpenAI). This suggests a high-value "Fellow" or "Technical Advisor" role, keeping his technical skills sharp and subsidized.
+    *   **HVM (Jan 2026):** Transitioning from "Creator" to "Executive". He is actively building an *operation* (hiring editors, defining "deliverable types", moving to NoCoDB) rather than just making content.
+
+2.  **Skill Evolution:**
+    *   **Past:** Cameraman, NSA Operator, Hands-on Editor.
+    *   **Present:** "Cyber Storyteller" & "Media Architect". He is teaching others (e.g., David Malicoat) how to be creators, effectively franchising his expertise.
+    *   **Gap:** He is still pulled into "weeds" (managing raw footage, folder structures) which distracts from strategy.
+
+3.  **Strategic Focus:**
+    *   **"Cyber Marketing":** HVM isn't just a podcast; it's a B2B marketing agency for cyber firms (CrowdStrike, Material Security, etc.).
+    *   **Events:** Major focus on **RSA** (March 2026) and **Cyber Marketing Con**, positioning him as a community anchor.
+
+---
+
+# Career & Skills Analysis: Ron Eddings (Iteration 13)
+
+## 1. Key Observations
+
+### The "Mozilla Engine" (Hidden Asset)
+While HVM is the public face, **Mozilla** appears to be the "technical engine" (and possibly financial stabilizer) behind the scenes.
+*   **Evidence:** "I have a Mac Studio desktop, compliments of Mozilla... We found my personal OpenAI, which Mozilla pays me for." (Jan 2, 2026).
+*   **Implication:** This role likely fuels his "AI/Tech" credibility, distinguishing him from generic media hosts. He isn't just talking about tech; he is *using* it on Mozilla's dime.
+
+### Industrializing Creativity (HVM)
+Ron is in the middle of a painful but necessary pivot from **Artist to Factory Owner**.
+*   **Current Struggle:** He is personally debugging "Descript" issues and "Google Drive" folder structures.
+*   **Active Solution:** Implementing **NoCoDB** for project tracking, defining standard "Deliverable Types" (Sizzle Reel vs. Social Clip), and creating "Blueprints" for client onboarding.
+*   **Goal:** "Deliver Faster Without Losing Quality" (Jan 8, 2026).
+
+### The "Network" Model
+He is moving beyond "Ron the Host" to "HVM the Network".
+*   **Example:** Launching **"The Professional CISO"** podcast with David Malicoat.
+*   **Role:** Ron acts as **Executive Producer**, providing the "kit", the "checklist", and the "strategy", effectively cloning his success for other voices.
+
+## 2. Insights & Connections
+
+*   **Skill Synergy:** His NSA background gives him *access* (trust with CISOs), his Cameraman background gives him *quality* (visuals/audio), and his Mozilla work gives him *modernity* (AI/Tech). This triad is his unique competitive advantage.
+*   **The "Operator" Trap:** He is the most technical person in his media company, which makes him the "IT Guy" for his creative staff (fixing their software bugs). This is a bottleneck.
+*   **Connection to "System":** The empty `10_Hacker_Valley_Media` folder vs. the rich `13_Meetings` folder confirms his "work" is entirely *conversational* and *relational*. He doesn't produce "files"; he produces "alignments".
+
+## 3. Opportunities
+
+*   **AI-Driven Agency:** He is manually trying to fix workflows that could be automated. Given his Mozilla AI access, he should **build internal AI agents** to handle the "raw footage" ingestion and "folder creation" tasks he hates.
+*   **"Producer" as a Service:** The model used for David Malicoat (Equipment + Strategy + Editing) is a scalable product line. He could launch 10 more industry voices without being on the mic himself.
+
+## 4. Recommendations
+
+*   **Immediate:** Hire or assign a "Technical Producer" to handle the file management/Descript troubleshooting. Ron's rate is too high to be debugging software sync issues.
+*   **Strategic:** Explicitly market the "HVM Media Stack" (the kits, workflows, and blueprints) as a product for corporate marketing teams, not just a service he delivers.
+*   **Personal:** Clarify the public narrative around Mozilla. If he is an "AI Fellow", leveraging that title could drastically increase HVM's rates for "AI Strategy" content.
+
+**Next Step for User:**
+Check `/Volumes/VRAM/10-19_Work/11_Mozilla` (specifically deep diving into *communications* about it) to see if this relationship can be further leveraged for HVM's growth.

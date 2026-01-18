@@ -1,0 +1,59 @@
+async function SH5(A,Q){
+let B=!Ra();
+if(Q.continue)try{
+r("tengu_continue_print",{
+}
+);
+let G=await Dl(void 0,void 0);
+if(G){
+if(!Q.forkSession){
+if(G.sessionId){
+if(E$(G.sessionId),B)await eL()}
+}
+return dc2(G.fileHistorySnapshots,A),G.messages}
+}
+catch(G){
+return s(G instanceof Error?G:Error(String(G))),f6(1),[]}
+if(Q.teleport)try{
+r("tengu_teleport_print",{
+}
+);
+let G=typeof Q.teleport==="string"?Q.teleport:null;
+await IQ1();
+let Z=await ZMA(G);
+return(await BMA(M0A(Z.log),Z.branch)).messages}
+catch(G){
+return s(G instanceof Error?G:Error(String(G))),f6(1),[]}
+if(Q.resume)try{
+r("tengu_resume_print",{
+}
+);
+let G=bc2(typeof Q.resume==="string"?Q.resume:"");
+if(!G){
+if(process.stderr.write(`Error: --resume requires a valid session ID when used with --print
+`),process.stderr.write(`Usage: claude -p --resume <session-id>
+`),typeof Q.resume==="string")process.stderr.write(`Session IDs must be in UUID format (e.g., 550e8400-e29b-41d4-a716-446655440000)
+`),process.stderr.write(`Provided value "${Q.resume}" is not a valid UUID
+`);
+return f6(1),[]}
+if(G.isUrl&&G.ingressUrl)await NLB(G.sessionId,G.ingressUrl);
+let Z=await Dl(G.sessionId,G.jsonlFile||void 0);
+if(!Z)if(G.isUrl)return await WU("startup");
+else return process.stderr.write(`No conversation found with session ID: ${
+G.sessionId}
+
+`),f6(1),[];
+if(Q.resumeSessionAt){
+let Y=Z.messages.findIndex((J)=>J.uuid===Q.resumeSessionAt);
+if(Y<0)return process.stderr.write(`No message found with message.uuid of: ${
+Q.resumeSessionAt}
+
+`),f6(1),[];
+Z.messages=Y>=0?Z.messages.slice(0,Y+1):[]}
+if(!Q.forkSession&&Z.sessionId){
+if(E$(Z.sessionId),B)await eL()}
+return dc2(Z.fileHistorySnapshots,A),Z.messages}
+catch(G){
+return s(G instanceof Error?G:Error(String(G))),process.stderr.write(`Failed to resume session with --print mode
+`),f6(1),[]}
+return await WU("startup")}

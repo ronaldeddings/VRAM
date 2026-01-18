@@ -1,0 +1,39 @@
+AGENTS.md not found under `/Volumes/VRAM`; proceeding with default instructions.
+
+**Key Observations**
+- Reflection is active but narrow: 40 daily notes + 2 weekly notes, with morning entries filled and evening sections mostly blank; see `30-39_Personal/30_Reflection/30.01_daily/2025-10-13.md` and `30-39_Personal/30_Reflection/30.02_weekly/2025-W42.md`.
+- Habit tracking is inconsistent: workout/meditation marked true in ~10/40 notes, deep work/family time in ~4/40; health experiments show up in prose (keto, alcohol‑free); see `30-39_Personal/30_Reflection/30.01_daily/2025-10-19.md`.
+- The “LifeArchitecture” scaffolding is referenced but not populated: goals/learning/health/messages/journals directories are effectively empty; e.g. `30-39_Personal/34_Goals`, `30-39_Personal/33_Learning`, `30-39_Personal/32_Health`.
+- Capture volume is massive and largely unprocessed: ~93k audio files in Limitless/Rewind/voice memos with no transcripts; see `30-39_Personal/31_Capture/31.02_limitless` and `30-39_Personal/31_Capture/31.01_voice_memos`.
+- Values show up repeatedly in gratitude/intention: family, money security, and creative/work output (podcasts, media, research); see `30-39_Personal/30_Reflection/30.01_daily/2025-10-07.md` and `30-39_Personal/30_Reflection/30.01_daily/2025-11-11.md`.
+
+**Insights**
+- There’s a strong reflection habit but a weak execution loop: daily journaling doesn’t land in goals/tasks, so insights don’t compound.
+- The real “growth reservoir” appears to be audio capture; without transcription/synthesis, it stays inert.
+- Emotional tone suggests high agency with periodic friction around schedule/energy and team dynamics; this is a leverage point for routines.
+- Family and financial stability are primary motivators; these could anchor goal‑setting and habit design.
+- Weekly review exists as a template but is not activated, so strategic recalibration is missing.
+
+**Opportunities**
+- Close the reflection loop by converting morning intentions into 1–3 concrete “next actions.”
+- Use a minimal weekly review to turn patterns into commitments (theme, top 3 priorities, one habit).
+- Extract insights from audio at low cost (batch transcription + brief summaries) to feed learning/goals.
+- Reduce tracking friction by focusing on two health metrics and one keystone habit.
+- Move “values” (family, financial security) into scheduled, visible actions.
+
+**Connections**
+- Work: regular references to podcasts, Odin/Hacker Valley Media, Mozilla, Via Science, Nagomi; this ties personal growth to `10-19_Work` planning and delivery; see `30-39_Personal/30_Reflection/30.01_daily/2025-11-11.md`.
+- Family: gratitude and intentions center on family and Monika; natural link to `40-49_Family` for planning shared time; see `30-39_Personal/30_Reflection/30.01_daily/2025-10-13.md`.
+- Finance: money appears as gratitude but finance folders are empty; aligns with the “security” theme and `20-29_Finance`; see `30-39_Personal/30_Reflection/30.01_daily/2025-10-07.md`.
+- Health/Lifestyle: keto, alcohol‑free, sleep variation, vasectomy recovery; should live in `32_Health` and `70-79_Lifestyle`; see `30-39_Personal/30_Reflection/30.01_daily/2025-10-19.md` and `30-39_Personal/30_Reflection/30.01_daily/2025-10-24.md`.
+- Learning/Growth: AI/cybersecurity research is woven into daily notes; create a landing zone in `33_Learning` or `60-69_Growth`.
+
+**Recommendations**
+- Stand up a minimal active goals file with 1–3 goals and review dates in `30-39_Personal/34_Goals`; point daily/weekly notes to it.
+- Commit to a 3‑minute evening close (wins + lessons + tomorrow’s intention) at least 3x/week in `30-39_Personal/30_Reflection/30.01_daily`.
+- Activate the weekly review: fill theme/focus and top 3 priorities in `30-39_Personal/30_Reflection/30.02_weekly/2025-W42.md` and set `weekly_review_completed: true`.
+- Build a capture‑to‑insight pipeline: transcribe `30-39_Personal/31_Capture/31.01_voice_memos` and `30-39_Personal/31_Capture/31.02_limitless`, then summarize into `33_Learning` or a new `31_Capture/31.04_transcripts`.
+- Simplify tracking: choose two metrics (sleep hours, mood) + one habit (meditation or workout) and record consistently for 30 days.
+
+**Triad Improvements**
+- The FTS index appears out of sync (fts5 missing row error when querying); consider adding a fallback to `files` table or a rebuild step so search remains reliable.

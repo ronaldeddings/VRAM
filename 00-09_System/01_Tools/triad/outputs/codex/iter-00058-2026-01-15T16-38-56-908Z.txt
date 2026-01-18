@@ -1,0 +1,40 @@
+Pulled signals from `/Volumes/VRAM/00-09_System/00_Index/search.db` scoped to `/Volumes/VRAM/10-19_Work/14_Communications`.
+
+**Key Observations**
+- 170,010 comms files split into 74,498 `emails_json`, 74,497 `emails_md`, and 21,015 Slack files (no “other” bucket in index).
+- Opportunity‑adjacent language surged post‑2023: 20,071 matches in 2024 and 21,148 in 2025 (FTS doc counts for opportunity/sponsor/partner/proposal/next steps, etc.).
+- Sponsorship mentions stay high: 5,372 (2024) → 4,063 (2025), suggesting slightly softer inbound but still strong volume.
+- Event/speaking terms dominate: 23,444 (2024) and 21,432 (2025); media/podcast terms show heavy overlap (43,647 total matches).
+- Follow‑up pressure is substantial: 16,631 “follow up” variants, 10,231 “next steps,” and 16,001 “intro/introduction.”
+- “Media kit / rate card / sponsor deck” appears 3,986 times—clear repeat need for a standardized response package.
+
+**Insights**
+- The opportunity pipeline is skewed toward speaking + media invitations, not just sponsorships—good for brand growth but can cannibalize revenue focus without clear qualification.
+- Sponsorship volume dipped in 2025 while “opportunity” language rose, which often indicates more conversations but fewer closings; a conversion bottleneck is likely.
+- Repeated follow‑up language suggests leakage in the late‑stage pipeline; likely lost deals or stalled decisions without a structured follow‑up cadence.
+- Top external domains in opportunity‑matched emails skew toward cybersecurity vendors and event organizers (e.g., `crowdstrike.com`, `sans.org`, `attackiq.com`, `picussecurity.com`, `cyberproof.com`, `axonius.com`, `netspi.com`, `email.webbyawards.com`, `messages1.blackhat.com`, `techcrunch.com`).
+
+**Opportunities**
+- Build a prioritized “Top 50” outreach list from high‑frequency external domains to formalize sponsorship/partner targeting.
+- Package a fast‑response sponsorship kit (media kit + rate card + audience metrics + inventory calendar) to reduce response time on 3,986+ repeat asks.
+- Create a follow‑up SLA (e.g., 2/7/21‑day cadence) for any thread containing “next steps” or “follow up,” likely reclaiming stalled deals.
+- Treat intros as a growth channel: convert “intro/introduction” threads into a structured referral pipeline with light nurture.
+
+**Connections**
+- Finance: sponsorships/speaking fees are likely a top revenue lever; integrate opportunity tracking with `/Volumes/VRAM/20-29_Finance`.
+- Growth: media/podcast invites drive audience; align with marketing assets under `/Volumes/VRAM/60-69_Growth`.
+- Social: high intro volume implies a relationship‑led network effect; cross‑reference with `/Volumes/VRAM/50-59_Social`.
+- Work ops: Slack volume indicates internal coordination overhead; improved triage reduces context switching.
+
+**Recommendations**
+1) Stand up an opportunity dashboard that tags each thread with type (sponsor, event, media, vendor) and stage (new, qualified, proposal, follow‑up).  
+2) Build a single canonical sponsorship kit and link it in saved replies; track when it’s sent.  
+3) Auto‑generate a weekly “follow‑up queue” from threads containing “next steps”/“follow up” and assign owners.  
+4) Create a top‑domain outreach plan (10–15 cybersecurity vendors + 5–10 event orgs) with a quarterly cadence.
+
+**Triad Improvements**
+- Index email JSON headers (from, subject, date) into `search.db` fields to enable structured sender/subject analysis without full‑file parsing.
+- Derive year from metadata instead of filename to avoid non‑year prefixes (`chan`, `mpim`, `user`) leaking into year buckets.
+- Add a lightweight opportunity classifier (keyword + domain + doc‑type) so each scan can output a ranked pipeline list automatically.
+
+If you want, I can generate the Top‑50 domain list with contact counts and a suggested outreach cadence.

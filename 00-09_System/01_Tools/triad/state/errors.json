@@ -1,0 +1,10 @@
+{
+  "errors": [],
+  "healingAttempts": [],
+  "stats": {
+    "totalErrors": 0,
+    "totalHealingAttempts": 0,
+    "successfulHeals": 0
+  },
+  "lastError": null
+}

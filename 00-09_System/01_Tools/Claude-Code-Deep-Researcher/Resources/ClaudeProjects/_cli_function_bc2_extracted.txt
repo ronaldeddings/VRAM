@@ -1,0 +1,14 @@
+function bc2(A){
+try{
+let Q=new URL(A);
+return{
+sessionId:fc2(),ingressUrl:Q.href,isUrl:!0,jsonlFile:null,isJsonlFile:!1}
+}
+catch{
+if(QC(A))return{
+sessionId:A,ingressUrl:null,isUrl:!1,jsonlFile:null,isJsonlFile:!1}
+;
+if(A.endsWith(".jsonl"))return{
+sessionId:fc2(),ingressUrl:null,isUrl:!1,jsonlFile:A,isJsonlFile:!0}
+}
+return null}

@@ -1,0 +1,56 @@
+async function etA(A){
+if(!o7())return;
+let Q=A.fileHistorySnapshots;
+if(!Q||A.messages.length===0)return;
+let G=A.messages[A.messages.length-1]?.sessionId;
+if(!G){
+s(Error("FileHistory: Failed to copy backups on restore (no previous session id)"));
+return}
+let Z=W0();
+if(G===Z){
+f(`FileHistory: No need to copy file history for resuming with same session id: ${
+Z}
+`);
+return}
+try{
+for(let Y of Q){
+let J=!1;
+for(let[I,X]of Object.entries(Y.trackedFileBackups)){
+if(!X.backupFileName)continue;
+let W=jA(),K=hGA(X.backupFileName,G),V=hGA(X.backupFileName,Z);
+if(W.existsSync(V))continue;
+if(!W.existsSync(K)){
+s(Error(`FileHistory: Failed to copy backup ${
+X.backupFileName}
+ on restore (backup file does not exist in ${
+G}
+)`)),J=!0;
+break}
+let E=fn1(V);
+if(!W.existsSync(E))W.mkdirSync(E);
+try{
+W.linkSync(K,V)}
+catch{
+s(Error("FileHistory: Error hard linking backup file from previous session"));
+try{
+W.copyFileSync(K,V)}
+catch{
+J=!0,s(Error("FileHistory: Error copying over backup from previous session"))}
+}
+f(`FileHistory: Copied backup ${
+X.backupFileName}
+ from session ${
+G}
+ to ${
+Z}
+`)}
+if(!J)otA(Y.messageId,Y,!1).catch((I)=>{
+s(Error("FileHistory: Failed to record copy backup snapshot"))}
+);
+else r("tengu_file_history_resume_copy_failed",{
+numSnapshots:Q.length}
+)}
+}
+catch(Y){
+s(Y)}
+}

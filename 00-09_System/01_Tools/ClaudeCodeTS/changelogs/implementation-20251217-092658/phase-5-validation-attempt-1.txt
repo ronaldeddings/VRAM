@@ -1,0 +1,117 @@
+== VALIDATION: phase 5 ==
+
+$ bun test tests/phase5*
+bun test v1.3.4 (5eb2145b)
+
+tests/phase5-queues-and-viewmodels.test.ts:
+(pass) Phase 5: queues, lifecycle, and UI adapter view models > tool permission queue resolves deterministically and can request persistence [1.29ms]
+(pass) Phase 5: queues, lifecycle, and UI adapter view models > elicitation cancellation propagates via effects [0.18ms]
+(pass) Phase 5: queues, lifecycle, and UI adapter view models > backgrounding clears ephemeral UI queues and emits cancellation effects [0.45ms]
+(pass) Phase 5: queues, lifecycle, and UI adapter view models > multi-session model enforces a single active session [0.12ms]
+(pass) Phase 5: queues, lifecycle, and UI adapter view models > UI view models share identical transcript semantics across adapters [0.77ms]
+
+tests/phase5-state.test.ts:
+(pass) Phase 5: app/session state model > create session command sets active session when requested [0.18ms]
+(pass) Phase 5: app/session state model > overlay selection reflects queue state deterministically [0.23ms]
+(pass) Phase 5: app/session state model > transcript semantic renderer produces stable summaries [0.09ms]
+
+ 8 pass
+ 0 fail
+ 27 expect() calls
+Ran 8 tests across 2 files. [26.00ms]
+
+$ bun test
+bun test v1.3.4 (5eb2145b)
+
+tests/phase3-event-bus.test.ts:
+(pass) Phase 3: event bus semantics > emits monotonic seq per channel and supports cursors [1.18ms]
+(pass) Phase 3: event bus semantics > recording helper captures envelopes and can be stopped [0.18ms]
+(pass) Phase 3: event bus semantics > includeSnapshot yields a snapshot envelope before live events [0.16ms]
+(pass) Phase 3: event bus semantics > coalescing policy can replace queued events deterministically [0.12ms]
+
+tests/phase4-leak-prevention.test.ts:
+(pass) Phase 4: capability leak prevention heuristics > no module-level HostCapabilities singletons in portable src/core [8.90ms]
+
+tests/phase3-replay-adapters.test.ts:
+(pass) Phase 3: replay/adapter conformance > event streams roundtrip through web/node/RN adapter shapes [3.38ms]
+(pass) Phase 3: replay/adapter conformance > diff classifier treats UI-only differences as benign_ui
+
+tests/phase4-capabilities.test.ts:
+(pass) Phase 4: host capabilities > requireCapability throws typed errors [0.03ms]
+(pass) Phase 4: host capabilities > capability view can policy-deny individual caps [0.14ms]
+(pass) Phase 4: host capabilities > capability compliance report flags missing required [0.20ms]
+(pass) Phase 4: host capabilities > node storage provides CAS semantics [2.51ms]
+(pass) Phase 4: host capabilities > portable path normalization is POSIX-like [0.22ms]
+(pass) Phase 4: host capabilities > retry/backoff is deterministic with injected RNG [0.22ms]
+
+tests/phase3-replay-conformance.test.ts:
+(pass) Phase 3: replay-style conformance (kernel/event bus baseline) > deterministic scenario produces identical normalized outputs across runs [1.43ms]
+
+tests/phase5-queues-and-viewmodels.test.ts:
+(pass) Phase 5: queues, lifecycle, and UI adapter view models > tool permission queue resolves deterministically and can request persistence [0.59ms]
+(pass) Phase 5: queues, lifecycle, and UI adapter view models > elicitation cancellation propagates via effects [0.28ms]
+(pass) Phase 5: queues, lifecycle, and UI adapter view models > backgrounding clears ephemeral UI queues and emits cancellation effects [0.33ms]
+(pass) Phase 5: queues, lifecycle, and UI adapter view models > multi-session model enforces a single active session
+(pass) Phase 5: queues, lifecycle, and UI adapter view models > UI view models share identical transcript semantics across adapters [0.40ms]
+
+tests/phase5-state.test.ts:
+(pass) Phase 5: app/session state model > create session command sets active session when requested [0.06ms]
+(pass) Phase 5: app/session state model > overlay selection reflects queue state deterministically [0.12ms]
+(pass) Phase 5: app/session state model > transcript semantic renderer produces stable summaries [0.08ms]
+
+tests/phase1-fixtures.test.ts:
+(pass) Phase 1 fixtures: sanitization > fixtures do not contain obvious secrets [3.55ms]
+
+tests/phase3-runtime.test.ts:
+(pass) Phase 3: deterministic runtime kernel > task yields and resumes deterministically [0.13ms]
+(pass) Phase 3: deterministic runtime kernel > timeouts abort tasks and resolve as timeout results [0.32ms]
+(pass) Phase 3: deterministic runtime kernel > concurrency limiter blocks and unblocks deterministically [0.15ms]
+(pass) Phase 3: deterministic runtime kernel > streams emit sequenced events and snapshot tracks them [0.31ms]
+(pass) Phase 3: deterministic runtime kernel > tool streams block producers under backpressure by default [0.13ms]
+(pass) Phase 3: deterministic runtime kernel > closing a scope cancels in-flight tasks without leaking timers [0.11ms]
+(pass) Phase 3: deterministic runtime kernel > parent task cancellation fans out to explicitly-parented child tasks [0.20ms]
+(pass) Phase 3: deterministic runtime kernel > fail-fast task errors cancel the rest of the scope deterministically [0.11ms]
+(pass) Phase 3: deterministic runtime kernel > hang detector fires once per category until progress resumes [0.11ms]
+(pass) Phase 3: deterministic runtime kernel > scheduler fairness: low priority is not starved by high priority [0.11ms]
+
+tests/phase1-legacy-spec.test.ts:
+(pass) Phase 1: legacy spec carry-over > overlay precedence matches captured legacy order
+(pass) Phase 1: legacy spec carry-over > permission rule parse/format roundtrip [0.09ms]
+(pass) Phase 1: legacy spec carry-over > bundle env vars include legacy MCP CLI toggles [28.33ms]
+(pass) Phase 1: legacy spec carry-over > bundle contains canonical settings-source precedence list [9.53ms]
+(pass) Phase 1: legacy spec carry-over > bundle contains canonical permission rule-source precedence list [50.14ms]
+(pass) Phase 1: legacy spec carry-over > bundle contains hook event names captured in v3 spec [55.55ms]
+(pass) Phase 1: legacy spec carry-over > MCP CLI env gates match observed bundle behavior [0.12ms]
+(pass) Phase 1: legacy spec carry-over > bundle `--mcp-cli` is gated by ENABLE_EXPERIMENTAL_MCP_CLI [935.54ms]
+(pass) Phase 1: legacy spec carry-over > both bundles agree on MCP CLI gating snapshot (env/flag mapping) [1999.48ms]
+
+tests/phase3-shutdown-summary.test.ts:
+(pass) Phase 3: scope shutdown summaries > closing a session scope can emit a bounded shutdown summary event [0.88ms]
+
+tests/phase2-architecture-boundaries.test.ts:
+(pass) Phase 2: architecture/boundaries > import boundary script passes [35.71ms]
+(pass) Phase 2: architecture/boundaries > host capability smoke check reports missing required [0.14ms]
+(pass) Phase 2: architecture/boundaries > host capability smoke check passes for provided adapters (node/rn/web) [0.33ms]
+(pass) Phase 2: architecture/boundaries > canonical JSON stringification is stable (key order) [0.04ms]
+
+tests/phase4-mobile-safe-conformance.test.ts:
+(pass) Phase 4: minimal mobile-safe conformance > boots with no filesystem/process/local endpoints and core subsystems still function [0.48ms]
+
+tests/phase3-determinism.test.ts:
+(pass) Phase 3: determinism helpers > seeded random produces stable UUIDs for a given seed [0.36ms]
+(pass) Phase 3: determinism helpers > kernel snapshot is stable and sorted [0.25ms]
+(pass) Phase 3: determinism helpers > core stream summary uses hash + counters (no raw transcript storage) [1.23ms]
+(pass) Phase 3: determinism helpers > node filesystem adapter returns deterministic directory listings [1.56ms]
+
+ 52 pass
+ 0 fail
+ 209 expect() calls
+Ran 52 tests across 14 files. [3.18s]
+
+$ bun run typecheck
+$ tsc -p tsconfig.json --noEmit
+
+$ bun run check:boundaries
+$ node scripts/check-import-boundaries.mjs
+Import boundary check passed.
+

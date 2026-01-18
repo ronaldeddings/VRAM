@@ -1,0 +1,33 @@
+**Key Observations**
+- The Finance hierarchy is fully scaffolded (banking/investments/taxes/insurance/real estate) but contains no real files beyond OS metadata; it’s effectively empty right now (`20-29_Finance/20_Banking`, `20-29_Finance/21_Investments`, `20-29_Finance/22_Taxes`, `20-29_Finance/.DS_Store`).
+- Personal finance mentions appear only as gratitude statements in daily reflections: “Having money in our accounts to support our family,” “MONEY! Having enough to support my family,” “MONEY! I love to have it and spend it,” and “Money in the bank” (`30-39_Personal/30_Reflection/30.01_daily/2025-10-07.md`, `30-39_Personal/30_Reflection/30.01_daily/2025-10-12.md`, `30-39_Personal/30_Reflection/30.01_daily/2025-10-31.md`, `30-39_Personal/30_Reflection/30.01_daily/2025-11-11.md`).
+- Work meetings include concrete budget discussions (e.g., $5,600 labor/gear and an $88,000 budget) indicating financial decisions are happening in operations (`10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-09-528348266.md`).
+- Financial sentiment is tightly linked to family support and personal security in reflections, not to tracking or planning (`30-39_Personal/30_Reflection/30.01_daily/2025-10-07.md`, `30-39_Personal/30_Reflection/30.01_daily/2025-10-12.md`).
+
+**Insights**
+- There’s a clear gap between intent (well-structured Finance folders) and execution (no stored financial artifacts), which limits visibility and continuity.
+- Money shows up as a value signal (gratitude, family support) rather than as an operational system; the emotional importance is strong, but the tracking system is missing.
+- Business budget activity is visible in Work, suggesting finance tracking is occurring informally inside project conversations rather than in a central finance system.
+- Tax years and insurance categories exist but are empty; if documents live elsewhere, discoverability/compliance risk increases.
+
+**Opportunities**
+- Establish a minimal monthly “financial snapshot” note to seed the Finance area (balances, cash flow, savings rate, debts).
+- Consolidate project budget decisions into a lightweight business ledger to understand margins and pricing.
+- Create a finance index document that links to accounts, policies, and tax years to reduce search friction.
+- Add a recurring “money check” prompt to daily or weekly reflections to link emotion and action.
+
+**Connections**
+- Personal wellbeing and family security are directly tied to financial sentiment in reflections (`30-39_Personal/30_Reflection/30.01_daily/2025-10-12.md`, `30-39_Personal/30_Reflection/30.01_daily/2025-11-11.md`).
+- Work operations involve budgeting and cost decisions, which should feed the finance system (`10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-09-528348266.md`).
+- The daily note template already includes goals/metrics sections, making it a natural bridge for lightweight financial tracking (`30-39_Personal/30_Reflection/30.01_daily/2025-10-07.md`).
+
+**Recommendations**
+- Create a `Finance Overview` note listing accounts, current balances, and update cadence; store it under `20-29_Finance/20_Banking` for a single starting anchor.
+- Drop the last 1–2 months of statements into `20-29_Finance/20_Banking/20.01_checking`, `20-29_Finance/20_Banking/20.02_savings`, and `20-29_Finance/20_Banking/20.03_credit_cards` with a consistent naming convention (e.g., `YYYY-MM-bank.pdf`).
+- Build a simple project budget tracker (estimate vs actual) that aggregates key numbers from Work transcripts; keep it in `20-29_Finance/21_Investments` or a new “Business” note under Finance.
+- Add a 2025 tax checklist file in `20-29_Finance/22_Taxes/22.03_2025` with required forms, due dates, and source docs.
+- Add a weekly “money check” line item to the reflection workflow (e.g., one sentence on spending/saving momentum).
+
+**Triad Improvements**
+- The search index appears inconsistent; I hit `fts5: missing row ...` during Finance-related queries, which suggests `search.db` needs a rebuild/integrity check to avoid partial results.
+- When a focus area is structurally present but empty, Triad should surface “related mentions elsewhere” automatically (e.g., Work budget transcripts and Personal gratitude entries) and flag the gap.

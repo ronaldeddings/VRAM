@@ -1,0 +1,13 @@
+async function ku3(A){
+let Q=new Map,B=0;
+for(let J of A){
+let I=J.messages[0]?.sessionId;
+if(I){
+let X=(Q.get(I)||0)+1;
+Q.set(I,X),B=Math.max(X,B)}
+}
+if(B<=1)return;
+let G=Array.from(Q.values()).filter((J)=>J>1),Z=G.length,Y=G.reduce((J,I)=>J+I,0);
+r("tengu_session_forked_branches_fetched",{
+total_sessions:Q.size,sessions_with_branches:Z,max_branches_per_session:Math.max(...G),avg_branches_per_session:Math.round(Y/Z),total_transcript_count:A.length}
+)}

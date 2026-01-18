@@ -1,0 +1,5 @@
+async function yn1(A){
+let Q=tS(KH(pQ()),`${
+A}
+.jsonl`);
+return bGA(Q)}

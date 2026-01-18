@@ -1,0 +1,39 @@
+{
+  "overall": "degraded",
+  "checks": [
+    {
+      "name": "server",
+      "status": "healthy",
+      "message": "Server is running",
+      "lastChecked": "2026-01-15T18:52:08.761Z"
+    },
+    {
+      "name": "agents",
+      "status": "healthy",
+      "message": "All agents available: claude, codex, gemini",
+      "lastChecked": "2026-01-15T18:52:08.768Z"
+    },
+    {
+      "name": "search_db",
+      "status": "healthy",
+      "message": "Search database accessible",
+      "lastChecked": "2026-01-15T18:52:08.768Z"
+    },
+    {
+      "name": "filesystem",
+      "status": "healthy",
+      "message": "VRAM filesystem accessible",
+      "lastChecked": "2026-01-15T18:52:08.768Z"
+    },
+    {
+      "name": "memory",
+      "status": "degraded",
+      "message": "High memory: 645MB RSS, 22MB heap",
+      "lastChecked": "2026-01-15T18:52:08.768Z"
+    }
+  ],
+  "consecutiveFailures": 0,
+  "uptime": 19005801,
+  "lastHealthy": "2026-01-15T18:52:08.768Z",
+  "savedAt": "2026-01-15T18:52:08.770Z"
+}

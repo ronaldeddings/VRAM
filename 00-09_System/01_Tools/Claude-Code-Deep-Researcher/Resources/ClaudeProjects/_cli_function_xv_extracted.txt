@@ -1,0 +1,23 @@
+async function xv(A){
+try{
+let Q=await cR9(A,"utf8");
+if(!Q.trim())return[];
+return Q=C9A(Q),Q.split(`
+`).filter((B)=>B.trim()).map((B)=>{
+try{
+return JSON.parse(B)}
+catch(G){
+return s(Error(`Error parsing line in ${
+A}
+: ${
+G}
+`)),null}
+}
+).filter((B)=>B!==null)}
+catch(Q){
+return s(Error(`Error opening file ${
+A}
+: ${
+Q}
+`)),[]}
+}

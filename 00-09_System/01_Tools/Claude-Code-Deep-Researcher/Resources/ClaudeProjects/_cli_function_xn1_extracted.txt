@@ -1,0 +1,6 @@
+async function xn1(A,Q){
+await rW().appendEntry({
+type:"tag",tag:Q,sessionId:A}
+),rW().tags.set(A,Q),r("tengu_session_tagged",{
+}
+)}

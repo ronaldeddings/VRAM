@@ -1,0 +1,8 @@
+async function fu3(A){
+let Q=await rW().getAllTranscripts(A),B=rW().summaries,G=rW().customTitles,Z=rW().tags,Y=Q.map((J,I)=>{
+let X=J[J.length-1],W=X?B.get(X.uuid):void 0,K=X?G.get(X.sessionId):void 0,V=X?Z.get(X.sessionId):void 0,E=Pn1(rW().fileHistorySnapshots,J);
+return Sn1(J,I,W,K,E,V)}
+).sort((J,I)=>{
+return I.modified.getTime()-J.modified.getTime()}
+);
+return await ku3(Y),Y}

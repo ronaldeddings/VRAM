@@ -1,0 +1,36 @@
+**Key Observations**
+- Work and Personal dominate volume: ~180k files in `10-19_Work` (mostly `10-19_Work/14_Communications` and `10-19_Work/13_Meetings`) and ~93k in `30-39_Personal`, with most in `30-39_Personal/31_Capture`.
+- Other top-level areas are empty scaffolds (0 files in `20-29_Finance`, `40-49_Family`, `50-59_Social`, `60-69_Growth`, `70-79_Lifestyle`, `80-89_Resources`, `90-99_Archive`).
+- Personal capture is almost entirely audio clips (Limitless/Rewind), while reflections are only 42 files in `30-39_Personal/30_Reflection`.
+- Daily notes embed dashboards for `LifeArchitecture/Tasks` and `LifeArchitecture/Goals`, but I could not find any `LifeArchitecture` files under VRAM; examples in `30-39_Personal/30_Reflection/30.01_daily/2025-10-12.md`.
+- Data scales drift and evenings are largely empty (sleep_quality 7.6 in `30-39_Personal/30_Reflection/30.01_daily/2025-10-11.md` vs 77 in `30-39_Personal/30_Reflection/30.01_daily/2025-11-18.md`).
+
+**Insights**
+- Ingestion outpaces synthesis: automated meeting/comms and audio capture are rich, but goals/health/learning remain empty, so insights rarely operationalize.
+- Work is the de facto life hub: meetings include explicit personal context and boundary discussions, effectively mixing domains (see `10-19_Work/13_Meetings/13.01_transcripts/2023/2023-10-10-41757558.md`).
+- Boundary tension is recurring: personal notes explicitly try to limit work spillover and protect family time (see `30-39_Personal/30_Reflection/30.01_daily/2025-10-11.md` and `30-39_Personal/30_Reflection/30.01_daily/2025-11-18.md`).
+- Family and financial security are core values but lack a home (gratitude about supporting family in `30-39_Personal/30_Reflection/30.01_daily/2025-10-12.md`, while `20-29_Finance` and `40-49_Family` are empty).
+- Health is present but inconsistent; back pain and sleep variability show up without a tracking system (see `30-39_Personal/30_Reflection/30.01_daily/2026-01-04.md`).
+
+**Opportunities**
+- Transcribe or summarize audio capture from `30-39_Personal/31_Capture/31.02_limitless` and `30-39_Personal/31_Capture/31.03_rewind` into weekly highlights.
+- Create minimal anchor docs for Finance, Family, Health, and Goals to make dashboards real and searchable.
+- Turn communications/meeting artifacts into project briefs so `10-19_Work/10_Hacker_Valley_Media`, `10-19_Work/11_Mozilla`, and `10-19_Work/12_Clients` stop being empty shells.
+- Simplify the daily note template to 3 evening prompts to raise completion and reduce data drift.
+- Use meeting metadata to track life constraints explicitly (e.g., family appointments already appear in `10-19_Work/13_Meetings/13.03_metadata/2026/2026-01-05-522666981.json`).
+
+**Connections**
+- Work ↔ Personal: intent to align personal goals and work culture is explicitly stated in `10-19_Work/13_Meetings/13.01_transcripts/2023/2023-10-10-41757558.md`.
+- Work ↔ Family: scheduling around Ava’s allergy appointment appears inside work meeting metadata in `10-19_Work/13_Meetings/13.03_metadata/2026/2026-01-05-522666981.json`.
+- Personal ↔ Finance: money as gratitude for family support shows in `30-39_Personal/30_Reflection/30.01_daily/2025-10-12.md`.
+- Personal ↔ Health: sleep and pain notes appear in `30-39_Personal/30_Reflection/30.01_daily/2025-10-11.md` and `30-39_Personal/30_Reflection/30.01_daily/2026-01-04.md`.
+- System ↔ All: Triad analysis depends on the search index, but FTS queries currently error, which limits cross-area retrieval.
+
+**Recommendations**
+- Create a minimal `LifeArchitecture` folder or update daily templates to point to real paths; otherwise remove the broken Dataview queries in `30-39_Personal/30_Reflection/30.01_daily/2025-10-12.md`.
+- Add a weekly synthesis ritual: pick 3 capture highlights and log one goal/action into a new `30-39_Personal/34_Goals` file.
+- Standardize sleep quality to a 1–10 scale and enforce it in daily notes; update the template to make evening fields required.
+- Start a lightweight project summary file per work stream and append meeting/comms highlights weekly to `10-19_Work/10_Hacker_Valley_Media`, `10-19_Work/11_Mozilla`, and `10-19_Work/12_Clients`.
+- Triad improvement: rebuild or validate the `files_fts` index and expand indexing coverage beyond Work/System/Personal to avoid missing-row errors and blind spots.
+
+If you want, I can propose a minimal folder/file template for Goals/Health/Finance/Family that keeps overhead under 5 minutes per week.

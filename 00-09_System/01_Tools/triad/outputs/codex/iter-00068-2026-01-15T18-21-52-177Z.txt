@@ -1,0 +1,38 @@
+**Key Observations**
+- Smaller team feels more cohesive with fewer personality clashes, but the transition period feels overwhelming and too thin; there’s a deliberate push to focus on repeatable podcast work (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2025/2025-06-24-335569042.md:331`, `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2025/2025-06-24-335569042.md:333`, `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2025/2025-06-24-335569042.md:351`, `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2025/2025-06-24-335569042.md:355`, `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2025/2025-06-24-335569042.md:359`)
+- Live streams/DMAs are a stress point and bandwidth is questioned before taking on more podcasts; both Ron and Emily flag the need for another person to expand capacity (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2024/2024-12-11-195753508.md:87`, `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2024/2024-12-11-195753508.md:433`, `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2024/2024-12-11-195753508.md:437`, `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2024/2024-12-11-195753508.md:459`)
+- Capacity limits are not yet quantified, and there’s explicit intent to avoid week‑after‑week live streams to protect workload (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-520901749.md:705`, `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-520901749.md:709`)
+- Manual work is still heavy (copy/paste, prompt templates), and automation plus better time tracking are identified as key to team happiness and scalability (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-520901749.md:641`, `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-520901749.md:651`, `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-520901749.md:683`)
+- Active hiring pressure exists for editing capacity, with a preference toward full‑time support and clear role scoping (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-521043276.md:13`, `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-521043276.md:63`, `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-521043276.md:67`)
+
+**Insights**
+- Team health pressure is driven more by load volatility and transition strain than interpersonal conflict; smaller team cohesion trades off against overload risk (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2025/2025-06-24-335569042.md:331`, `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2025/2025-06-24-335569042.md:351`)
+- Revenue growth via new podcasts is gated by production bandwidth; staffing is the unlock, not demand (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2024/2024-12-11-195753508.md:433`, `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2024/2024-12-11-195753508.md:459`)
+- Automation and time tracking are emerging as well‑being levers, not just ops improvements; they’re directly linked to team happiness (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-520901749.md:641`, `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-520901749.md:683`)
+- Strategic narrowing to repeatable podcast work reduces spread across travel and ad‑hoc projects, which aligns with lower overwhelm (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2025/2025-06-24-335569042.md:355`, `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2025/2025-06-24-335569042.md:359`)
+
+**Opportunities**
+- Define a formal capacity model for live streams and podcast production to prevent overload and allow clearer sales commitments (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-520901749.md:705`)
+- Convert the editor need into a hiring decision (full‑time vs contractor) with a scoped role and budget range (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-521043276.md:63`, `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-521043276.md:67`)
+- Implement time tracking and WIP visibility to catch overload early and smooth scheduling (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-520901749.md:683`)
+- Prioritize automation targets in Wrike/N8N to reduce repetitive tasks and protect creator bandwidth (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-520901749.md:651`)
+- Maintain focus on repeatable podcast production and limit non‑core travel/projects during transitions (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2025/2025-06-24-335569042.md:355`)
+
+**Connections**
+- Sales pipeline decisions are directly constrained by production bandwidth; capacity planning is a revenue lever (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2024/2024-12-11-195753508.md:433`)
+- Ops/process maturity (automation + time tracking) links to team well‑being and scalability (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-520901749.md:641`, `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-520901749.md:683`)
+- Team composition and focus strategy influence morale and conflict levels; smaller team + tight focus reduces friction but requires load discipline (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2025/2025-06-24-335569042.md:331`, `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2025/2025-06-24-335569042.md:359`)
+
+**Recommendations**
+- Establish a published capacity policy for live streams/podcasts (e.g., no back‑to‑back weeks; blackout buffer after travel) and align sales to it (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-520901749.md:709`)
+- Approve and launch the editor hire pipeline with a clear role spec, budget range, and timeline (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-521043276.md:63`)
+- Pilot time tracking + weekly WIP reviews to identify overload before it becomes burnout (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-520901749.md:683`)
+- Build an automation roadmap (top 3 manual tasks) and assign ownership to reduce copy/paste work (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-520901749.md:641`)
+- Reconfirm “podcast‑first” focus and defer non‑core travel/projects during transition windows (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2025/2025-06-24-335569042.md:355`)
+
+**Triad Improvements**
+- Add speaker‑based filtering for “Team Health” so external podcast topics (burnout, stress) don’t dilute internal signals.
+- De‑duplicate JSON/MD transcript pairs in the index to avoid double‑counting evidence.
+- Create an automated “team health trend” summary that weights recency and flags stress/bandwidth/capacity changes.
+
+No Triad code changes made. If you want, I can expand on any section or drill into a specific team member’s workload.

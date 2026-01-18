@@ -1,0 +1,117 @@
+== VALIDATION: phase 15 ==
+
+$ bun test tests/phase15*
+bun test v1.3.4 (5eb2145b)
+
+tests/phase15-engine-only-cli.test.ts:
+(pass) Phase 15: engine-only diagnostic mode > engine-only prints a stable JSON report and exits 0 [42.00ms]
+
+tests/phase15-migration.test.ts:
+(pass) Phase 15: migration strategy primitives > legacy settings file snapshot merges sources in legacy order [2.50ms]
+(pass) Phase 15: migration strategy primitives > policy settings origin is absent/invalid based on managed-settings.json readability [1.00ms]
+(pass) Phase 15: migration strategy primitives > legacy permission updates can be persisted back to legacy settings files [1.33ms]
+(pass) Phase 15: migration strategy primitives > legacy MCP tool identifiers are canonicalized deterministically [0.11ms]
+(pass) Phase 15: migration strategy primitives > shadow evaluation produces no diffs when settings are equivalent [2.33ms]
+
+ 6 pass
+ 0 fail
+ 23 expect() calls
+Ran 6 tests across 2 files. [71.00ms]
+
+$ bun test
+bun test v1.3.4 (5eb2145b)
+
+tests/phase6-settings.test.ts:
+(pass) Phase 6: settings system > enabled sources flag parser matches legacy [0.14ms]
+(pass) Phase 6: settings system > enabled file sources always include policy+flag (and preserve legacy order) [0.05ms]
+(pass) Phase 6: settings system > patch semantics: delete on undefined + arrays replace
+(pass) Phase 6: settings system > storage-backed settings manager merges enabled sources and suppresses self-triggered watch events [1.45ms]
+(pass) Phase 6: settings system > export/import bundle captures per-source settings objects [0.19ms]
+(pass) Phase 6: settings system > invalid policy settings fail-closed in EffectiveConfig [0.19ms]
+(pass) Phase 6: settings system > remote policy refresh writes to cache (storage) [0.16ms]
+
+tests/phase3-event-bus.test.ts:
+(pass) Phase 3: event bus semantics > emits monotonic seq per channel and supports cursors [1.28ms]
+(pass) Phase 3: event bus semantics > recording helper captures envelopes and can be stopped [0.19ms]
+(pass) Phase 3: event bus semantics > includeSnapshot yields a snapshot envelope before live events
+(pass) Phase 3: event bus semantics > coalescing policy can replace queued events deterministically [0.22ms]
+
+tests/phase4-leak-prevention.test.ts:
+(pass) Phase 4: capability leak prevention heuristics > no module-level HostCapabilities singletons in portable src/core [13.72ms]
+
+tests/phase3-replay-adapters.test.ts:
+(pass) Phase 3: replay/adapter conformance > event streams roundtrip through web/node/RN adapter shapes [2.79ms]
+(pass) Phase 3: replay/adapter conformance > diff classifier treats UI-only differences as benign_ui [0.04ms]
+
+tests/phase12-no-subprocess.test.ts:
+(pass) Phase 12: no-subprocess constraint (CLI host adapter) > CLI host adapter code avoids subprocess helpers [2.27ms]
+
+tests/phase4-capabilities.test.ts:
+(pass) Phase 4: host capabilities > requireCapability throws typed errors [0.05ms]
+(pass) Phase 4: host capabilities > capability view can policy-deny individual caps
+(pass) Phase 4: host capabilities > capability compliance report flags missing required [0.28ms]
+(pass) Phase 4: host capabilities > node storage provides CAS semantics [1.73ms]
+(pass) Phase 4: host capabilities > portable path normalization is POSIX-like [0.12ms]
+(pass) Phase 4: host capabilities > retry/backoff is deterministic with injected RNG [0.07ms]
+
+tests/phase1-5-e2e-baseline.test.ts:
+(pass) Phases 1–5: end-to-end baseline > engine boots, emits app state, accepts user input, and preserves deterministic event ordering [1.59ms]
+
+tests/phase9-hooks.test.ts:
+(pass) Phase 9: hooks system redesign > normalizeHooksConfig is deterministic and compiles matchers [0.87ms]
+(pass) Phase 9: hooks system redesign > normalizeHooksConfig reports invalid regex with source attribution [0.15ms]
+(pass) Phase 9: hooks system redesign > ToolRunner integrates PreToolUse/PostToolUse via createToolPipelineHooks [2.15ms]
+(pass) Phase 9: hooks system redesign > ToolRunner calls afterToolFailure on tool error [0.11ms]
+(pass) Phase 9: hooks system redesign > applyHookEffects rejects conflicting merge updates
+(pass) Phase 9: hooks system redesign > applyHookEffects dedupes transcript appends and permission updates; denies unsupported IO effects [0.07ms]
+(pass) Phase 9: hooks system redesign > applyHookEffects applies first BlockContinuation and keeps status line/file suggestions first-win [0.04ms]
+(pass) Phase 9: hooks system redesign > HookEngine enforces allowNestedToolRuns for RunTool [0.35ms]
+(pass) Phase 9: hooks system redesign > legacy async hook stdout mapping detects async:true and clamps timeout [0.07ms]
+(pass) Phase 9: hooks system redesign > legacy async hook parser matches legacy heuristics (parse only when stdout is JSON-shaped) [0.03ms]
+(pass) Phase 9: hooks system redesign > loadPluginHooks reads plugins/*/hooks/hooks.json and merges [1.34ms]
+
+tests/phase3-replay-conformance.test.ts:
+(pass) Phase 3: replay-style conformance (kernel/event bus baseline) > deterministic scenario produces identical normalized outputs across runs [1.75ms]
+
+tests/phase12-cli-adapter.test.ts:
+(pass) Phase 12: CLI adapter wiring > feeds user input into engine and supports transcript toggle [0.50ms]
+
+tests/phase14-integration.test.ts:
+(pass) Phase 14: integration tests (engine + host adapters) > engine boots on node/web/RN-like hosts and emits ready/stopped [1.10ms]
+
+tests/phase13-observability.test.ts:
+(pass) Phase 13: observability/logging/telemetry boundaries > telemetry dedupe suppresses usage events in endpoint mode (legacy MCP CLI behavior)
+(pass) Phase 13: observability/logging/telemetry boundaries > diagnostic bundle redacts secret-looking settings fields and passes lint [0.60ms]
+(pass) Phase 13: observability/logging/telemetry boundaries > runtime kernel emits span lifecycle events to an injected trace buffer [0.18ms]
+
+tests/phase14-no-subprocess-core.test.ts:
+(pass) Phase 14: no-subprocess enforcement (portable core) > core avoids subprocess APIs/imports [6.18ms]
+(pass) Phase 14: no-subprocess enforcement (portable core) > node host adapter can disable subprocess-backed secret persistence (dev/test guard) [0.39ms]
+
+tests/phase5-queues-and-viewmodels.test.ts:
+(pass) Phase 5: queues, lifecycle, and UI adapter view models > tool permission queue resolves deterministically and can request persistence [0.15ms]
+(pass) Phase 5: queues, lifecycle, and UI adapter view models > elicitation cancellation propagates via effects [0.10ms]
+(pass) Phase 5: queues, lifecycle, and UI adapter view models > backgrounding clears ephemeral UI queues and emits cancellation effects [0.17ms]
+(pass) Phase 5: queues, lifecycle, and UI adapter view models > multi-session model enforces a single active session [0.08ms]
+(pass) Phase 5: queues, lifecycle, and UI adapter view models > UI view models share identical transcript semantics across adapters [0.15ms]
+
+tests/phase12-node-auth.test.ts:
+(pass) Phase 12: Node auth token discovery > CLAUDE_CODE_SESSION_ACCESS_TOKEN is exposed via secrets capability [0.56ms]
+
+tests/phase12-chrome-native-host.test.ts:
+(pass) Phase 12: Chrome native host framing > NativeHostReader reads length-prefixed JSON messages across chunks [0.76ms]
+(pass) Phase 12: Chrome native host framing > NativeHostReader returns null on invalid length [0.29ms]
+(pass) Phase 12: Chrome native host framing > NativeHostWriter writes framed payloads and honors backpressure [1.33ms]
+
+tests/phase15-engine-only-cli.test.ts:
+(pass) Phase 15: engine-only diagnostic mode > engine-only prints a stable JSON report and exits 0 [36.32ms]
+
+tests/phase5-notifications-and-redaction.test.ts:
+(pass) Phase 5: deterministic queues and redaction > notification drain is deterministic for equal priority [0.11ms]
+(pass) Phase 5: deterministic queues and redaction > transcript redaction removes sensitive nodes and produces a stable hash [0.54ms]
+(pass) Phase 5: deterministic queues and redaction > session export omits out-of-line attachment payloads [0.08ms]
+
+tests/phase12-cli-entrypoint.test.ts:
+(pass) Phase 12: runnable CLI entrypoint (repo-level) > --version fast path prints a version and exits 0 [28.47ms]
+(pass) Phase 12: runnable CLI entrypoint (repo-level) > --help prints usage and exits 0 [29.95ms]
+(pass) Phase 12: runnable CLI entrypoint (repo-level) > --print-frame boots engine and prints one frame [31.71ms]

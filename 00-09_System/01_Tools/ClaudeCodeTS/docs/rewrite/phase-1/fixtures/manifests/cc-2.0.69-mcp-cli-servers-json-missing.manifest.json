@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2025-12-17T12:27:45.985Z",
+  "bundle": "ClaudeCodeCode",
+  "command": "node bundles/ClaudeCodeCode/cli.js --mcp-cli servers --json",
+  "exitCode": 1,
+  "env": {
+    "provided": [
+      "ENABLE_EXPERIMENTAL_MCP_CLI"
+    ],
+    "derived": {
+      "mcpCliGates": {
+        "enableExperimentalMcpCli": true,
+        "enableMcpCliEndpoint": true,
+        "mcpToolTimeoutMs": null,
+        "maxMcpOutputTokens": null
+      }
+    }
+  },
+  "outputs": {
+    "stdoutPath": "docs/rewrite/phase-1/fixtures/sessions/cc-2.0.69-mcp-cli-servers-json-missing.stdout.txt",
+    "stderrPath": "docs/rewrite/phase-1/fixtures/sessions/cc-2.0.69-mcp-cli-servers-json-missing.stderr.txt",
+    "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrSha256": "698299f2af4f4811ffa98ccc3e383b524f3cb7ad1d285bd380bf04e83396c967"
+  },
+  "captured": {
+    "normalizedEffectiveSettingsSnapshot": {
+      "enabledSources": [
+        "userSettings",
+        "projectSettings",
+        "localSettings",
+        "flagSettings",
+        "policySettings"
+      ],
+      "fileBackedSources": [
+        "userSettings",
+        "projectSettings",
+        "localSettings",
+        "flagSettings",
+        "policySettings"
+      ],
+      "mergeSemantics": {
+        "objects": "deep-merge",
+        "arrays": "union-dedupe-preserve-order",
+        "deleteOnUndefinedPatch": true
+      },
+      "note": "Capture uses an empty CLAUDE_CONFIG_DIR temp dir; this snapshot records the known source order + merge semantics, not user machine settings."
+    },
+    "normalizedPermissionRuleSet": {
+      "sourcePrecedence": [
+        "userSettings",
+        "projectSettings",
+        "localSettings",
+        "flagSettings",
+        "policySettings",
+        "cliArg",
+        "command",
+        "session"
+      ],
+      "allow": {},
+      "deny": {},
+      "ask": {},
+      "note": "No settings files were loaded during capture (empty CLAUDE_CONFIG_DIR)."
+    },
+    "hookSelectionResults": {
+      "note": "Not captured for this offline fixture yet."
+    },
+    "toolInvocationTranscript": {
+      "note": "Not captured for this offline fixture yet."
+    },
+    "mcpModeSelection": {
+      "note": "Infer from stderr/stdout text for `--mcp-cli` fixtures."
+    }
+  }
+}

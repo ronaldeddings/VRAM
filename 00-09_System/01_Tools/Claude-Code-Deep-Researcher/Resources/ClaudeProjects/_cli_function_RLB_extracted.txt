@@ -1,0 +1,34 @@
+async function RLB(A,Q,B){
+let G=jA(),Z=[];
+for(let J of A)try{
+let X=G.readdirSync(J).filter((W)=>W.isFile()&&W.name.endsWith(".jsonl")).map((W)=>tS(J,W.name));
+if(B)X=X.sort((W,K)=>{
+let V=G.statSync(W);
+return G.statSync(K).mtime.getTime()-V.mtime.getTime()}
+).slice(0,B);
+for(let W of X){
+let{
+messages:K,summaries:V,customTitles:E,tags:D,fileHistorySnapshots:H}
+=await bGA(W);
+if(K.size===0)continue;
+let F=[...K.values()],C=new Set(F.map((O)=>O.parentUuid)),U=F.filter((O)=>!C.has(O.uuid));
+for(let O of U){
+let q=atA(K,O);
+if(q.length===0)continue;
+let M=V.get(O.uuid),_=O.sessionId,T=E.get(_),y=D.get(_),h=Pn1(H,q),x=Sn1(q,0,M,T,h,y);
+Z.push(x)}
+}
+}
+catch{
+continue}
+let Y=Z.filter((J)=>{
+if(!J.messages.length)return!1;
+if(J.firstPrompt?.startsWith("API Error"))return!1;
+if(J.summary?.startsWith("API Error"))return!1;
+if(J.isSidechain)return!1;
+if(!Q&&J.isTeammate)return!1;
+return!0}
+);
+return uPA(Y).map((J,I)=>({
+...J,value:I}
+))}

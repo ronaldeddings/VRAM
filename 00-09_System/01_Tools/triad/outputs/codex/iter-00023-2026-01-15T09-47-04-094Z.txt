@@ -1,0 +1,39 @@
+Pulled cross-area signals from `search.db` to quantify where text content lives and how themes like family, money, sleep, podcasting, and recovery show up across Work/System/Personal.
+
+**Key Observations**
+- The searchable corpus is overwhelmingly Work: 177,167 files (~3.6 GB) vs System 4,285 (~450 MB) vs Personal 42 (~0.1 MB).
+- Content types are highly skewed to capture formats: `json` (98,174) and `md` (83,080) dwarf everything else (`txt` 240).
+- Categories show a capture-first pipeline: Communications (170,010) and Meetings (7,157) dominate, with Reflection only 42.
+- Themes like family and money appear mostly inside Work artifacts (e.g., family hits: Work 71,334 vs Personal 40), implying cross-area meaning is being stored in Work contexts.
+- Search index integrity issue: FTS queries error with “missing row … from content table,” suggesting an out-of-sync index.
+
+**Insights**
+- The system is structurally mature but content is highly asymmetric: Work acts as the de facto memory store for personal themes.
+- Synthesis is the bottleneck, not capture: the text footprint of reflection is tiny compared to communications and meetings.
+- Personal and Family intent is present in Work data, but lacks a dedicated aggregation path (hence “scaffold without substrate”).
+- The most emotionally loaded signals (family, money, sleep, recovery) live in operational logs rather than reflective spaces.
+- The index error hints at tooling drift; analysis quality may degrade if search isn’t reliable.
+
+**Opportunities**
+- Create a low-friction extraction loop from Work communications into Personal/Family snapshots (weekly, automated).
+- Treat “reflection” as a synthesis artifact of capture, not a separate manual habit.
+- Centralize “family” moments and references into a minimal, curated log to match its emotional prominence.
+- Use existing Work metadata to seed Personal goals, finance, and learning updates without extra typing.
+- Fix search indexing to enable cross-area query reliability.
+
+**Connections**
+- Work ↔ Personal: Gratitude and recovery themes surface in Work files, aligning with prior journaling patterns.
+- Work ↔ Family: Frequent family mentions in Work indicate family is a primary lens for decision-making.
+- Personal ↔ Finance: Monetary security appears emotionally salient but finance folders remain empty scaffolding.
+- Personal ↔ Health: Sleep and new‑parent signals align with earlier notes about infant care and time fragmentation.
+- System ↔ Workflow: Tools and meeting systems are robust, but lack downstream synthesis outputs.
+
+**Recommendations**
+- Build a weekly “synthesis pass” that converts top Work themes into 3–5 Personal/Family notes (automated or semi‑automated).
+- Add a single Family “event log” file and feed it with quick captures pulled from existing Work data.
+- Create a lightweight “goals delta” note sourced from meetings and daily notes to formalize learning/goals.
+- Rebuild or repair the search index (FTS content mismatch) before relying on cross-area queries.
+- Define a minimal capture-to-summary path: 1 input (Work) → 1 synthesis (Personal) → 1 archive (Family/Finance).
+
+**Triad Improvement Note**
+- `files_fts` is out of sync with `files` (FTS “missing row” errors). Triad’s indexer should detect and repair inconsistencies or regenerate FTS to restore reliable search.

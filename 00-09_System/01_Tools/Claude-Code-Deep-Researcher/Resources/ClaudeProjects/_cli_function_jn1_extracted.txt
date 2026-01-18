@@ -1,0 +1,21 @@
+function jn1(A){
+for(let Q of A){
+if(Q.type!=="user"||Q.isMeta)continue;
+let B=Q.message?.content;
+if(!B)continue;
+let G="";
+if(typeof B==="string")G=B;
+else if(Array.isArray(B))G=B.find((J)=>J.type==="text")?.text||"";
+if(!G)continue;
+let Z=Q9(G,"command-name");
+if(Z){
+let Y=Z.replace(/^\//,"");
+if(eS().has(Y))continue;
+else{
+let J=Q9(G,"command-args");
+if(!J||J.trim()==="")continue}
+}
+if(G.match(/^<local-command-stdout>/))continue;
+if(G.match(/^<session-start-hook>/))continue;
+return G}
+return}

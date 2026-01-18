@@ -1,0 +1,5 @@
+function ceA(A){
+if(A.messages.length>0){
+let Q=A.messages[0];
+if(Q&&"sessionId"in Q)si3(Q.sessionId,W0())}
+}

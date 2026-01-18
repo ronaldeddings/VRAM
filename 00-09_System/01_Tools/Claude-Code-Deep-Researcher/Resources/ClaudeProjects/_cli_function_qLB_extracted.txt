@@ -1,0 +1,4 @@
+async function qLB(A,Q){
+await rW().appendEntry({
+type:"summary",summary:Q,leafUuid:A}
+)}

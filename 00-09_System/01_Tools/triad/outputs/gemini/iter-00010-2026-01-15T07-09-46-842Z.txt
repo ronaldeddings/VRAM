@@ -1,0 +1,4 @@
+I will query the search database to uncover details about the "Mozilla" contract, recent AI tooling projects like "Fabricator," and evidence of specific technical skills active in late 2025/early 2026.
+I will inspect the database schema to determine the correct table names and column structure for the full-text search index.
+I will query the `files` table for records containing "Mozilla", "Fabricator", "AI Engineering", or "Claude Code", returning the file path, modification date, and a content preview to identify relevant project details.
+I will search for "Mozilla" within the `10-19_Work` directory to verify the source of the "Mozilla AI/Security Contractor" claim, and I will read the December 2025 Slack log `2025-12-via-knowledge-hub-collab.md` to investigate the "Knowledge Hub" project.

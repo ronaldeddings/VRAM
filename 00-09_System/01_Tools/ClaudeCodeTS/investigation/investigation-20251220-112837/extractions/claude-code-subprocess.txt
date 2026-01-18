@@ -1,0 +1,5 @@
+  44 child_process
+ 184 exec(
+   1 execSync(
+  67 fork(
+  11 spawn(

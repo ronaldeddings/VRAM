@@ -1,0 +1,24 @@
+{
+  "name": "claude-code-ts-rewrite",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "cli": "bun src/cli.ts",
+    "start": "bun src/cli.ts",
+    "build": "tsc -p tsconfig.build.json",
+    "test": "bun test",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "check:boundaries": "node scripts/check-import-boundaries.mjs"
+  },
+  "bin": {
+    "claude-ts": "dist/cli.js"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "0.70.0"
+  }
+}

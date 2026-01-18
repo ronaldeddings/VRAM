@@ -1,0 +1,2 @@
+I will list the root directory to confirm the folder structure and then read the `insights.json` file to analyze the quality of the generated insights.
+I will search for "Family" and "Health" within the `10-19_Work` directory to check for personal content, and list the contents of `40-49_Family` and `20-29_Finance` to confirm they are empty.

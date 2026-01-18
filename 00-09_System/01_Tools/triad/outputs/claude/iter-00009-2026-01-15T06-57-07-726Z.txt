@@ -1,0 +1,152 @@
+This is a treasure trove of client information. Let me look at the current team structure and summarize:
+
+---
+
+## Updated Analysis: Complete Picture of Hacker Valley Media
+
+### Team Structure (December 2025)
+
+Based on Slack communications:
+
+| Role | Person | Notes |
+|------|--------|-------|
+| **Leadership/Host** | Ron Eddings | Principal, podcast host, client relations |
+| **Operations Manager** | Emily Humphrey | Production coordination, client management |
+| **Content Producer/Editor** | Jessica Rusch | Episode planning, show notes, outlines |
+| **Content Producer/PM** | Thirdy Rivera | New hire (Dec 2025), creative direction |
+| **Video Editor** | Christian Santos | Color grading, audio, social clips |
+| **QC/Admin** | Berna Gallardo | Quality control, scheduling, admin |
+| **Technical/Automation** | Ivan Mendoza | Automations, technical infrastructure |
+
+### Active Client Projects (December 2025)
+
+| Client | Project Code | Content Type |
+|--------|--------------|--------------|
+| VIA Science | VS25 | Episode series + social clips |
+| Picus Security | PS25 | Livestream content, highlight reels |
+| Material Security | MS25 | Livestream |
+| Orchid | OS25 | Company story video |
+| White Knight Labs | WKL | Episode + social clips |
+| Cobalt | Co25 | Livestream |
+| 7AI | 7AI25 | Episode series |
+
+### Production Infrastructure
+
+**Tools Identified**:
+- **Descript**: Primary editing platform
+- **Google Drive**: Asset storage and delivery
+- **Frame.io**: Review links
+- **Canva**: Storyboarding, thumbnails
+- **Wrike**: Task management
+- **After Effects**: Complex animations
+- **CapCut**: Backup editing
+- **HubSpot**: CRM, custom URLs
+
+**Automations**:
+- Episode folder creation (HVS_2026)
+- Google Drive structure automation
+
+### Content Production Workflow
+
+From the Slack threads, the workflow is:
+1. **Guest Planning Form** → 2. **Outline Creation** → 3. **Recording** → 4. **Color/Audio Processing** → 5. **Edit in Descript** → 6. **QC Checklist** → 7. **Social Clips** → 8. **Delivery via Drive**
+
+### Quality Control Evolution
+
+Emily Humphrey created a comprehensive QC checklist (December 2025) covering:
+- Visual/Editing (15 checkpoints)
+- Audio (9 checkpoints)
+- Script/Captions (4 checkpoints)
+- Branding (3 checkpoints)
+- Final Review (4 checkpoints)
+
+---
+
+## Critical Insights
+
+### 1. **Operational Maturity Increasing**
+The team is actively building SOPs:
+- Production Standards document created (Dec 12)
+- QC checklist formalized (Dec 2)
+- Episode folder automation updated for 2026
+
+### 2. **Client Diversification**
+Active work with 7+ clients indicates healthy pipeline. Notable sectors:
+- Security vendors (Picus, Material Security)
+- AI companies (7AI, VIA Science)
+- Professional services (White Knight Labs, Cobalt)
+
+### 3. **Content Sophistication**
+Moving beyond podcasts to:
+- GTA-style promotional videos (CyberMarketingCon)
+- MCP security risk explainers
+- Company story videos (Orchid)
+
+### 4. **Resource Constraints Visible**
+- Christian's rendering bottlenecks (AE limitations)
+- Rush orders causing quality gaps
+- Multiple projects competing for same editors
+
+---
+
+## Refined Recommendations
+
+### Immediate Organization (VRAM)
+
+1. **Create `10_Hacker_Valley_Media/` structure**:
+```
+10.01_Active_Clients/
+    VIA_Science/
+    Picus_Security/
+    Material_Security/
+    Orchid/
+    Cobalt/
+    White_Knight_Labs/
+    7AI/
+10.02_HVS_Podcast/
+    Episodes_2025/
+    Episodes_2026/
+    Guest_Pipeline/
+10.03_Production_Resources/
+    QC_Checklists/
+    Brand_Assets/
+    SOPs/
+10.04_Team/
+    Onboarding/
+    Roles_Responsibilities/
+10.05_Business_Development/
+    Proposals/
+    Competitive_Intel/
+    Pricing/
+```
+
+2. **Migrate from Communications**: Move HVM-related Slack channels to reference folder within HVM directory
+
+### Operational Improvements
+
+3. **Formalize pricing model** based on:
+   - Cybersecurity Ventures benchmark: $3K/episode
+   - Current service tiers (podcast, livestream, company story)
+
+4. **Document production capacity** to prevent rush-order quality issues
+
+5. **Create client dashboard template** (mentioned in deliverables channel but needs standardization)
+
+### Strategic
+
+6. **Track the GTA video success** - viral LinkedIn content is valuable case study
+7. **Build repeatable workflows** for each content type (podcast, livestream, promo video)
+8. **Consider equipment upgrades** for video team (Christian's AE rendering issues)
+
+---
+
+## Connections Map
+
+```
+Hacker Valley Media
+├── 📧 Communications (14) ← Current content home
+├── 💰 Finance (20-29) ← Revenue tracking needed
+├── 🎙️ Ron's Personal Brand ← Content overlap
+├── 🔒 Security Community ← Guest network
+└── 📅 Calendar ← Production scheduling
+```

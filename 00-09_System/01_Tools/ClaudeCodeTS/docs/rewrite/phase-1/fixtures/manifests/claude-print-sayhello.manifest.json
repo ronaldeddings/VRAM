@@ -1,0 +1,10 @@
+{
+  "createdAt": "2025-12-16T17:38:08.764Z",
+  "cliVersion": "2.0.70 (Claude Code)",
+  "command": "claude --dangerously-skip-permissions -p sayhello",
+  "envVarsProvided": [
+    "CLAUDE_CODE_SESSION_ACCESS_TOKEN"
+  ],
+  "outputFile": "docs/rewrite/phase-1/fixtures/sessions/claude-print-sayhello.txt",
+  "notes": "Output captured for Phase 1 baseline; secrets not included."
+}

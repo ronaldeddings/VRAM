@@ -1,0 +1,96 @@
+==============================================
+INVESTIGATION ITERATION 3: CLI COMMAND PARITY
+==============================================
+
+You are verifying that ALL CLI commands from the original work in TypeScript.
+
+MISSION: Test every CLI command and flag.
+
+AUTHORITATIVE INPUTS:
+- Original ClaudeCodeCode/cli.js: @/Users/ronaldeddings/ClaudeCodeTS/bundles/ClaudeCodeCode/cli.js
+- TypeScript source: @/Users/ronaldeddings/ClaudeCodeTS/src
+- Previous CLI test results: @/Users/ronaldeddings/ClaudeCodeTS/investigation/investigation-20251220-112837/cli-tests/results.md
+
+INVESTIGATION TASKS:
+
+1) EXTRACT ALL CLI COMMANDS FROM ORIGINAL
+   ```bash
+   # Find yargs command definitions
+   grep -oE '\.command\([^)]+\)' bundles/ClaudeCodeCode/cli.js | head -30
+   
+   # Find option definitions  
+   grep -oE '\.option\([^)]+\)|--[a-z-]+' bundles/ClaudeCodeCode/cli.js | sort -u | head -50
+   
+   # Find alias definitions
+   grep -oE '\.alias\([^)]+\)|alias:\s*["\'][^"'\'']+' bundles/ClaudeCodeCode/cli.js | head -20
+   ```
+
+2) TEST EACH COMMAND IN TYPESCRIPT
+   For each command found, run:
+   ```bash
+   bun run cli [command] --help
+   ```
+   
+   Test these specific commands:
+   ```bash
+   bun run cli --help
+   bun run cli --version
+   bun run cli -p "test prompt"
+   bun run cli --dangerously-skip-permissions -p "test"
+   bun run cli chat --help 2>&1 || echo "chat command not found"
+   bun run cli run --help 2>&1 || echo "run command not found"
+   bun run cli config --help 2>&1 || echo "config command not found"
+   ```
+
+3) FLAG COMPARISON
+   Create a comprehensive flag comparison:
+   
+   | Flag | Original CLI.js | TypeScript CLI | Works? |
+   |------|-----------------|----------------|--------|
+   | --help | ✅ | ? | ? |
+   | --version | ✅ | ? | ? |
+   | -p/--prompt | ✅ | ? | ? |
+   | --dangerously-skip-permissions | ✅ | ? | ? |
+   | ... | | | |
+
+4) INTERACTIVE MODE TEST
+   ```bash
+   # Test if interactive mode starts
+   echo "exit" | timeout 5 bun run cli 2>&1 || echo "Interactive mode test"
+   ```
+
+5) CREATE PARITY REPORT
+
+Output file: investigation/iteration-3-cli-parity.md
+
+Format:
+```markdown
+# Iteration 3: CLI Command Parity
+
+## Commands Found in Original
+[List all commands]
+
+## Command Test Results
+| Command | Original | TypeScript | Test Output |
+|---------|----------|------------|-------------|
+| | | | |
+
+## Flag Parity
+| Flag | Original | TypeScript | Status |
+|------|----------|------------|--------|
+| | | | |
+
+## Missing Commands
+1. [command]
+
+## Missing Flags
+1. [flag]
+
+## Broken Commands
+1. [command]: [error]
+
+## Working Commands
+1. [command]: ✅
+```
+
+Begin now.

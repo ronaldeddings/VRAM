@@ -1,0 +1,19 @@
+async function fGA(A,Q){
+let{
+limit:B,exact:G}
+=Q||{
+}
+,Z=await Ic(pQ()),Y=await wb(Z),J=A.toLowerCase().trim(),I=Y.filter((K)=>{
+let V=K.customTitle?.toLowerCase().trim();
+if(!V)return!1;
+return G?V===J:V.includes(J)}
+),X=new Map;
+for(let K of I){
+let V=x_(K);
+if(V){
+let E=X.get(V);
+if(!E||K.modified>E.modified)X.set(V,K)}
+}
+let W=Array.from(X.values());
+if(W.sort((K,V)=>V.modified.getTime()-K.modified.getTime()),B)return W.slice(0,B);
+return W}

@@ -1,0 +1,93 @@
+==============================================
+INVESTIGATION ITERATION 4: SUBPROCESS PATTERN MIGRATION
+==============================================
+
+The rewrite should eliminate subprocess-centric patterns.
+You are verifying this migration is complete.
+
+MISSION: Find any remaining subprocess patterns that should be async.
+
+AUTHORITATIVE INPUTS:
+- Original ClaudeCodeCode/cli.js: @/Users/ronaldeddings/ClaudeCodeTS/bundles/ClaudeCodeCode/cli.js
+- TypeScript source: @/Users/ronaldeddings/ClaudeCodeTS/src
+- Subprocess patterns found: @/Users/ronaldeddings/ClaudeCodeTS/investigation/investigation-20251220-112837/extractions/claude-code-subprocess.txt
+
+INVESTIGATION TASKS:
+
+1) CATALOG ORIGINAL SUBPROCESS USAGE
+   ```bash
+   # Count spawn/exec in original
+   grep -c 'spawn\|exec\|fork\|child_process' bundles/ClaudeCodeCode/cli.js || echo "0"
+   
+   # Find specific patterns
+   grep -n 'spawn\|exec\|fork' bundles/ClaudeCodeCode/cli.js | head -30
+   ```
+
+2) CHECK TYPESCRIPT FOR SUBPROCESS
+   ```bash
+   # Should be minimal or zero
+   grep -rn 'spawn\|exec\|fork\|child_process' src/ --include="*.ts" || echo "None found"
+   
+   # Check for proper async patterns instead
+   grep -rn 'async\|await\|Promise' src/ --include="*.ts" | wc -l
+   ```
+
+3) IDENTIFY WHAT SUBPROCESSES WERE USED FOR
+   In original CLI.js, subprocesses are used for:
+   - Shell command execution
+   - Git operations
+   - Editor launching
+   - Hook execution
+   - Background tasks
+   
+   For each, determine:
+   - Was it migrated to async?
+   - Is there a platform abstraction?
+   - Does it work on non-Node platforms?
+
+4) PLATFORM CAPABILITY CHECK
+   ```bash
+   # Look for capability abstraction
+   grep -rn 'capability\|Capability\|platform\|Platform' src/ --include="*.ts" | head -20
+   
+   # Look for shell abstraction
+   grep -rn 'ShellExecutor\|shell\|Shell' src/ --include="*.ts" | head -20
+   ```
+
+5) CREATE MIGRATION REPORT
+
+Output file: investigation/iteration-4-subprocess-migration.md
+
+Format:
+```markdown
+# Iteration 4: Subprocess Pattern Migration
+
+## Original Subprocess Usage
+| Pattern | Count | Purpose |
+|---------|-------|---------|
+| spawn() | X | shell commands |
+| exec() | X | ... |
+| fork() | X | ... |
+
+## TypeScript Subprocess Usage
+| Pattern | Count | Location | Justified? |
+|---------|-------|----------|------------|
+| | | | |
+
+## Migration Status by Feature
+| Feature | Original Method | New Method | Status |
+|---------|-----------------|------------|--------|
+| Shell commands | spawn() | ? | |
+| Git operations | exec() | ? | |
+| Hooks | fork() | ? | |
+
+## Platform Abstraction
+- Capability layer: [found/not found]
+- Shell abstraction: [found/not found]
+- Works on React Native: [yes/no/unknown]
+
+## Remaining Issues
+1. [issue]
+```
+
+Begin now.

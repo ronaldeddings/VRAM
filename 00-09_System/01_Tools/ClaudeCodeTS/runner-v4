@@ -1,0 +1,240 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+#===============================================================================
+# runner-v4: checklist-driven codex autopilot (best-effort)
+#===============================================================================
+#
+# What it does:
+# - Reads implementation/1-initial-rewrite-implementation-checklist.md
+# - Selects a batch of unchecked items (earliest unfinished phase by default)
+# - Invokes `codex exec` with a prompt to implement that batch
+# - Runs validations (tests + typecheck + boundaries)
+# - Repeats until no unchecked items remain (or MAX_BATCHES hit)
+#
+# What it cannot do:
+# - It cannot *guarantee* completion (some items require product decisions, secrets,
+#   external services, or extended human review). It maximizes throughput and
+#   prevents silent drift by enforcing validation gates and changelog capture.
+#
+# Usage:
+#   ./runner-v4
+#   PHASE=20 BATCH_SIZE=15 ./runner-v4
+#   MAX_BATCHES=3 ./runner-v4
+#
+# Requirements:
+#   - bun
+#   - codex (Codex CLI)
+#===============================================================================
+
+export PATH="$HOME/.bun/bin:$PATH"
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PLAN_FILE="${PLAN_FILE:-$ROOT_DIR/implementation/1-initial-rewrite-implementation-checklist.md}"
+ENCYCLOPEDIA_FILE="${ENCYCLOPEDIA_FILE:-$ROOT_DIR/CLI_ENCYCLOPEDIA.md}"
+NEXT_SCRIPT="${NEXT_SCRIPT:-$ROOT_DIR/scripts/checklist-next.py}"
+CHANGELOG_ROOT="${CHANGELOG_ROOT:-$ROOT_DIR/changelogs}"
+
+PHASE="${PHASE:-}"
+BATCH_SIZE="${BATCH_SIZE:-20}"
+MAX_BATCHES="${MAX_BATCHES:-999999}"
+MAX_FIX_RETRIES="${MAX_FIX_RETRIES:-2}"
+DRY_RUN="${DRY_RUN:-0}"
+
+TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
+RUN_ID="autopilot-$TIMESTAMP"
+RUN_DIR="$CHANGELOG_ROOT/$RUN_ID"
+
+mkdir -p "$RUN_DIR"
+
+require_cmd() {
+  command -v "$1" >/dev/null 2>&1 || { echo "❌ Missing required command: $1" >&2; exit 1; }
+}
+
+require_file() {
+  [[ -f "$1" ]] || { echo "❌ Missing required file: $1" >&2; exit 1; }
+}
+
+run_codex() {
+  local prompt_file="$1"
+  local output_file="$2"
+  mkdir -p "$(dirname "$output_file")"
+
+  if [[ "$DRY_RUN" == "1" ]]; then
+    cp "$prompt_file" "$output_file"
+    return 0
+  fi
+
+  # Allocate a TTY and feed prompt via STDIN (avoids missing interactive features).
+  script -q /dev/null bash -c "codex exec --dangerously-bypass-approvals-and-sandbox < \"$prompt_file\"" >"$output_file"
+}
+
+validate() {
+  local out_file="$1"
+  if [[ "$DRY_RUN" == "1" ]]; then
+    echo "== VALIDATION (skipped; DRY_RUN=1) ==" >"$out_file"
+    return 0
+  fi
+  set +e
+  {
+    echo "== VALIDATION =="
+    echo ""
+    echo "\$ bun test"
+    bun test
+    echo ""
+    echo "\$ bun run typecheck"
+    bun run typecheck
+    echo ""
+    echo "\$ bun run check:boundaries"
+    bun run check:boundaries
+    echo ""
+  } >"$out_file" 2>&1
+  local code=$?
+  set -e
+  return "$code"
+}
+
+select_batch_json() {
+  local phase_arg=()
+  if [[ -n "$PHASE" ]]; then
+    phase_arg=(--phase "$PHASE")
+  fi
+  python3 "$NEXT_SCRIPT" --plan "$PLAN_FILE" "${phase_arg[@]}" --limit "$BATCH_SIZE" --format json
+}
+
+require_cmd bun
+require_cmd codex
+require_cmd python3
+require_file "$PLAN_FILE"
+require_file "$ENCYCLOPEDIA_FILE"
+require_file "$NEXT_SCRIPT"
+
+echo "Run ID: $RUN_ID"
+echo "Plan: $PLAN_FILE"
+echo "Encyclopedia: $ENCYCLOPEDIA_FILE"
+echo "Batch size: $BATCH_SIZE"
+echo "Max batches: $MAX_BATCHES"
+if [[ "$DRY_RUN" == "1" ]]; then
+  echo "DRY_RUN=1 (no codex exec; prompts only)"
+fi
+if [[ -n "$PHASE" ]]; then
+  echo "Phase filter: $PHASE"
+fi
+echo ""
+
+batch=1
+while [[ "$batch" -le "$MAX_BATCHES" ]]; do
+  payload="$(select_batch_json)"
+  remaining="$(python3 - <<PY
+import json,sys
+p=json.loads(sys.argv[1])
+print(p.get("remaining",0))
+PY
+"$payload")"
+
+  selected_count="$(python3 - <<PY
+import json,sys
+p=json.loads(sys.argv[1])
+print(len(p.get("selected",[])))
+PY
+"$payload")"
+
+  if [[ "$selected_count" -eq 0 ]]; then
+    echo "✅ No unchecked items found for selection. Remaining unchecked: $remaining"
+    echo "Artifacts: $RUN_DIR"
+    exit 0
+  fi
+
+  CHANGELOG_FILE="$RUN_DIR/batch-$batch.md"
+  PROMPT_FILE="$(mktemp)"
+  VALIDATION_LOG="$RUN_DIR/batch-$batch.validation.txt"
+
+  {
+    echo "You are working in the repository at: $ROOT_DIR"
+    echo ""
+    echo "AUTHORITATIVE INPUTS:"
+    echo "- Implementation checklist: @$PLAN_FILE"
+    echo "- CLI encyclopedia: @$ENCYCLOPEDIA_FILE"
+    echo "- Investigation notes: @investigation/FINAL-gap-summary.md (if present)"
+    echo "- Parity dashboard: @implementation/parity-dashboard.md (if present)"
+    echo ""
+    echo "YOUR TASK:"
+    echo "- Implement the following unchecked checklist items (best-effort, in this batch)."
+    echo "- For 'Define/Decide' items: make the decision, write it down (ADR or changelog), and check the item off if complete."
+    echo "- For implementation items: implement code + tests and check the item off when done."
+    echo "- Do not silently skip items; if you must defer, document why and propose the next smallest actionable sub-step."
+    echo ""
+    echo "BATCH ITEMS (line numbers are 1-based):"
+    python3 - <<'PY'
+import json,sys
+p=json.loads(sys.argv[1])
+for item in p.get("selected",[]):
+  ln=item["line"]
+  phase=item.get("phase")
+  sec=item.get("section")
+  text=item.get("text","")
+  label=f"Phase {phase}" if phase is not None else "Phase ?"
+  sec_label=f" · {sec}" if sec else ""
+  print(f"- L{ln} · {label}{sec_label}: {text}")
+PY
+"$payload"
+    echo ""
+    echo "CONSTRAINTS:"
+    echo "- Preserve portability: do not add Node-only dependencies to src/core/*."
+    echo "- Keep the no-subprocess rule (except already-isolated Node host keychain helper)."
+    echo "- Keep changes focused to the batch; avoid refactors not needed to satisfy the items."
+    echo ""
+    echo "VALIDATION GATE:"
+    echo "- Run: \`bun test\`, \`bun run typecheck\`, \`bun run check:boundaries\` and fix failures."
+    echo ""
+    echo "OUTPUT CONTRACT:"
+    echo "- Write a short changelog into: $CHANGELOG_FILE"
+    echo "- Include: summary, files changed, tests run, and any decisions made."
+    echo "- Do NOT paste large code blocks into the changelog."
+  } >"$PROMPT_FILE"
+
+  echo "🚀 Batch $batch (selected=$selected_count, remaining=$remaining)"
+  run_codex "$PROMPT_FILE" "$CHANGELOG_FILE"
+  rm -f "$PROMPT_FILE"
+
+  echo "🧪 Validating..."
+  if validate "$VALIDATION_LOG"; then
+    echo "✅ Validation passed: $VALIDATION_LOG"
+  else
+    echo "❌ Validation failed: $VALIDATION_LOG"
+    retry=1
+    while [[ "$retry" -le "$MAX_FIX_RETRIES" ]]; do
+      FIX_PROMPT="$(mktemp)"
+      FIX_LOG="$RUN_DIR/batch-$batch.fix-$retry.md"
+      {
+        echo "Validation failed. Fix the repository until the following commands pass:"
+        echo "- bun test"
+        echo "- bun run typecheck"
+        echo "- bun run check:boundaries"
+        echo ""
+        echo "Read the validation output:"
+        echo "- @$VALIDATION_LOG"
+        echo ""
+        echo "Record what you changed to fix it in: $FIX_LOG"
+      } >"$FIX_PROMPT"
+      run_codex "$FIX_PROMPT" "$FIX_LOG"
+      rm -f "$FIX_PROMPT"
+      if validate "$VALIDATION_LOG"; then
+        echo "✅ Validation passed after fix $retry: $VALIDATION_LOG"
+        break
+      fi
+      retry=$((retry + 1))
+    done
+    if [[ "$retry" -gt "$MAX_FIX_RETRIES" ]]; then
+      echo "❌ Unable to restore green tests within MAX_FIX_RETRIES=$MAX_FIX_RETRIES."
+      echo "See: $VALIDATION_LOG"
+      exit 1
+    fi
+  fi
+
+  batch=$((batch + 1))
+  echo ""
+done
+
+echo "Stopped after MAX_BATCHES=$MAX_BATCHES. Artifacts: $RUN_DIR"
+exit 0

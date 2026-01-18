@@ -1,0 +1,35 @@
+**Key Observations**
+- `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts` holds 4,019 files (2023: 340, 2024: 2,021, 2025: 1,623, 2026: 35); 3,138 unique meeting IDs based on filename stems.
+- Format mix: 881 meetings have both `.md` and `.json`, 1,543 are `.md`‑only, and 714 are `.json`‑only (metadata split that limits consistent analysis).
+- Transcript scale: `.md` files average ~5.9k words / ~888 lines; meetings average 32.6 mins (median 29, p25 21, p75 38) and ~6.6 participants.
+- Recurring meeting types dominate: “30‑Minute Meeting” (72), “Interpres <> Hacker Valley weekly sync” (51), “HV <> CyberProof Weekly Meeting” (36), plus multiple weekly syncs/content meetings.
+- Topic prevalence across `.md` files: marketing (1,218 files), podcast (1,418), LinkedIn (1,311), events (1,271), sponsor (456), contract (768), budget (673), proposal (380), invoice (215), action item (193), next steps (195).
+- Partner ecosystem shows up via email domains in `.json` participants: sans.org (126 meetings), cyberproof.com (98), interpressecurity.com (79), nagomisecurity.com (74), akaidentity.io (59), orchid.security (47), picussecurity.com (46), writealchemist.com (44).
+- Personal overlap exists: names like Monika, Ava, Mason, Charlie appear in work transcripts, indicating cross‑domain context bleed.
+
+**Insights**
+- This corpus functions as an operational system of record for HVM’s content/marketing and revenue execution, not just meeting archives.
+- Actionable items are frequently verbalized (“follow up”, “action item”, “next steps”) but not systematically captured.
+- Format fragmentation (mixed `.md`/`.json`) creates blind spots: either transcript text without metadata or metadata without a clean readable transcript.
+
+**Opportunities**
+- Standardize meeting records by merging `.md` and `.json` into a single canonical representation per meeting ID.
+- Use participant domains and recurring titles to quantify client/partner time allocation and align with revenue impact.
+- Build automated action‑item extraction and weekly digesting from transcripts.
+
+**Connections**
+- Business/Finance: strong signal in contract, proposal, invoice, budget, sponsor language aligns with finance and revenue workflows elsewhere in Work.
+- Marketing/Content: dominant podcast/LinkedIn/YouTube/event language reinforces this area as the content production log.
+- Personal: family mentions inside Work transcripts echo the “Work as universal inbox” pattern seen in prior iterations.
+
+**Recommendations**
+1) Create a normalized meeting index (CSV/DB) with meeting ID, date, title, duration, participants, domains, and transcript path; drive it from `.json` where available and fall back to `.md`.
+2) Add an “Action Items + Next Steps” extractor over `.md` transcripts and publish a weekly digest.
+3) Build partner dashboards from email domains to track meeting volume/time vs. revenue.
+4) Backfill missing metadata for `.md`‑only meetings (duration/participants) by parsing transcript headers or re‑syncing from Fathom exports.
+5) Tag transcripts that include personal mentions to improve boundary management.
+
+**Triad Improvements**
+- Triad metadata says “0 subdirectories,” but `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts` is year‑partitioned; update the scanner to report real subdir counts.
+- Deduplicate analytics by meeting ID stem to avoid double‑counting `.md`/`.json` pairs.
+- Promote derived stats (duration, participant count, recurring titles) as first‑class analytics outputs.

@@ -1,0 +1,36 @@
+**Key Observations**
+- Slack export has 18,834 JSON files and 212,962 messages across 419 channels; DM-heavy: 122,712 DM messages (≈58%) vs 90,250 in named channels. Sources: `10-19_Work/14_Communications/14.02_slack/json`, `10-19_Work/14_Communications/14.02_slack/json/users.json`
+- Activity is recent‑weighted: 2024 (37,893) and 2025 (48,552) are the highest years; peak month is 2025‑10. Source: `10-19_Work/14_Communications/14.02_slack/json`
+- Top named channels by volume: production-sync (9,004), qc (7,648), ea-support (4,414), marketing (4,252), experience-emails (3,176), experience-chat (2,903). Source: `10-19_Work/14_Communications/14.02_slack/json`
+- Channel lifecycle is project‑based: 158 channels in `channels.json`, 131 archived, 27 open. Source: `10-19_Work/14_Communications/14.02_slack/json/channels.json`
+- Core human senders: Ron Eddings (60,353), Emily Humphrey (24,033), marcomcse (15,026), clcochr (13,895). Bots are significant (≈15% of messages), led by Overseer, Notion, Demisto, Zapier, Wrike. Source: `10-19_Work/14_Communications/14.02_slack/json/users.json`
+- Communication shape: 17.6% of messages are thread replies; 10.1% include links; 7.7% include files. Source: `10-19_Work/14_Communications/14.02_slack/json`
+- Search index themes are operational and client‑facing: high file hits for “eta”, “client”, “review”, “call/meeting”, “contract/invoice/payment”, “status/update”. Source: `00-09_System/00_Index/search.db`
+
+**Insights**
+- Decision and coordination load lives in DMs and small group DMs (109 mpdm channels), which likely hides critical context and slows onboarding or handoffs.
+- The highest‑volume named channels map to execution (production, QC, support) rather than ideation—Slack is being used primarily as a delivery/ops bus.
+- Automation footprint is strong (Notion/Wrike/Zapier/Demisto), suggesting existing investment in workflow tooling that could be extended into structured summaries and decision logs.
+- Channel archive rate implies frequent project spin‑ups with short lifecycles; valuable knowledge may be scattered and lost without synthesis.
+
+**Opportunities**
+- Shift decision‑making and status updates from DMs into shared channels for persistent context and easier onboarding.
+- Add lightweight “decision log” or “status digest” channels to preserve key outcomes from production/QC/support cycles.
+- Leverage existing bot footprint to automate handoffs (e.g., post daily/weekly digests, convert key messages into Notion/Wrike tasks).
+
+**Connections**
+- Strong overlap with production and marketing workflows indicates Slack is a live operating system for deliverables; this ties directly to work process maturity and client experience.
+- Search‑indexed phrases (client, contract, invoice, status) connect Slack to finance and revenue operations, not just internal coordination.
+- The presence of Overseer/automation bots aligns with the broader tooling investment noted in Triad docs.
+
+**Recommendations**
+- Build a DM‑to‑channel capture habit: when a decision is made in a DM, post a short “Decision + Next step” note in the relevant project channel.
+- Establish a small set of canonical channels (e.g., production‑sync, qc, marketing, internal‑team) and require project channels to roll up updates there on a schedule.
+- Add a weekly automated digest that summarizes top threads/decisions and links to artifacts; use existing integration bots as the delivery path.
+- Create an “operations metrics” view from Slack exports: DM ratio, thread ratio, response latency, and top blockers. Start with `10-19_Work/14_Communications/14.02_slack/json` and write a recurring Triad report.
+
+**Triad Improvement Notes**
+- Triad’s Slack area summary reports “0 subdirectories,” but `14.02_slack/` clearly has nested folders (`json`, `markdown`, `search`). The directory stats logic should count subdirectories accurately.
+- Consider enriching the Slack summary with DM vs channel split, archive ratio, and top human/bot senders using `10-19_Work/14_Communications/14.02_slack/json/users.json` and `10-19_Work/14_Communications/14.02_slack/json/channels.json`.
+
+If you want, I can generate a compact “Slack ops dashboard” JSON from the export (message volume, DM ratio, top channels, top senders) or draft a Triad parser module for it.

@@ -1,0 +1,72 @@
+{
+  "Andre Ludwig": {
+    "sample_count": 3,
+    "sample_files": [
+      "Andre_Ludwig_sample1.wav",
+      "Andre_Ludwig_sample2.wav",
+      "Andre_Ludwig_sample3.wav"
+    ]
+  },
+  "Berna Gallardo": {
+    "sample_count": 1,
+    "sample_files": [
+      "Berna_Gallardo_sample1.wav"
+    ]
+  },
+  "Emily Humphrey": {
+    "sample_count": 3,
+    "sample_files": [
+      "Emily_Humphrey_sample1.wav",
+      "Emily_Humphrey_sample2.wav",
+      "Emily_Humphrey_sample3.wav"
+    ]
+  },
+  "Heidi": {
+    "sample_count": 3,
+    "sample_files": [
+      "Heidi_sample1.wav",
+      "Heidi_sample2.wav",
+      "Heidi_sample3.wav"
+    ]
+  },
+  "Ivan Mendoza": {
+    "sample_count": 3,
+    "sample_files": [
+      "Ivan_Mendoza_sample1.wav",
+      "Ivan_Mendoza_sample2.wav",
+      "Ivan_Mendoza_sample3.wav"
+    ]
+  },
+  "Jessica Rusch": {
+    "sample_count": 3,
+    "sample_files": [
+      "Jessica_Rusch_sample1.wav",
+      "Jessica_Rusch_sample2.wav",
+      "Jessica_Rusch_sample3.wav"
+    ]
+  },
+  "Ron Eddings": {
+    "sample_count": 3,
+    "sample_files": [
+      "Ron_Eddings_sample1.wav",
+      "Ron_Eddings_sample2.wav",
+      "Ron_Eddings_sample3.wav"
+    ]
+  },
+  "Sara Gotwalt": {
+    "sample_count": 3,
+    "sample_files": [
+      "Sara_Gotwalt_sample1.wav",
+      "Sara_Gotwalt_sample2.wav",
+      "Sara_Gotwalt_sample3.wav"
+    ]
+  },
+  "tracyholden": {
+    "sample_count": 3,
+    "sample_files": [
+      "tracyholden_sample1.wav",
+      "tracyholden_sample2.wav",
+      "tracyholden_sample3.wav"
+    ]
+  }
+}

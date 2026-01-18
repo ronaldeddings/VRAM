@@ -1,0 +1,33 @@
+**Key Observations**
+- `10-19_Work/10_Hacker_Valley_Media` has the folder structure but no assets beyond `.DS_Store`, so HVM materials are living elsewhere (mostly emails and meeting recaps). Evidence: `10-19_Work/10_Hacker_Valley_Media/.DS_Store`.
+- Offerings are consistently framed as end‑to‑end podcast + livestream + clip repurposing across multiple recaps. Evidence: `10-19_Work/14_Communications/14.01_emails/2024/2024-04-29_201230_053304_Summary of your meeting with eSentire.md`, `10-19_Work/14_Communications/14.01_emails/2024/2024-11-25_220454_025146_Recap of your meeting with Sandfly Security.md`, `10-19_Work/14_Communications/14.01_emails/2025/2025-01-31_185810_021661_Recap of your meeting with SixMap.md`.
+- Pricing bands show up repeatedly: episodes starting around 7.5k, packages 8k–13k, and a 10k/month content acceleration offer. Evidence: `10-19_Work/14_Communications/14.01_emails/2024/2024-11-12_163438_026360_Recap of your meeting with overwatchdata.io.md`, `10-19_Work/14_Communications/14.01_emails/2024/2024-11-25_220454_025146_Recap of your meeting with Sandfly Security.md`.
+- Event video production is a parallel line of business with defined deliverables and pricing. Evidence: `10-19_Work/14_Communications/14.01_emails/2024/2024-07-19_193459_032648_Recap of your meeting with Sans.md`.
+- Lead gen relies heavily on LinkedIn RSVP and profile data (no emails), indicating a capture gap. Evidence: `10-19_Work/14_Communications/14.01_emails/2025/2025-01-31_185810_021661_Recap of your meeting with SixMap.md`, `10-19_Work/14_Communications/14.01_emails/2025/2025-12-04_173233_000731_Recap of your meeting with McIntyre Associates.md`.
+
+**Insights**
+- HVM is operating like a productized B2B content and demand-gen agency; the same service pattern and audience stats recur across prospects, which is strong for scaling. Evidence: `10-19_Work/14_Communications/14.01_emails/2024/2024-04-29_201230_053304_Summary of your meeting with eSentire.md`, `10-19_Work/14_Communications/14.01_emails/2024/2024-11-25_220454_025146_Recap of your meeting with Sandfly Security.md`.
+- The pipeline is heavy in 2024–2025 (based on recap volume and recurring prospect patterns), but content is scattered across communications rather than centralized in HVM. Evidence: `10-19_Work/14_Communications/14.01_emails/2024/2024-07-19_193459_032648_Recap of your meeting with Sans.md`, `10-19_Work/14_Communications/14.01_emails/2025/2025-01-31_185810_021661_Recap of your meeting with SixMap.md`.
+- Some prospects prioritize narrative control (e.g., choosing other partners for that reason), suggesting a product gap for “client-owned” formats. Evidence: `10-19_Work/14_Communications/14.01_emails/2025/2025-12-04_173233_000731_Recap of your meeting with McIntyre Associates.md`.
+
+**Opportunities**
+- Centralize HVM collateral, case studies, and pricing in `10-19_Work/10_Hacker_Valley_Media` so the team has a single source of truth instead of searching through emails.
+- Package a “narrative control” option (client‑owned show or co‑hosted series) to address objections highlighted in the McIntyre recap.
+- Add an email capture path to LinkedIn RSVP flows (landing page + gated bonus clip) to turn RSVP interest into contactable leads.
+- Convert event work into reusable sales assets (one-page case study for SANS‑style events with deliverables and sample clips).
+
+**Connections**
+- Work/Meetings and Communications are the real operational store today; most HVM business context lives in Fathom recaps and emails rather than the HVM folder. Evidence: `10-19_Work/14_Communications/14.01_emails/2024/2024-11-25_220454_025146_Recap of your meeting with Sandfly Security.md`.
+- Finance ties in through consistent pricing anchors (8k–13k packages, 10k/month retainer). Evidence: `10-19_Work/14_Communications/14.01_emails/2024/2024-11-12_163438_026360_Recap of your meeting with overwatchdata.io.md`.
+- Social/Brand: LinkedIn is the primary demand channel and the core of lead gen metrics. Evidence: `10-19_Work/14_Communications/14.01_emails/2025/2025-01-31_185810_021661_Recap of your meeting with SixMap.md`.
+
+**Recommendations**
+1) Create a canonical “HVM Offers + Metrics” doc and place it under `10-19_Work/10_Hacker_Valley_Media` using the latest metrics and pricing from `10-19_Work/14_Communications/14.01_emails/2024/2024-11-25_220454_025146_Recap of your meeting with Sandfly Security.md` and `10-19_Work/14_Communications/14.01_emails/2025/2025-01-31_185810_021661_Recap of your meeting with SixMap.md`.
+2) Build a lightweight CRM tracker (sheet or Notion) and seed it with 2024–2025 leads from `10-19_Work/14_Communications/14.01_emails/2024/2024-07-19_193459_032648_Recap of your meeting with Sans.md`, `10-19_Work/14_Communications/14.01_emails/2024/2024-11-12_163438_026360_Recap of your meeting with overwatchdata.io.md`, and `10-19_Work/14_Communications/14.01_emails/2025/2025-12-04_173233_000731_Recap of your meeting with McIntyre Associates.md`.
+3) Add a “client‑owned show” package that explicitly solves narrative control (referencing McIntyre’s rationale in `10-19_Work/14_Communications/14.01_emails/2025/2025-12-04_173233_000731_Recap of your meeting with McIntyre Associates.md`).
+4) Pilot email capture for LinkedIn RSVPs by attaching a gated resource to streams referenced in `10-19_Work/14_Communications/14.01_emails/2025/2025-01-31_185810_021661_Recap of your meeting with SixMap.md`.
+5) Turn the SANS event coverage into a formal case study (deliverables + short clip montage) anchored on `10-19_Work/14_Communications/14.01_emails/2024/2024-07-19_193459_032648_Recap of your meeting with Sans.md`.
+
+**Triad Improvements**
+- Search index FTS queries fail with a “missing row” error; Triad should detect this and fall back to `files` table LIKE queries or trigger a rebuild.
+- The HVM directory was reported as having 0 subdirectories despite a visible folder tree; directory enumeration should count empty subfolders.

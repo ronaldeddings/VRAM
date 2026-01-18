@@ -1,0 +1,12 @@
+async function GAA(A){
+let B=(await fu3(A)).filter((G)=>{
+if(!G.messages.length)return!1;
+if(G.firstPrompt?.startsWith("API Error"))return!1;
+if(G.summary?.startsWith("API Error"))return!1;
+if(G.isSidechain)return!1;
+if(G.isTeammate)return!1;
+return!0}
+);
+return uPA(B).map((G,Z)=>({
+...G,value:Z}
+))}

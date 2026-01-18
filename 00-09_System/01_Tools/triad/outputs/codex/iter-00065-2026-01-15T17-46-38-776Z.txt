@@ -1,0 +1,39 @@
+Analyzed `00-09_System/00_Index/search.db` for `10-19_Work/13_Meetings/13.01_transcripts` to quantify volume, cadence, and themes without inspecting full transcript text.
+
+**Key Observations**
+- Scale is massive: 4,019 transcripts, ~219.5MB of text; median file size ~44KB, p90 ~106KB, max 433KB.
+- Meetings are concentrated on 588 distinct days with ~6.84 transcripts per active day; 98.9% fall on weekdays (Tue highest at 23.7%).
+- Monthly volume peaks in early 2024 and late 2025; top months: 2024‑01 (221), 2024‑03 (206), 2025‑10 (203), 2025‑05 (201).
+- Ingestion looks batch‑loaded: modified_at spikes in 2025‑05 (1,871 files) and 2026‑01 (1,631 files), suggesting backfill/import cycles.
+- Content signals meeting types: “1:1” in 2,349 files (~58%), “sync” 1,514 (~38%), “planning” 1,134 (~28%), “interview” 1,768 (~44%).
+- Business focus is strong: “customer” in 2,367 files (58.9%), “sales” 1,730 (43.0%), “ship” 2,426 (60.4%).
+- Execution markers are uneven: “decision” 1,015 (25.3%), “risk” 1,222 (30.4%), “follow up” 1,222 (30.4%), but “action items” only 226 (5.6%).
+- Personal/life bleed‑through is non‑trivial: “family” 925 (~23%), “kids” 782 (~19%), “health” 593 (~15%), “sleep” 446 (~11%), “stress” 409 (~10%), “burnout” 95 (~2%).
+
+**Insights**
+- The transcript corpus functions as a de‑facto operational memory for Ron’s work; the density of “customer/sales/ship” indicates strong external and delivery orientation.
+- The meeting load is extremely high; 6–7 transcripts per active day implies significant context switching and coordination overhead.
+- Hiring appears to be a recurring theme (interview mentions in ~44% of files), signaling a long‑running talent or org‑build cycle.
+- Decisions and risks show up often, but explicit “action items” are scarce—suggesting that decisions are made without a consistent task‑capture layer in transcripts.
+- Personal/health terms appear frequently in work meetings, reinforcing the earlier “Work as universal inbox” pattern.
+
+**Opportunities**
+- Build a structured decision/action log from transcripts to prevent loss of follow‑through and reduce repeated discussion.
+- Classify transcripts by meeting type (1:1, interview, planning, sync) to enable targeted summaries and better calendar hygiene.
+- Use “risk/follow‑up” density as a leading indicator for operational stress periods.
+- Extract personal/health mentions into a separate, private journal stream to support wellness tracking without mixing domains.
+
+**Connections**
+- Strong cross‑area overlap with Family/Health themes suggests Work data is already the richest lens into personal wellbeing.
+- The ingestion bursts align with systemic tooling work (likely index rebuilds or transcription imports), so System tooling choices directly shape available insights.
+
+**Recommendations**
+- Create a lightweight nightly job that produces: (1) decision log, (2) action list, (3) risk register from `13.01_transcripts`. Keep the output in `10-19_Work/13_Meetings/13.02_summaries`.
+- Add meeting‑type tags using simple heuristics (“1:1”, “interview”, “planning”, “sync”) to enable rollups by type and participant.
+- Build a monthly meeting‑load dashboard: transcripts/day, weekday distribution, and top themes to spot overload or hiring surges.
+- Establish a “personal signal extraction” step to route family/health mentions into `30-39_Personal` or `60-69_Growth` artifacts for continuity.
+- If you want, I can sketch a small extractor script (read‑only) that produces CSV summaries from `search.db`.
+
+**Triad Improvements**
+- The FTS index appears inconsistent (`fts5: missing row … from content table`) when querying `files_fts`; add an integrity check and auto‑rebuild step (e.g., `INSERT INTO files_fts(files_fts) VALUES('rebuild')`) in Triad’s indexing pipeline.
+- Track both “meeting date” (from filename) and “ingestion date” (modified_at) as separate dimensions to avoid conflating activity vs. import timing.

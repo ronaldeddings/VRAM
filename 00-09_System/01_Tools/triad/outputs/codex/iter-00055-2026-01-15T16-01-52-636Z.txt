@@ -1,0 +1,37 @@
+**Key Observations**
+- 170,010 files in `10-19_Work/14_Communications`; split across `json` (93,332) and `md` (76,678), which likely double-represent the same emails.
+- Volume is recent‑heavy: 2023–2025 = 133,423 files (~79%); 2024–2025 alone ~60%.
+- Automation/newsletter markers are common: `unsubscribe` 48,847 (~29%), `newsletter` 13,256 (~8%), `no-reply|noreply` 29,077 (~17%), `automated` 10,457 (~6%).
+- Scheduling/coordination dominates: `meeting` 50,605, `invite` 37,978, `calendar` 31,985, `schedule` 33,412, `call` 41,470, `zoom` 23,824.
+- Business relationship language is prevalent: `client` 39,095, `customer` 30,382, `partner` 15,378, `sponsor` 10,666, `proposal` 7,676, `contract` 7,892, `renewal` 1,896.
+- Warm‑relationship cues are comparatively modest: `catch up` 2,493, `coffee` 1,841, `lunch` 1,308, `touch base` 1,115, `relationship` 2,958.
+
+**Insights**
+- Relationship surface area has scaled rapidly since 2023, but the signal is dominated by operational scheduling rather than conversational depth; this can erode proactive relationship care if not systematized.
+- Automation noise is large enough to hide high‑value correspondence; effective relationship management requires segmentation, not inbox scanning.
+- Commercial activity is strong (client/customer/proposal/contract), while explicit nurture signals (gift/touch base) are relatively low, suggesting relationship maintenance is under‑instrumented relative to revenue load.
+- Dual-format storage (md + json) will inflate metrics unless deduped; any KPIs should normalize by message-id or filename stem.
+
+**Opportunities**
+- Build a “human‑only” view (exclude no‑reply/unsubscribe/newsletter) and rank contacts by recency + frequency.
+- Formalize a relationship cadence: quarterly partner/sponsor check‑ins, monthly top‑client touchpoints, and a 48‑hour post‑meeting follow‑up SLA.
+- Turn intros/referrals into a tracked pipeline (tag → follow‑up → outcome).
+- Use gifting deliberately for top tiers (aligns with prior gifting notes in iteration outputs).
+- Reduce noise with targeted unsubscribe passes and digest routing.
+
+**Connections**
+- Finance: invoice/receipt/contract/renewal volume ties relationships directly to revenue cycles; align CRM touchpoints with billing milestones.
+- Systems/Tools: automation‑heavy flow suggests inbox rules and CRM automation deliver high ROI (consistent with tool‑savings focus).
+- Marketing/Community: sponsor/newsletter content implies audience channels where relationship health impacts growth.
+- Time management: heavy scheduling traffic implies a need for tighter calendar hygiene to protect follow‑through.
+
+**Recommendations**
+- Create a deduped “Relationship Index” keyed by message‑id or filename stem from `10-19_Work/14_Communications` with fields: sender, last‑touch, touch‑count, meeting‑count, automation‑flag.
+- Implement inbox filters for `no-reply|unsubscribe|newsletter` and route to a weekly digest; reserve primary inbox for human senders.
+- Establish a top‑30 relationship list (clients/partners/sponsors) and schedule recurring check‑ins; track completion in CRM or a lightweight sheet.
+- Add a post‑meeting follow‑up template that captures next steps and accountability.
+- Run a quarterly relationship review from the index to identify dormant high‑value contacts (90+ days) and launch re‑engagement.
+
+**Triad Improvements**
+- Add a “relationship audit” script that dedupes md/json, computes human vs automated ratios, and outputs top contacts + dormancy list.
+- Persist derived metrics (yearly volume, automation %, meeting %, top domains) into a small report for trend comparisons across iterations.

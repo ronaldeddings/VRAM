@@ -1,0 +1,36 @@
+Finance is scaffolded but empty, so this analysis relies on finance signals embedded in Work meetings and communications rather than a centralized Finance system of record.
+
+**Key Observations**
+- `20-29_Finance` has the right structure but no substantive files, so finance artifacts are currently stored elsewhere. `20-29_Finance`
+- Runway/cashflow modeling exists in meetings: monthly expenses cited at ~$18K with a 30% buffer and runway scenarios. `10-19_Work/13_Meetings/13.01_transcripts/2023/2023-09-06-35986829.md:1033` `10-19_Work/13_Meetings/13.01_transcripts/2023/2023-09-06-35986829.md:1089` `10-19_Work/13_Meetings/13.01_transcripts/2023/2023-09-06-35986829.md:1091`
+- AR/collections are active: invoicing is owned by a specific person, payment terms are net‑30 with late-fee enforcement, and audit requests require contract+invoice+proof‑of‑work packages. `10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-521053578.md:119` `10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-520962961.md:325` `10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-05-522674820.md:451`
+- Finance tooling and compliance are present: QuickBooks is referenced, and the CPA’s S‑Corp tax prep request requires distributions, payroll reports, bank recs, statements, and 1099s. `10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-08-526140322.md:333` `10-19_Work/14_Communications/14.01_emails/2023/2023-03-06_164726_057895_Hacker Valley Media LLC S-Corp Tax return.md:18`
+
+**Insights**
+- Finance data is operationally rich but fragmented across meetings and emails, which increases tax‑time and audit friction.
+- The business is operating at a level that demands formal financial ops (S‑Corp, payroll, net‑terms, audits) but the system of record is not centralized.
+- Budgeting and runway modeling exist, yet the absence of a Finance hub suggests the model may not be consistently updated with actuals.
+
+**Opportunities**
+- Centralize finance artifacts (contracts, invoices, tax packs, statements) into `20-29_Finance` to reduce operational drag.
+- Automate intake of invoices/receipts from email into structured AP/AR folders.
+- Build a lightweight monthly close that updates runway, cashflow, and variance vs. budget.
+- Maintain audit‑ready client packets to respond quickly to compliance requests.
+
+**Connections**
+- Work: finance decisions, budgets, and AR live inside operations and sales workflows. `10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-520962961.md:325` `10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-09-528348266.md:575`
+- Growth: runway and expense management directly inform hiring and project investment decisions. `10-19_Work/13_Meetings/13.01_transcripts/2023/2023-09-06-35986829.md:1101`
+- Systems: finance tooling (QuickBooks) is intertwined with broader ops tooling and migrations. `10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-08-526140322.md:333`
+
+**Recommendations**
+- Create a “Finance Index” doc in `20-29_Finance` that links to each year’s tax package, AP, AR, payroll, and statements; migrate priority artifacts from Work communications first.
+- Turn the runway spreadsheet into a monthly close ritual: update actuals, refresh the runway, and log variance to the budget baseline. `10-19_Work/13_Meetings/13.01_transcripts/2023/2023-09-06-35986829.md:1089`
+- Formalize AR policy into a single playbook: net‑30 default, late‑fee timing, and reminder cadence; keep templates in Finance. `10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-520962961.md:325`
+- Maintain a yearly tax checklist based on CPA requirements (distributions, payroll/W‑2/W‑3, bank recs, 1099s, statements) to avoid last‑minute scrambles. `10-19_Work/14_Communications/14.01_emails/2023/2023-03-06_164726_057895_Hacker Valley Media LLC S-Corp Tax return.md:18`
+- Build per‑client “audit packs” with contract + invoice + proof‑of‑work to reduce compliance response time. `10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-05-522674820.md:451`
+
+**Triad Improvements**
+- Add a “Finance gap” detector that flags an empty `20-29_Finance` and surfaces finance‑related items from Work communications and meeting transcripts for triage.
+- Add a finance signal extractor that collects budget amounts, invoice terms, and tax deliverables into a structured summary to reduce manual review.
+
+If you want, I can produce a short “Finance Index” template and a monthly close checklist tailored to HVM’s workflows.

@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2025-12-17T12:27:52.068Z",
+  "bundle": "ClaudeAgentSDKCode",
+  "command": "node bundles/ClaudeAgentSDKCode/cli.js --version",
+  "exitCode": 0,
+  "env": {
+    "provided": [],
+    "derived": {
+      "mcpCliGates": {
+        "enableExperimentalMcpCli": false,
+        "enableMcpCliEndpoint": false,
+        "mcpToolTimeoutMs": null,
+        "maxMcpOutputTokens": null
+      }
+    }
+  },
+  "outputs": {
+    "stdoutPath": "docs/rewrite/phase-1/fixtures/sessions/sdk-2.0.67-version.stdout.txt",
+    "stderrPath": "docs/rewrite/phase-1/fixtures/sessions/sdk-2.0.67-version.stderr.txt",
+    "stdoutSha256": "ccbe127cca0cdf65de41b23082082375a3b796eaa99201a2ad7d08cedcf9eaf8",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "captured": {
+    "normalizedEffectiveSettingsSnapshot": {
+      "enabledSources": [
+        "userSettings",
+        "projectSettings",
+        "localSettings",
+        "flagSettings",
+        "policySettings"
+      ],
+      "fileBackedSources": [
+        "userSettings",
+        "projectSettings",
+        "localSettings",
+        "flagSettings",
+        "policySettings"
+      ],
+      "mergeSemantics": {
+        "objects": "deep-merge",
+        "arrays": "union-dedupe-preserve-order",
+        "deleteOnUndefinedPatch": true
+      },
+      "note": "Capture uses an empty CLAUDE_CONFIG_DIR temp dir; this snapshot records the known source order + merge semantics, not user machine settings."
+    },
+    "normalizedPermissionRuleSet": {
+      "sourcePrecedence": [
+        "userSettings",
+        "projectSettings",
+        "localSettings",
+        "flagSettings",
+        "policySettings",
+        "cliArg",
+        "command",
+        "session"
+      ],
+      "allow": {},
+      "deny": {},
+      "ask": {},
+      "note": "No settings files were loaded during capture (empty CLAUDE_CONFIG_DIR)."
+    },
+    "hookSelectionResults": {
+      "note": "Not captured for this offline fixture yet."
+    },
+    "toolInvocationTranscript": {
+      "note": "Not captured for this offline fixture yet."
+    },
+    "mcpModeSelection": {
+      "note": "Infer from stderr/stdout text for `--mcp-cli` fixtures."
+    }
+  }
+}

@@ -1,0 +1,1 @@
+{"PreToolUse":[{"matcher":"a","hooks":[{"type":"workflow","actions":[{"kind":"AppendTranscriptContext","text":"x"}]}]}]}

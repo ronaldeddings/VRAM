@@ -1,0 +1,8 @@
+function Ya3(A){
+if(A.type==="assistant")return{
+type:A.type,message:A.message,uuid:u_B(),timestamp:new Date().toISOString(),requestId:void 0}
+;
+else if(A.type==="user")return{
+type:A.type,message:A.message,uuid:u_B(),timestamp:new Date().toISOString()}
+;
+return}

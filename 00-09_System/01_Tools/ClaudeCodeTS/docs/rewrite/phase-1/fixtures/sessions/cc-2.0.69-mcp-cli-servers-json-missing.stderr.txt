@@ -1,0 +1,2 @@
+Warning: MCP endpoint file not found at /var/folders/y9/178pkym1719_vgbjz6fwl0100000gq/T/claude-code-mcp-cli/5229869a-36ee-484d-abfd-d916984a38bd.endpoint (session: 5229869a-36ee-484d-abfd-d916984a38bd). Falling back to state file.
+Error: MCP state file not found at /var/folders/y9/178pkym1719_vgbjz6fwl0100000gq/T/claude-code-mcp-cli/5229869a-36ee-484d-abfd-d916984a38bd.json (session: 5229869a-36ee-484d-abfd-d916984a38bd). Is Claude Code running?

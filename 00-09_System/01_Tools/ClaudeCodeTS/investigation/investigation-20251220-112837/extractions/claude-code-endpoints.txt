@@ -1,0 +1,379 @@
+/v1/${J}:generateAccessToken`,X={delegates:this.delegates,scope:this.targetScopes,lifetime:this.lifetime+
+/v1/${Z}:generateIdToken`,J={delegates:this.delegates,audience:A,includeEmail:(B=Q===null||Q===void 0?void 0:Q.includeEmail)!==null&&B!==void 0?B:!0,useEmailAzp:(G=Q===null||Q===void 0?void 0:Q.includeEmail)!==null&&G!==void 0?G:!0};return(await this.sourceClient.request({...lzA.RETRY_CONFIG,url:Y,data:J,method:
+/v1/batch
+/v1/complete
+/v1/environment_providers`;try{let G={...oW(A),
+/v1/files
+/v1/files/${A}/content`,{...B,headers:V6([{
+/v1/files/${A}`,{...B,headers:V6([{
+/v1/messages
+/v1/messages?beta=true
+/v1/messages/batches
+/v1/messages/batches?beta=true
+/v1/messages/batches/${A}?beta=true`,{...B,headers:V6([{
+/v1/messages/batches/${A}/cancel?beta=true`,{...B,headers:V6([{
+/v1/messages/batches/${A}`,Q)}cancel(A,Q){return this._client.post(aY`/v1/messages/batches/${A}/cancel`,Q)}async results(A,Q){let B=await this.retrieve(A);if(!B.results_url)throw new X2(`No batch \`results_url\`; Has it finished processing? ${B.processing_status} - ${B.id}`);return this._client.get(B.results_url,{...Q,headers:V6([{Accept:
+/v1/messages/batches/${A}`,Q)}list(A={},Q){return this._client.getAPIList(
+/v1/messages/count_tokens
+/v1/messages/count_tokens?beta=true
+/v1/models
+/v1/models?beta=true
+/v1/models/${A}?beta=true`,{...B,headers:V6([{...G?.toString()!=null?{
+/v1/models/${A}`,{...B,headers:V6([{...G?.toString()!=null?{
+/v1/session_ingress/session/${A}`,Y={...oW(B),
+/v1/sessions/${A}/events`,Y={...oW(B),
+/v1/sessions/${A}/events`;f(`Fetching events from: ${Z}`);let Y=await wQ.get(Z,{headers:{...G,
+/v1/sessions/${A}`,J={...G,
+/v1/sessions/${A}`,Y={...B,
+/v1/sessions/${A}`;f(`Fetching session details from: ${W}`);let K=await wQ.get(W,{headers:{...G,
+/v1/sessions`,U={...oW(Z),
+/v1/sessions`;try{let G={...oW(A),
+/v1/skills?beta=true
+/v1/skills/${A}?beta=true`,{...B,headers:V6([{
+/v1/skills/${A}/versions?beta=true`,h8A({body:Z,...B,headers:V6([{
+/v1/skills/${A}/versions?beta=true`,sCA,{query:Z,...B,headers:V6([{
+/v1/skills/${G}/versions/${A}?beta=true`,{...B,headers:V6([{
+/v1/token
+api.amazonwebservices
+api.anthropic
+api.aws
+api.cloud
+api.cn
+api.logs
+api.net
+api.request
+api.tiangolo
+http:// or https:// scheme
+http:// or https://, got ${Q.protocol}`)}async function e5(A){try{e_3(A);let Q=process.env.BROWSER,B=process.platform;if(B===
+http://.
+http://[fd00:ec2::254]
+http://${A.headers.host||
+http://${A}`;return new URL(j4.BASE_PATH,A).href}function uI3(A){Object.keys(A).forEach((Q)=>{switch(Q){case
+http://${K}:${I.port}/sse`;Q.push({url:V,name:W,workspaceFolders:I.workspaceFolders,port:I.port,isValid:X,authToken:I.authToken,ideRunningInWindows:I.runningInWindows})}if(!A&&G){let J=Q.filter((I)=>I.isValid&&I.port===G);if(J.length===1)return J}}catch(B){s(B)}return Q}async function KDB(A){await A.notification({method:
+http://${this._host}:${this._port}/`,this._endpoint=(A.endpoint||ul.DEFAULT_OPTIONS.endpoint).replace(/^([^/])/,
+http://1.1.1.1
+http://127.0.0.1:${this.port}`;f(`[MCP CLI Endpoint] Started on ${G}`),A({port:this.port,url:G})})})}getSecret(){return this.secret}async handleRequest(A,Q){if(A.setTimeout(30000),A.on(
+http://127.0.0.1:40342/metadata/identity/oauth2/token
+http://169.254.169.254
+http://169.254.169.254/metadata/instance/compute/location
+http://169.254.169.254${ZXB}`;o$A=class o$A extends nz{constructor(A,Q,B,G,Z,Y){super(A,Q,B,G,Z);this.identityEndpoint=Y}static tryCreate(A,Q,B,G,Z){let Y;if(process.env[P4.AZURE_POD_IDENTITY_AUTHORITY_HOST])A.info(`[Managed Identity] Environment variable ${P4.AZURE_POD_IDENTITY_AUTHORITY_HOST} for ${d4.IMDS} returned endpoint: ${process.env[P4.AZURE_POD_IDENTITY_AUTHORITY_HOST]}`),Y=o$A.getValidatedEnvVariableUrlString(P4.AZURE_POD_IDENTITY_AUTHORITY_HOST,`${process.env[P4.AZURE_POD_IDENTITY_AUTHORITY_HOST]}${ZXB}`,d4.IMDS,A);else A.info(`[Managed Identity] Unable to find ${P4.AZURE_POD_IDENTITY_AUTHORITY_HOST} environment variable for ${d4.IMDS}, using the default endpoint.`),Y=Tq3;return new o$A(A,Q,B,G,Z,Y)}createRequest(A,Q){let B=new Ew(XY.GET,this.identityEndpoint);if(B.headers[pz.METADATA_HEADER_NAME]=
+http://169.254.170.2
+http://dogs.are.great${B}`;try{return A.query||typeof URL<
+http://json-schema.org/draft-07/schema
+http://json-schema.org/draft-07/schema#
+http://json-schema.org/schema
+http://localhost
+http://localhost:${A}/callback`}function Mj3(){let A=parseInt(process.env.MCP_OAUTH_CALLBACK_PORT||
+http://localhost:${A}`),B.push(`HTTPS_PROXY=http://localhost:${A}`),B.push(`http_proxy=http://localhost:${A}`),B.push(`https_proxy=http://localhost:${A}`);if(Q){if(B.push(`ALL_PROXY=socks5h://localhost:${Q}`),B.push(`all_proxy=socks5h://localhost:${Q}`),XL()===
+http://localhost:${A||Q}`),B.push(`DOCKER_HTTPS_PROXY=http://localhost:${A||Q}`),A)B.push(
+http://localhost:${B}/callback`);let W=Y?[E9A]:Ng0;if(X.searchParams.append(
+http://localhost:${G}/callback`,client_id:u9().CLIENT_ID,code_verifier:B,state:Q};if(Y!==void 0)J.expires_in=Y;let I=await wQ.post(u9().TOKEN_URL,J,{headers:{
+http://localhost:3000
+http://localhost:3000/api/oauth/claude_cli/create_api_key
+http://localhost:3000/api/oauth/claude_cli/roles
+http://localhost:3000/buy_credits?returnUrl=/oauth/code/success%3Fapp%3Dclaude-code
+http://localhost:3000/oauth/authorize
+http://localhost:3000/oauth/code/success?app=claude-code
+http://localhost:3000/v1/oauth/token
+http://localhost:4000/oauth/authorize
+http://localhost:4317
+http://localhost:4318/
+http://localhost:8969/stream
+http://localhost:9999
+http://metadata.google.internal.
+http://www.apple.com/DTDs/PropertyList-1.0.dtd
+http://www.example.com
+http://www.ibm.com/data/dtd/v11/ibmxhtml1-transitional.dtd
+http://www.w3.org/1998/Math/MathML
+http://www.w3.org/1999/xhtml
+http://www.w3.org/1999/xlink
+http://www.w3.org/2000/svg
+http://www.w3.org/2000/xmlns/
+http://www.w3.org/XML/1998/namespace
+https:// or git@)
+https:// website.
+https://_
+https://_____
+https://, etc.)
+https://..., or ./path
+https://..., or ./path`),process.exit(1);if(
+https://[::1]
+https://{Region}.signin.amazonaws-us-gov.com
+https://{Region}.signin.amazonaws.cn
+https://{Region}.signin.aws.amazon.com
+https://${A}/${this.authority.tenant}/`,G=await bu1(B,this.networkClient,this.cacheManager,this.authority.options,this.logger,Q,this.performanceClient);this.authority=G}createTokenQueryParameters(A){let Q=new Map;if(A.embeddedClientId)uf(Q,this.config.authOptions.clientId,this.config.authOptions.redirectUri);if(A.tokenQueryParameters)gf(Q,A.tokenQueryParameters);return at(Q,A.correlationId),ct(Q,A.correlationId,this.performanceClient),TS(Q)}}var C$A=L(()=>{mnA();jnA();yZ();SnA();eUA();o5A();Q7A();ut();hu1();I_();l7B();OL();eX();i7B();mf();ZX();/*! @azure/msal-common v15.13.1 2025-10-29 */});var ZaA={};EG(ZaA,{uxNotAllowed:()=>GaA,refreshTokenExpired:()=>U$A,noTokensFound:()=>tc,nativeAccountUnavailable:()=>z$A,loginRequired:()=>mu1,interactionRequired:()=>gu1,consentRequired:()=>uu1,badToken:()=>ec});var tc=
+https://${A}`;let B=new g78.URL(A);if(B.protocol===
+https://${B}.services.ai.azure.com/anthropic/`}else if(B)throw new X2(
+https://${Q}-aiplatform.googleapis.com/v1`),...G});if(this.messages=cV3(this),this.beta=pV3(this),this.region=Q,this.projectId=B,this.accessToken=G.accessToken??null,G.authClient&&G.googleAuth)throw Error(
+https://${this.defaultServicePath}/`:A;let Q=!this.hasUserScopes()&&A||this.useJWTAccessWithScope&&this.hasAnyScopes()||this.universeDomain!==hiA.DEFAULT_UNIVERSE;if(this.subject&&this.universeDomain!==hiA.DEFAULT_UNIVERSE)throw RangeError(`Service Account user is configured for the credential. Domain-wide delegation is not supported in universes other than ${hiA.DEFAULT_UNIVERSE}`);if(!this.apiKey&&Q)if(this.additionalClaims&&this.additionalClaims.target_audience){let{tokens:B}=await this.refreshToken();return{headers:this.addSharedMetadataHeaders({Authorization:`Bearer ${B.id_token}`})}}else{if(!this.access)this.access=new lW3.JWTAccess(this.email,this.key,this.keyId,this.eagerRefreshThresholdMillis);let B;if(this.hasUserScopes())B=this.scopes;else if(!A)B=this.defaultScopes;let G=this.useJWTAccessWithScope||this.universeDomain!==hiA.DEFAULT_UNIVERSE,Z=await this.access.getRequestHeaders(A!==null&&A!==void 0?A:void 0,this.additionalClaims,G?B:void 0);return{headers:this.addSharedMetadataHeaders(Z)}}else if(this.hasAnyScopes()||this.apiKey)return super.getRequestMetadataAsync(A);else return{headers:{}}}async fetchIdToken(A){let Q=new g4B.GoogleToken({iss:this.email,sub:this.subject,scope:this.scopes||this.defaultScopes,keyFile:this.keyFile,key:this.key,additionalClaims:{target_audience:A},transporter:this.transporter});if(await Q.getToken({forceRefresh:!0}),!Q.idToken)throw Error(
+https://${V}/${K}`,this.startTime=new Date}getDeadlineInfo(){var A,Q;let B=[];if(this.childStartTime){if(this.childStartTime>this.startTime){if((A=this.metadata)===null||A===void 0?void 0:A.getOptions().waitForReady)B.push(
+https://${W}/${X}`;let K=(0,y48.getRelativeTimeout)(G.deadline);if(K!==1/0)if(K<=0)this.cancelWithStatus(KLA.Status.DEADLINE_EXCEEDED,
+https://${X}${Y}`)}}return G})}_pickNewFallbackUrl(A,Q){var B;if(Q==null)return null;let G=new Set((B=A===null||A===void 0?void 0:A.previous)!==null&&B!==void 0?B:[]),Z=A===null||A===void 0?void 0:A.url,Y=null;for(let J of Q){let I=J.endsWith(
+https://$1.
+https://a.co/74kJMmI`)};function mg9(A,Q,B){if(!A.$source)A.$source={};return A.$source[Q]=B,A}function dg9(A,Q,B){if(!A.__aws_sdk_context)A.__aws_sdk_context={features:{}};else if(!A.__aws_sdk_context.features)A.__aws_sdk_context.features={};A.__aws_sdk_context.features[Q]=B}function cg9(A,Q,B){if(!A.$source)A.$source={};return A.$source[Q]=B,A}pg9.emitWarningIfUnsupportedVersion=ug9;pg9.setCredentialFeature=mg9;pg9.setFeature=dg9;pg9.setTokenFeature=cg9;pg9.state=HD1});var gl0=w((tg9)=>{var hl0={},FD1={};for(let A=0;A<256;A++){let Q=A.toString(16).toLowerCase();if(Q.length===1)Q=`0${Q}`;hl0[A]=Q,FD1[Q]=A}function rg9(A){if(A.length%2!==0)throw Error(
+https://a.co/74kJMmI`)};function Xc9(A,Q,B){if(!A.$source)A.$source={};return A.$source[Q]=B,A}function Wc9(A,Q,B){if(!A.__aws_sdk_context)A.__aws_sdk_context={features:{}};else if(!A.__aws_sdk_context.features)A.__aws_sdk_context.features={};A.__aws_sdk_context.features[Q]=B}function Kc9(A,Q,B){if(!A.$source)A.$source={};return A.$source[Q]=B,A}var Jn0=(A)=>BH1.HttpResponse.isInstance(A)?A.headers?.date??A.headers?.Date:void 0,GH1=(A)=>new Date(Date.now()+A),Vc9=(A,Q)=>Math.abs(GH1(Q).getTime()-A)>=300000,In0=(A,Q)=>{let B=Date.parse(A);if(Vc9(B,Q))return B-Date.now();return Q},qVA=(A,Q)=>{if(!Q)throw Error(`Property \`${A}\` is not resolved for AWS SDK SigV4Auth`);return Q},ZH1=async(A)=>{let Q=qVA(
+https://accounts.google.com
+https://accounts.google.com/o/oauth2/revoke?token=
+https://accounts.google.com/o/oauth2/v2/auth
+https://aiplatform.googleapis.com/v1
+https://aka.ms/azsdk/identity/mfa.
+https://aka.ms/azsdk/js/identity/azdevclicredential/troubleshoot.
+https://aka.ms/azsdk/js/identity/environmentcredential/troubleshoot.`,error_description:G.message.toString().split(
+https://aka.ms/azsdk/js/identity/environmentcredential/troubleshoot.`)})}}var yL3,HoA=
+https://aka.ms/azsdk/js/identity/powershellcredential/troubleshoot.
+https://aka.ms/azsdk/js/identity/serviceprincipalauthentication/troubleshoot.
+https://aka.ms/azsdk/js/identity/serviceprincipalauthentication/troubleshoot.`);if(Z&&Y)throw Error(`${AwA}: To avoid unexpected behaviors, providing both the contents of a PEM certificate and the path to a PEM certificate is forbidden. To troubleshoot, visit https://aka.ms/azsdk/js/identity/serviceprincipalauthentication/troubleshoot.`);this.msalClient=Xp(Q,A,Object.assign(Object.assign({},G),{logger:IWB,tokenCredentialOptions:G}))}async getToken(A,Q={}){return oY.withSpan(`${AwA}.getToken`,Q,async(B)=>{B.tenantId=SF(this.tenantId,B,this.additionallyAllowedTenantIds,IWB);let G=Array.isArray(A)?A:[A],Z=await this.buildClientCertificate();return this.msalClient.getTokenByClientCertificate(G,Z,B)})}async buildClientCertificate(){var A;let Q=await SL3(this.certificateConfiguration,(A=this.sendCertificateChain)!==null&&A!==void 0?A:!1),B;if(this.certificateConfiguration.certificatePassword!==void 0)B=jL3({key:Q.certificateContents,passphrase:this.certificateConfiguration.certificatePassword,format:
+https://aka.ms/azsdk/js/identity/usernamepasswordcredential/troubleshoot.
+https://aka.ms/azsdk/js/identity/workloadidentitycredential/troubleshoot`;throw e$A.info(B),new X4(B)}return e$A.info(
+https://aka.ms/azsdk/js/identity/workloadidentitycredential/troubleshoot`);e$A.info(`Invoking ClientAssertionCredential with tenant ID: ${G}, clientId: ${B.clientId} and federated token path: [REDACTED]`),this.client=new Hd1(G,Z,this.readFileContents.bind(this),A)}async getToken(A,Q){if(!this.client){let B=`${He}: is unavailable. tenantId, clientId, and federatedTokenFilePath are required parameters. 
+https://aka.ms/azsdk/js/identity/workloadidentitycredential/troubleshoot`);if(!G)throw new X4(`${He}: is unavailable. tenantId is a required parameter. In DefaultAzureCredential and ManagedIdentityCredential, this can be provided as an environment variable - 
+https://aka.ms/azsdk/js/identity/workloadidentitycredential/troubleshoot`);if(!this.federatedTokenFilePath)throw new X4(`${He}: is unavailable. federatedTokenFilePath is a required parameter. In DefaultAzureCredential and ManagedIdentityCredential, this can be provided as an environment variable - 
+https://aka.ms/azure-cli for installation instructions and then, once installed, authenticate to your Azure account using 
+https://aka.ms/msaljs/optional-claims for more information.
+https://aka.ms/servicefabricmi for more information
+https://anthropic.com/legal/privacy
+https://anthropic.com/legal/terms
+https://anthropic.com/supported-countries
+https://api.anthropic.com
+https://api.anthropic.com/
+https://api.anthropic.com/api/claude_cli_feedback
+https://api.anthropic.com/api/claude_code/link_vcs_account
+https://api.anthropic.com/api/claude_code/metrics
+https://api.anthropic.com/api/claude_code/organizations/metrics_enabled
+https://api.anthropic.com/api/hello
+https://api.anthropic.com/api/oauth/claude_cli/create_api_key
+https://api.anthropic.com/api/oauth/claude_cli/roles
+https://api.anthropic.com/api/organization/${A}/claude_code_sonnet_1m_access`,Z=await wQ.get(G,{headers:B,timeout:5000});return{hasAccess:Z.data.has_access,hasAccessNotAsDefault:Z.data.has_access_not_as_default,hasError:!1}}catch(G){return s(G),{hasAccess:!1,hasError:!0}}}async function mu6(){try{return await uu6()}catch(A){return f(
+https://api.segment.io
+https://api.statsigcdn.com/v1
+https://aws.amazon.com/javascript/
+https://bedrock-fips.{Region}.{PartitionResult#dnsSuffix}
+https://bedrock-fips.{Region}.{PartitionResult#dualStackDnsSuffix}
+https://bedrock-runtime-fips.{Region}.{PartitionResult#dnsSuffix}
+https://bedrock-runtime-fips.{Region}.{PartitionResult#dualStackDnsSuffix}
+https://bedrock-runtime.{Region}.{PartitionResult#dnsSuffix}
+https://bedrock-runtime.{Region}.{PartitionResult#dualStackDnsSuffix}
+https://bedrock-runtime.${A}.amazonaws.com`,awsSecretKey:B=null,awsAccessKey:G=null,awsSessionToken:Z=null,providerChainResolver:Y=null,...J}={}){super({baseURL:Q,...J});this.skipAuth=!1,this.messages=v53(this),this.completions=new Ec(this),this.beta=k53(this),this.awsSecretKey=B,this.awsAccessKey=G,this.awsRegion=A,this.awsSessionToken=Z,this.skipAuth=J.skipAuth??!1,this.providerChainResolver=Y}validateHeaders(){}async prepareRequest(A,{url:Q,options:B}){if(this.skipAuth)return;let G=this.awsRegion;if(!G)throw Error(
+https://bedrock.{Region}.{PartitionResult#dnsSuffix}
+https://bedrock.{Region}.{PartitionResult#dualStackDnsSuffix}
+https://cdn.growthbook.io
+https://claude.ai/admin-settings/usage
+https://claude.ai/api/web/domain_info?domain=${encodeURIComponent(A)}`);if(Q.status===200)return Q.data.can_fetch===!0?{status:
+https://claude.ai/code
+https://claude.ai/code/
+https://claude.ai/code/${A}`}function $rB(A){return`claude --teleport ${A}`}var Bh,zrB;var W10=L(()=>{fA();EqA();h1();Y0();d_();RAA();WM();I1A();RG();HB();g0();cs();HrB();Bh=o(WA(),1);zrB={name:
+https://claude.ai/code/${GB.id}?m=0
+https://claude.ai/oauth/authorize
+https://claude.ai/settings/data-privacy-controls
+https://claude.ai/settings/usage
+https://claude.ai/upgrade/max
+https://claude.ai/upgrade/max to upgrade.
+https://claude.com/claude-code
+https://claude.com/claude-code) is an AI coding agent that can help with:
+https://cli.github.com/
+https://cloud.google.com/compute/docs/metadata/predefined-metadata-keys`};class eb1{get isGCE(){return this.checkIsGCE}constructor(A={}){if(xc.add(this),this.checkIsGCE=void 0,this.jsonContent=null,this.cachedCredential=null,O5A.set(this,null),this.clientOptions={},this._cachedProjectId=A.projectId||null,this.cachedCredential=A.authClient||null,this.keyFilename=A.keyFilename||A.keyFile,this.scopes=A.scopes,this.clientOptions=A.clientOptions||{},this.jsonContent=A.credentials||null,this.apiKey=A.apiKey||this.clientOptions.apiKey||null,this.apiKey&&(this.jsonContent||this.clientOptions.credentials))throw RangeError(RE.GoogleAuthExceptionMessages.API_KEY_WITH_CREDENTIALS);if(A.universeDomain)this.clientOptions.universeDomain=A.universeDomain}setGapicJWTValues(A){A.defaultServicePath=this.defaultServicePath,A.useJWTAccessWithScope=this.useJWTAccessWithScope,A.defaultScopes=this.defaultScopes}getProjectId(A){if(A)this.getProjectIdAsync().then((Q)=>A(null,Q),A);else return this.getProjectIdAsync()}async getProjectIdOptional(){try{return await this.getProjectId()}catch(A){if(A instanceof Error&&A.message===RE.GoogleAuthExceptionMessages.NO_PROJECT_ID_FOUND)return null;else throw A}}async findAndCacheProjectId(){let A=null;if(A||(A=await this.getProductionProjectId()),A||(A=await this.getFileProjectId()),A||(A=await this.getDefaultServiceProjectId()),A||(A=await this.getGCEProjectId()),A||(A=await this.getExternalAccountClientProjectId()),A)return this._cachedProjectId=A,A;else throw Error(RE.GoogleAuthExceptionMessages.NO_PROJECT_ID_FOUND)}async getProjectIdAsync(){if(this._cachedProjectId)return this._cachedProjectId;if(!this._findProjectIdPromise)this._findProjectIdPromise=this.findAndCacheProjectId();return this._findProjectIdPromise}async getUniverseDomainFromMetadataServer(){var A;let Q;try{Q=await azA.universe(
+https://cloud.google.com/docs/authentication/getting-started for more information.
+https://cloud.google.com/docs/authentication/getting-started`,NO_ADC_FOUND:
+https://cloud.google.com/docs/authentication/getting-started`,NO_CREDENTIALS_FOUND:`Unable to find credentials in current environment. 
+https://cloudflare-dns.com/dns-query
+https://cloudresourcemanager.${this.universeDomain}/v1/projects/`),Y)this.clientAuth={confidentialClientType:
+https://cloudresourcemanager.googleapis.com/v1/projects/
+https://code.claude.com/docs/en/claude_code_docs_map.md
+https://code.claude.com/docs/en/cli-reference for available options
+https://code.claude.com/docs/en/costs
+https://code.claude.com/docs/en/hooks
+https://code.claude.com/docs/en/iam#configuring-permissions
+https://code.claude.com/docs/en/iam#permission-modes
+https://code.claude.com/docs/en/iam#working-directories
+https://code.claude.com/docs/en/legal-and-compliance.
+https://code.claude.com/docs/en/mcp
+https://code.claude.com/docs/en/mcp to learn more.
+https://code.claude.com/docs/en/mcp#configure-mcp-servers
+https://code.claude.com/docs/en/memory
+https://code.claude.com/docs/en/overview
+https://code.claude.com/docs/en/sandboxing
+https://code.claude.com/docs/en/sandboxing#configure-sandboxing
+https://code.claude.com/docs/en/security
+https://code.claude.com/docs/en/settings
+https://code.claude.com/docs/en/settings#environment-variables
+https://cognitiveservices.azure.com/.default
+https://cognito-identity-fips.{Region}.{PartitionResult#dnsSuffix}
+https://cognito-identity-fips.{Region}.{PartitionResult#dualStackDnsSuffix}
+https://cognito-identity-fips.us-east-1.amazonaws.com
+https://cognito-identity-fips.us-east-2.amazonaws.com
+https://cognito-identity-fips.us-west-1.amazonaws.com
+https://cognito-identity-fips.us-west-2.amazonaws.com
+https://cognito-identity.{Region}.{PartitionResult#dnsSuffix}
+https://cognito-identity.{Region}.{PartitionResult#dualStackDnsSuffix}
+https://cognito-identity.{Region}.amazonaws.com
+https://console.anthropic.com/buy_credits?returnUrl=/oauth/code/success%3Fapp%3Dclaude-code
+https://console.anthropic.com/oauth/authorize
+https://console.anthropic.com/oauth/code/callback
+https://console.anthropic.com/oauth/code/success?app=claude-code
+https://console.anthropic.com/settings/billing
+https://console.anthropic.com/settings/keys)
+https://console.anthropic.com/v1/oauth/hello
+https://console.anthropic.com/v1/oauth/token
+https://console.staging.ant.dev/oauth/code/callback
+https://docs.anthropic.com/en/docs/resources/model-deprecations for more information.`);let B=this._client._options.timeout;if(!A.stream&&B==null){let G=upA[A.model]??void 0;B=this._client.calculateNonstreamingTimeout(A.max_tokens,G)}return this._client.post(
+https://docs.anthropic.com/en/docs/resources/model-deprecations for more information.`);let Z=this._client._options.timeout;if(!G.stream&&Z==null){let Y=upA[G.model]??void 0;Z=this._client.calculateNonstreamingTimeout(G.max_tokens,Y)}return this._client.post(
+https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sso.html`,{tryNextLink:!1,logger:Q});return A},G34=(A={})=>async({callerClientConfig:Q}={})=>{A.logger?.debug(
+https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/node-configuring-maxsockets.html
+https://docs.aws.amazon.com/sdkref/latest/guide/feature-static-credentials.html
+https://docs.claude.com/s/claude-code-jetbrains
+https://docs.claude.com/s/claude-code-jetbrains`:
+https://docs.expo.dev/versions/latest/sdk/expo/#expofetch-api
+https://docs.microsoft.com/en-us/azure/active-directory/develop/msal-js-initializing-client-applications#configuration-options
+https://docs.statsig.com/client/javascript-sdk/#typed-getters`),Z!==null&&Z!==void 0?Z:null;return B===null||B===void 0||B(G),J}}Gh0._makeTypedGet=XyA});var Ih0=w((Jh0)=>{Object.defineProperty(Jh0,
+https://downloads.claude.ai/claude-code-releases
+https://e531a1d9ec1de9064fae9d4affb0b0f4@o1158394.ingest.us.sentry.io/4508259541909504
+https://evil.com -d @-) => command_injection_detected
+https://example.com
+https://example.com/1)
+https://example.com/2)
+https://example.com/iiif
+https://example.com/marketplace.json
+https://fburl.com/react-devtools-workplace-group
+https://featureassets.org/v1
+https://feross.org/opensource> */var TiA=qA(
+https://git-scm.com/downloads/win). If installed but not in PATH, set environment variable pointing to your bash.exe, similar to: CLAUDE_CODE_GIT_BASH_PATH=C:\\Program Files\\Git\\bin\\bash.exe
+https://github.com/${A.repo}.git`;Z=nF(G,I),J=!0;let D=null;if(await FP3()){hL(Q,`Cloning via SSH: ${V}`);try{await a7A(V,Z,A.ref,Q)}catch(F){if(D=F instanceof Error?F:Error(String(F)),s(D),hL(Q,`SSH clone failed, retrying with HTTPS: ${E}`),f(`SSH clone failed for ${A.repo} despite SSH being configured, falling back to HTTPS`,{level:
+https://github.com/${A}/compare/${K}...${D}?quick_pull=1&title=${encodeURIComponent(Bv2)}&body=${encodeURIComponent(Zv2)}`;await e5(H)}r(
+https://github.com/${GA}`);else if(bA===
+https://github.com/${TA}`);else if(YA===
+https://github.com/${y}/${h}`,revision:A.branchName},X={type:
+https://github.com/ajv-validator/ajv/blob/master/lib/definition_schema.js
+https://github.com/anthropics/anthropic-sdk-typescript#long-requests for more details
+https://github.com/anthropics/anthropic-sdk-typescript#streaming-responses for more details
+https://github.com/anthropics/claude-code-action
+https://github.com/anthropics/claude-code-action).
+https://github.com/anthropics/claude-code-action/blob/main/docs/setup.md
+https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
+https://github.com/anthropics/claude-code-action/blob/main/examples/
+https://github.com/anthropics/claude-code-action/blob/main/examples/claude.yml
+https://github.com/anthropics/claude-code-marketplace/blob/main/plugins/code-review/README.md
+https://github.com/anthropics/claude-code.git
+https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
+https://github.com/anthropics/claude-code/issues
+https://github.com/apps/claude
+https://github.com/apps/claude/installations/new`}}function wI8(A,Q,B,G){let Y=`<task-notification>
+https://github.com/aws/aws-sdk-js-v3.git
+https://github.com/aws/aws-sdk-js-v3/blob/main/supplemental-docs/CLIENTS.md.
+https://github.com/aws/aws-sdk-js-v3/tree/main/clients/client-bedrock
+https://github.com/aws/aws-sdk-js-v3/tree/main/clients/client-bedrock-runtime
+https://github.com/aws/aws-sdk-js-v3/tree/main/clients/client-cognito-identity
+https://github.com/aws/aws-sdk-js-v3/tree/main/clients/client-sso
+https://github.com/aws/aws-sdk-js-v3/tree/main/clients/client-sts
+https://github.com/aws/aws-sdk-js-v3/tree/main/packages/nested-clients
+https://github.com/axios/axios to learn more about the valid request options.`;throw Error(G)}}});var cf1=w((fq7,UX3)=>{UX3.exports={name:
+https://github.com/bitinn/node-fetch)
+https://github.com/cli/cli#installation
+https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md`}var d75,c75,p75;var MO2=L(()=>{d75=/^D+$/,c75=/^Y+$/,p75=[
+https://github.com/facebook/react/blob/main/packages/react-devtools/CHANGELOG.md
+https://github.com/getsentry/sentry-javascript */ft8.base64WorkerScript=
+https://github.com/grpc/grpc-node/issues/1173`;(0,I18.log)(X18.LogVerbosity.ERROR,Y)}}return Q}}OkB.Metadata=fA1;var F18=(A)=>{return Buffer.isBuffer(A)?A.toString(
+https://github.com/grpc/grpc-node/tree/master/packages/grpc-js
+https://github.com/highlightjs/highlight.js/issues/2277`),G1=ZA,TA=GA;let YA={code:TA,language:G1};EA(
+https://github.com/highlightjs/highlight.js/issues/2534
+https://github.com/highlightjs/highlight.js/issues/2559
+https://github.com/highlightjs/highlight.js/pull/2844
+https://github.com/jprichardson/node-fs-extra/issues/269`,
+https://github.com/markedjs/marked.`,A){let G=
+https://github.com/owner/repo
+https://github.com/owner/repo…
+https://github.com/vadimdemedes/ink/#israwmodesupported`);else throw Error(`Raw mode is not supported on the stdin provided to Ink.
+https://github.com/vadimdemedes/ink/#israwmodesupported`);if(Q.setEncoding(
+https://grpc.io/
+https://http-intake.logs.datadoghq.com/api/v2/logs
+https://iamcredentials.${G}/v1/projects/-/serviceAccounts/`,B instanceof M5A.Impersonated)return(await B.sign(A)).signedBlob;let Z=(0,GV3.createCrypto)();if(B instanceof L5A.JWT&&B.key)return await Z.sign(B.key,A);let Y=await this.getCredentials();if(!Y.client_email)throw Error(
+https://iamcredentials.${this.universeDomain}`}async sign(A){await this.sourceClient.getAccessToken();let Q=`projects/-/serviceAccounts/${this.targetPrincipal}`,B=`${this.endpoint}/v1/${Q}:signBlob`,G={delegates:this.delegates,payload:Buffer.from(A).toString(
+https://jimmy.warting.se/opensource> */let K=(C)=>C.replace(/\n/g,
+https://job-boards.greenhouse.io/anthropic/jobs/4816199008
+https://json-schema.org/draft/2019-09/schema#
+https://json-schema.org/draft/2020-12/schema
+https://json.schemastore.org/claude-code-settings.json
+https://learn.microsoft.com/azure/azure-portal/get-subscription-tenant-id.
+https://learn.microsoft.com/en-us/azure/service-fabric/configure-existing-cluster-enable-managed-identity-token-service.`);return new Ke(A,Q,B,G,Z,J,I)}createRequest(A,Q){let B=new Ew(XY.GET,this.identityEndpoint);if(B.headers[pz.ML_AND_SF_SECRET_HEADER_NAME]=this.identityHeader,B.queryParameters[QW.API_VERSION]=Pq3,B.queryParameters[QW.RESOURCE]=A,Q.idType!==jJ.SYSTEM_ASSIGNED)B.queryParameters[this.getManagedIdentityUserAssignedIdQueryParameterKey(Q.idType)]=Q.id;return B}}});var Sq3=
+https://learn.microsoft.com/partner-center/find-ids-and-domain-names.
+https://localforage.github.io/localForage
+https://login.chinacloudapi.cn
+https://login.chinacloudapi.cn/{tenantid}/discovery/v2.0/keys
+https://login.chinacloudapi.cn/{tenantid}/oauth2/v2.0/authorize
+https://login.chinacloudapi.cn/{tenantid}/oauth2/v2.0/logout
+https://login.chinacloudapi.cn/{tenantid}/oauth2/v2.0/token
+https://login.microsoftonline.com
+https://login.microsoftonline.com/{tenantid}/discovery/v2.0/keys
+https://login.microsoftonline.com/{tenantid}/oauth2/v2.0/authorize
+https://login.microsoftonline.com/{tenantid}/oauth2/v2.0/logout
+https://login.microsoftonline.com/{tenantid}/oauth2/v2.0/token
+https://login.microsoftonline.com/{tenantid}/v2.0
+https://login.microsoftonline.com/${QF3}/`,pz={AUTHORIZATION_HEADER_NAME:
+https://login.microsoftonline.com/common/
+https://login.microsoftonline.com/common/discovery/instance?api-version=1.1&authorization_endpoint=
+https://login.microsoftonline.de
+https://login.microsoftonline.us
+https://login.microsoftonline.us/{tenantid}/discovery/v2.0/keys
+https://login.microsoftonline.us/{tenantid}/oauth2/v2.0/authorize
+https://login.microsoftonline.us/{tenantid}/oauth2/v2.0/logout
+https://login.microsoftonline.us/{tenantid}/oauth2/v2.0/token
+https://login.microsoftonline.us/{tenantid}/v2.0
+https://login.partner.microsoftonline.cn/{tenantid}/v2.0
+https://login.windows-ppe.net
+https://mcp.asana.com/sse
+https://mcp.sentry.dev/mcp
+https://mozilla.github.io/localForage/#definedriver
+https://npms.io/search?q=ponyfill.
+https://oauth2.googleapis.com/revoke
+https://oauth2.googleapis.com/token
+https://oauth2.googleapis.com/tokeninfo
+https://oidc-fips.{Region}.{PartitionResult#dnsSuffix}
+https://oidc-fips.{Region}.{PartitionResult#dualStackDnsSuffix}
+https://oidc.{Region}.{PartitionResult#dnsSuffix}
+https://oidc.{Region}.{PartitionResult#dualStackDnsSuffix}
+https://oidc.{Region}.amazonaws.com
+https://opencollective.com/libvips
+https://platform.claude.com/llms.txt
+https://portal.sso-fips.{Region}.{PartitionResult#dnsSuffix}
+https://portal.sso-fips.{Region}.{PartitionResult#dualStackDnsSuffix}
+https://portal.sso.{Region}.{PartitionResult#dnsSuffix}
+https://portal.sso.{Region}.{PartitionResult#dualStackDnsSuffix}
+https://portal.sso.{Region}.amazonaws.com
+https://prodregistryv2.org/v1
+https://raw.githubusercontent.com/ajv-validator/ajv/master/lib/refs/data.json#
+https://raw.githubusercontent.com/anthropics/claude-code/refs/heads/main/CHANGELOG.md
+https://react-native.canny.io/feature-requests/p/fetch-streaming-body`);return Z.stream()};return Object.assign(A,{transformToByteArray:B,transformToString:async(Z)=>{let Y=await B();if(Z===
+https://react.dev/errors/
+https://reactjs.org/blog/2019/08/15/new-react-devtools.html#how-do-i-get-the-old-version-back
+https://reactjs.org/link/perf-use-production-build
+https://sharp.pixelplumbing.com
+https://sharp.pixelplumbing.com/install
+https://sharp.pixelplumbing.com/install#canvas-and-windows
+https://sharp.pixelplumbing.com/install#cross-platform
+https://signin-fips.{Region}.{PartitionResult#dnsSuffix}
+https://signin-fips.{Region}.{PartitionResult#dualStackDnsSuffix}
+https://signin.{Region}.{PartitionResult#dnsSuffix}
+https://signin.{Region}.{PartitionResult#dualStackDnsSuffix}
+https://slack.com/marketplace/A08SF47R6P4-claude
+https://statsig.anthropic.com/v1/
+https://statsigapi.net/v1/sdk_exception
+https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases
+https://sts-fips.{Region}.{PartitionResult#dnsSuffix}
+https://sts-fips.{Region}.{PartitionResult#dualStackDnsSuffix}
+https://sts.{Region}.{PartitionResult#dnsSuffix}
+https://sts.{Region}.{PartitionResult#dualStackDnsSuffix}
+https://sts.{Region}.amazonaws.com
+https://sts.{region}.amazonaws.com?Action=GetCallerIdentity&Version=2011-06-15
+https://sts.{universeDomain}/v1/oauthtoken
+https://sts.{universeDomain}/v1/token
+https://sts.${this.universeDomain}/v1/token`),this.cachedDownscopedAccessToken=null}setCredentials(A){if(!A.expiry_date)throw Error(
+https://sts.amazonaws.com
+https://sts.amazonaws.com/doc/2011-06-15/
+https://tools.ietf.org/html/rfc7515
+https://www.anthropic.com/legal/aup). Please double press esc to edit your last message or start a new session for Claude Code to assist with a different task.`;return QJ({content:B+(Q!==
+https://www.anthropic.com/news/updates-to-our-consumer-terms
+https://www.googleapis.com/auth/cloud-platform
+https://www.googleapis.com/oauth2/v1/certs
+https://www.googleapis.com/oauth2/v3/certs
+https://www.googleapis.com/oauth2/v4/token
+https://www.gstatic.com/iap/verify/public_key
+https://www.stickermule.com/claudecode

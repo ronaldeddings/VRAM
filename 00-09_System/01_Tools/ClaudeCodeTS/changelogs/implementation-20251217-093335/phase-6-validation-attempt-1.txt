@@ -1,0 +1,128 @@
+== VALIDATION: phase 6 ==
+
+$ bun test tests/phase6*
+bun test v1.3.4 (5eb2145b)
+
+tests/phase6-settings.test.ts:
+(pass) Phase 6: settings system > enabled sources flag parser matches legacy [0.14ms]
+(pass) Phase 6: settings system > enabled file sources always include policy+flag (and preserve legacy order) [0.09ms]
+(pass) Phase 6: settings system > patch semantics: delete on undefined + arrays replace [0.09ms]
+(pass) Phase 6: settings system > storage-backed settings manager merges enabled sources and suppresses self-triggered watch events [1.33ms]
+(pass) Phase 6: settings system > export/import bundle captures per-source settings objects [0.22ms]
+(pass) Phase 6: settings system > invalid policy settings fail-closed in EffectiveConfig [0.17ms]
+(pass) Phase 6: settings system > remote policy refresh writes to cache (storage) [0.17ms]
+
+ 7 pass
+ 0 fail
+ 26 expect() calls
+Ran 7 tests across 1 file. [20.00ms]
+
+$ bun test
+bun test v1.3.4 (5eb2145b)
+
+tests/phase6-settings.test.ts:
+(pass) Phase 6: settings system > enabled sources flag parser matches legacy [0.08ms]
+(pass) Phase 6: settings system > enabled file sources always include policy+flag (and preserve legacy order)
+(pass) Phase 6: settings system > patch semantics: delete on undefined + arrays replace
+(pass) Phase 6: settings system > storage-backed settings manager merges enabled sources and suppresses self-triggered watch events [1.55ms]
+(pass) Phase 6: settings system > export/import bundle captures per-source settings objects [0.22ms]
+(pass) Phase 6: settings system > invalid policy settings fail-closed in EffectiveConfig [0.19ms]
+(pass) Phase 6: settings system > remote policy refresh writes to cache (storage) [0.17ms]
+
+tests/phase3-event-bus.test.ts:
+(pass) Phase 3: event bus semantics > emits monotonic seq per channel and supports cursors [1.43ms]
+(pass) Phase 3: event bus semantics > recording helper captures envelopes and can be stopped [0.23ms]
+(pass) Phase 3: event bus semantics > includeSnapshot yields a snapshot envelope before live events [0.17ms]
+(pass) Phase 3: event bus semantics > coalescing policy can replace queued events deterministically [0.16ms]
+
+tests/phase4-leak-prevention.test.ts:
+(pass) Phase 4: capability leak prevention heuristics > no module-level HostCapabilities singletons in portable src/core [11.04ms]
+
+tests/phase3-replay-adapters.test.ts:
+(pass) Phase 3: replay/adapter conformance > event streams roundtrip through web/node/RN adapter shapes [3.65ms]
+(pass) Phase 3: replay/adapter conformance > diff classifier treats UI-only differences as benign_ui [0.07ms]
+
+tests/phase4-capabilities.test.ts:
+(pass) Phase 4: host capabilities > requireCapability throws typed errors [0.13ms]
+(pass) Phase 4: host capabilities > capability view can policy-deny individual caps [0.16ms]
+(pass) Phase 4: host capabilities > capability compliance report flags missing required [0.18ms]
+(pass) Phase 4: host capabilities > node storage provides CAS semantics [2.53ms]
+(pass) Phase 4: host capabilities > portable path normalization is POSIX-like [0.33ms]
+(pass) Phase 4: host capabilities > retry/backoff is deterministic with injected RNG [0.22ms]
+
+tests/phase3-replay-conformance.test.ts:
+(pass) Phase 3: replay-style conformance (kernel/event bus baseline) > deterministic scenario produces identical normalized outputs across runs [2.05ms]
+
+tests/phase5-queues-and-viewmodels.test.ts:
+(pass) Phase 5: queues, lifecycle, and UI adapter view models > tool permission queue resolves deterministically and can request persistence [0.82ms]
+(pass) Phase 5: queues, lifecycle, and UI adapter view models > elicitation cancellation propagates via effects [0.17ms]
+(pass) Phase 5: queues, lifecycle, and UI adapter view models > backgrounding clears ephemeral UI queues and emits cancellation effects [0.29ms]
+(pass) Phase 5: queues, lifecycle, and UI adapter view models > multi-session model enforces a single active session [0.12ms]
+(pass) Phase 5: queues, lifecycle, and UI adapter view models > UI view models share identical transcript semantics across adapters [0.30ms]
+
+tests/phase5-notifications-and-redaction.test.ts:
+(pass) Phase 5: deterministic queues and redaction > notification drain is deterministic for equal priority
+(pass) Phase 5: deterministic queues and redaction > transcript redaction removes sensitive nodes and produces a stable hash [1.46ms]
+(pass) Phase 5: deterministic queues and redaction > session export omits out-of-line attachment payloads [0.10ms]
+
+tests/phase5-state.test.ts:
+(pass) Phase 5: app/session state model > create session command sets active session when requested [0.10ms]
+(pass) Phase 5: app/session state model > overlay selection reflects queue state deterministically [0.12ms]
+(pass) Phase 5: app/session state model > transcript semantic renderer produces stable summaries [0.07ms]
+
+tests/phase1-fixtures.test.ts:
+(pass) Phase 1 fixtures: sanitization > fixtures do not contain obvious secrets [3.40ms]
+
+tests/phase3-runtime.test.ts:
+(pass) Phase 3: deterministic runtime kernel > task yields and resumes deterministically [0.22ms]
+(pass) Phase 3: deterministic runtime kernel > timeouts abort tasks and resolve as timeout results [0.40ms]
+(pass) Phase 3: deterministic runtime kernel > concurrency limiter blocks and unblocks deterministically [0.24ms]
+(pass) Phase 3: deterministic runtime kernel > streams emit sequenced events and snapshot tracks them [0.23ms]
+(pass) Phase 3: deterministic runtime kernel > tool streams block producers under backpressure by default [0.25ms]
+(pass) Phase 3: deterministic runtime kernel > closing a scope cancels in-flight tasks without leaking timers [0.13ms]
+(pass) Phase 3: deterministic runtime kernel > parent task cancellation fans out to explicitly-parented child tasks [0.22ms]
+(pass) Phase 3: deterministic runtime kernel > fail-fast task errors cancel the rest of the scope deterministically [0.06ms]
+(pass) Phase 3: deterministic runtime kernel > hang detector fires once per category until progress resumes [0.23ms]
+(pass) Phase 3: deterministic runtime kernel > scheduler fairness: low priority is not starved by high priority
+
+tests/phase1-legacy-spec.test.ts:
+(pass) Phase 1: legacy spec carry-over > overlay precedence matches captured legacy order [0.01ms]
+(pass) Phase 1: legacy spec carry-over > permission rule parse/format roundtrip [0.07ms]
+(pass) Phase 1: legacy spec carry-over > bundle env vars include legacy MCP CLI toggles [34.39ms]
+(pass) Phase 1: legacy spec carry-over > bundle contains canonical settings-source precedence list [19.30ms]
+(pass) Phase 1: legacy spec carry-over > bundle contains canonical permission rule-source precedence list [58.54ms]
+(pass) Phase 1: legacy spec carry-over > bundle contains hook event names captured in v3 spec [63.42ms]
+(pass) Phase 1: legacy spec carry-over > MCP CLI env gates match observed bundle behavior [0.16ms]
+(pass) Phase 1: legacy spec carry-over > bundle `--mcp-cli` is gated by ENABLE_EXPERIMENTAL_MCP_CLI [1056.77ms]
+(pass) Phase 1: legacy spec carry-over > both bundles agree on MCP CLI gating snapshot (env/flag mapping) [2049.84ms]
+
+tests/phase3-shutdown-summary.test.ts:
+(pass) Phase 3: scope shutdown summaries > closing a session scope can emit a bounded shutdown summary event [0.52ms]
+
+tests/phase2-architecture-boundaries.test.ts:
+(pass) Phase 2: architecture/boundaries > import boundary script passes [42.62ms]
+(pass) Phase 2: architecture/boundaries > host capability smoke check reports missing required [0.15ms]
+(pass) Phase 2: architecture/boundaries > host capability smoke check passes for provided adapters (node/rn/web) [0.35ms]
+(pass) Phase 2: architecture/boundaries > canonical JSON stringification is stable (key order) [0.05ms]
+
+tests/phase4-mobile-safe-conformance.test.ts:
+(pass) Phase 4: minimal mobile-safe conformance > boots with no filesystem/process/local endpoints and core subsystems still function [0.50ms]
+
+tests/phase3-determinism.test.ts:
+(pass) Phase 3: determinism helpers > seeded random produces stable UUIDs for a given seed [0.17ms]
+(pass) Phase 3: determinism helpers > kernel snapshot is stable and sorted [0.27ms]
+(pass) Phase 3: determinism helpers > core stream summary uses hash + counters (no raw transcript storage) [1.33ms]
+(pass) Phase 3: determinism helpers > node filesystem adapter returns deterministic directory listings [1.66ms]
+
+ 62 pass
+ 0 fail
+ 247 expect() calls
+Ran 62 tests across 16 files. [3.41s]
+
+$ bun run typecheck
+$ tsc -p tsconfig.json --noEmit
+
+$ bun run check:boundaries
+$ node scripts/check-import-boundaries.mjs
+Import boundary check passed.
+

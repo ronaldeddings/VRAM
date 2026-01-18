@@ -1,0 +1,37 @@
+**Key Observations**
+- Volume split in `search.db`: 170,010 total files under `10-19_Work/14_Communications` with 74,498 `emails_json`, 74,497 `emails_md`, and 21,015 Slack JSON archives.
+- Email volume scales sharply: 2020 → 1,549 emails, 2023 → 14,750, 2024 → 22,047, 2025 → 23,831 (JSON corpus).
+- Slack archives grow steadily by day-file count: 2017 → 95, 2024 → 4,142, 2025 → 4,522 (file-based proxy, not message counts).
+- External senders are broad (3,121 distinct sender domains); biggest non-`hackervalley.com` sources are tooling + platforms: `google.com`, `fathom.video`, `mail.notion.so`, `zoom.us`, `notifications.hubspot.com`.
+- Outbound/recipient focus is security ecosystem: top external `to` domains include `gmail.com`, `sans.org`, `crowdstrike.com`, `cyberproof.com`, `picussecurity.com`.
+- Email labels suggest high triage load: `archived`, `unread`, `important`, and category `updates/promotions` are dominant.
+- Slack activity concentrates in production/ops and DMs: file-day counts show `production-sync`, `marketing`, `internal-team`, `qc`, `experience-chat`, `production-automation`, plus a high DM share.
+- Cross-channel topic overlap is strong: file-match counts for `podcast` (email 13,649 vs Slack 2,638), `sponsor` (6,063 vs 1,038), `RSA` (10,973 vs 1,602), `CISO` (4,130 vs 816), `docuseries` (476 vs 140).
+
+**Insights**
+- Email is the primary external surface area; Slack is the internal execution layer, indicating a clear “deal-to-delivery” boundary that could benefit from tighter linking.
+- Tool-driven notifications are a significant share of inbound volume; this likely creates noise and follow-up risk, especially with high unread counts.
+- The subject mix consistently centers on cybersecurity media production and sponsorship, reinforcing a strong market identity but also suggesting recurring workflow patterns that could be templatized.
+
+**Opportunities**
+- Tie external threads (email) to internal execution (Slack/Notion) with shared identifiers to reduce context loss between channels.
+- Reduce notification overload by rerouting automated tool mail into a low-priority pipeline with periodic digests.
+- Shift repeated multi-week discussions from DMs into durable channels to improve visibility and reduce duplication.
+
+**Connections**
+- Business development: sponsorships, partner outreach, and event coordination dominate cross-channel patterns.
+- Media production: “episode”, “docuseries”, “filming”, and “production” topics show a consistent operations cadence.
+- Ops/admin: scheduling and tooling (Zoom, Notion, Fathom, HubSpot, Calendly) indicate a tech-heavy workflow foundation.
+- Personal overlap: Slack’s `roommates` channel hints at non-work coordination within the same workspace.
+
+**Recommendations**
+1) Establish a cross-channel tagging scheme (email subject prefix + Slack channel/topic tag) for each production or sponsor thread to keep context connected.  
+2) Create a weekly “Comms Digest” (top open email threads + top Slack tasks) to reduce follow-up slippage.  
+3) Auto-label and auto-archive tool notifications (Zoom, Notion, HubSpot, Fathom) into a “Systems” label with a weekly review slot.  
+4) Migrate recurring DM threads into shared channels (e.g., a `sponsors-ops` or `production-partners` channel) to reduce fragmentation.  
+5) Schedule a monthly “Unread sweep” block to close loops on stale threads tied to partners or deals.
+
+**Triad Improvement**
+- `search.db` FTS5 appears out of sync (`fts5: missing row` on `MATCH` queries); recommend rebuilding or repairing the FTS index to restore reliable full-text searches.
+
+If you want, I can drill into a specific year, partner, or channel (e.g., sponsorship pipeline or RSA-related comms) and extract a targeted timeline or follow-up list.

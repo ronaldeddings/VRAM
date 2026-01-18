@@ -1,0 +1,61 @@
+I will start by listing the contents of the meetings directory to understand the organization of transcripts and identify the most recent files for analysis.
+I will list the contents of the `13.01_transcripts` directory to check for year-based organization.
+I will list the files in the `2026` transcript directory to identify the most recent discussions.
+I will read the schema of the `search.db` database to understand how to query it effectively.
+I will query the `search.db` database for keywords related to team health, specifically looking for terms like "morale", "burnout", "bandwidth", "hiring", "culture", and "feedback" within the meeting transcripts.
+I will read the content of `2026-01-05-522568815.md`, `2026-01-05-522520665.md`, and `2026-01-02-521043276.md` to investigate the discussions surrounding "burnout" and the hiring of a new editor.
+I will search for "Therese" and "Emily" in the 2026 transcripts to understand their current roles and activities. I will also perform a targeted search for "stress", "capacity", and "overwhelmed" to find genuine indicators of team sentiment, distinguishing them from the "Berna/burnout" transcription error.
+I will read the transcript `2026-01-07-523682405.md` to clarify the team schedule and the identity of "30", and `2026-01-08-526140322.md` to gain insight into Emily's current focus and interactions.
+Based on the analysis of the meeting transcripts and system data, here is the Team Health Assessment.
+
+---
+
+# Team Health Assessment (Iteration 68)
+
+## 1. Key Observations
+
+### **The "Migration" Stress Test**
+The team is currently navigating a high-pressure transition from **HubSpot** to **NoCodeDB** (deadline: Jan 30). This is not just a software swap; it is an operational overhaul that has mobilized the entire leadership team:
+*   **Ron (CEO):** Personally reverse-engineering HubSpot APIs to scrape PDF quotes and "teaching" Claude (AI) to write extraction scripts (`2026-01-07`).
+*   **Ivan (Ops Lead):** Architecting the NoCodeDB schema and managing the data import.
+*   **Brandy (EA/Sales Ops):** Executing "**Operation Find the Bag**" — a manual scrub of Ron's email to recover lost leads/opportunities before the CRM goes dark.
+*   **Berna (Support):** Tasked with manual data entry/linking, though viewed as "underutilized" by leadership.
+
+### **Role Clarity & Evolution**
+*   **Therese (aka "30"):** Confirmed as a Producer/Editor. Ron is offloading "raw footage management" to Therese via Jump Desktop to remove himself as a bottleneck.
+*   **Emily (COO):** Focused on "Quality Control" and defining QBR goals. She is pushing for standardized "Blueprints" and "Service Templates" to fix the "unruly" state of Google Drive and Wrike.
+*   **Jessica (Marketing):** Described as an "engineer" (execution-focused) rather than a "pioneer." Ron desires more creative risks (like the "GTA video") but feels he needs to direct her explicitly.
+*   **Berna:** Her position is precarious. Ron noted, "Emily isn't really leveraging Berna... maybe through us getting what we're paying for, we'll find a nice home for Berna," implying a need to prove value or face changes.
+
+### **Operational Friction**
+*   **Deliverable Ambiguity:** The team lacks clear definitions for product types (e.g., "Sizzle Reel" vs. "Recap"), causing confusion in sales and production.
+*   **File Chaos:** Google Drive and Wrike organization has degraded ("becoming a little unruly"), forcing a return to manual folder creation.
+
+## 2. Insights
+
+*   **"Operation Find the Bag" is a symptom, not a strategy:** The need to manually scrub emails for revenue indicates a failure in previous CRM discipline. However, it's also a creative "scrappy" solution to capitalize on the migration.
+*   **The "Engineer" vs. "Pioneer" Gap:** Ron's frustration with Jessica highlights a classic founder dilemma: he wants *generative* creativity (Pioneer) but has hired for *reliable* execution (Engineer). He needs to bridge this gap with better briefs or by hiring a dedicated Creative Director/Producer (which might be Therese's evolving role).
+*   **Leadership Maturity:** Ron's reflection on turning 35 ("I want more time for me") directly correlates with his push for "Blueprints" and offloading tasks to Therese. He is consciously trying to build a system that doesn't require his constant manual intervention.
+
+## 3. Opportunities
+
+*   **The "Menu" Opportunity:** Immediate creation of a **"Deliverable Types Inventory"** (Visual Menu). Defining exactly what a "Sizzle Reel" is vs. a "Customer Testimonial" will streamline Sales (Brandy), Production (Therese), and QC (Emily).
+*   **Berna's "Migration" Audit:** Use the manual data entry work as a test for Berna. If she can handle the complex linking of data in NoCodeDB, she can transition into a **Data Integrity Specialist** role, which will be crucial for maintaining the new system.
+*   **QBR as a Reset:** The delayed QBRs are actually a blessing; they allow the team to align goals specifically around the *new* tool stack (NoCodeDB) rather than legacy HubSpot metrics.
+
+## 4. Connections
+
+*   **Ron's Birthday (Jan 10) & Mental Shift:** The desire for "time for me" connects to the "HubSpot Scrape" automation. He is using AI (Claude) to buy back his time, mirroring his life goal of stepping back from the grind.
+*   **"Brandied333" & "30":** The transcription errors (Brandied333 = Brandy, 30 = Therese) mirror the "unruly" data in the file system. Just as the files need organization, the team's communication channels/identities need clearer labeling.
+
+## 5. Recommendations
+
+1.  **Immediate:** **Formalize "Operation Find the Bag"**. Don't just scrub for leads; tag them in the new NoCodeDB immediately to test the "New Opportunity" workflow.
+2.  **Short-Term:** **Create the "Deliverable Definitions" One-Pager**. Emily/Ron to define the top 5 products (Sizzle, Recap, Full Ep, Short, Social Clip) with examples. Distribute to Sales and Production by Jan 25.
+3.  **Personnel:** **"Berna's Crucible"**. Explicitly assign Berna the ownership of "Data Cleanliness" for the migration. Review her performance on Jan 30. If she succeeds, she owns Data Ops. If not, the "home" Ron mentioned might be outside the org.
+4.  **Tech:** **Monitor the "HubSpot PDF Scrape"**. Ensure the script Ron generated with Claude actually captured *all* draft quotes, as these contain the intellectual property/pricing history needed for the new system.
+
+---
+
+**Next Steps for Agent:**
+I will proceed to update the system context with these findings, specifically noting the identity of "30" (Therese) and the critical nature of the Jan 30 deadline.

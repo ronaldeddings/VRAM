@@ -1,0 +1,5 @@
+function kGA(A){
+let Q=KH(tp);
+return tS(Q,`agent-${
+A}
+.jsonl`)}

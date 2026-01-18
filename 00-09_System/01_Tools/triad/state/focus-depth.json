@@ -1,0 +1,48 @@
+{
+  "areas": {
+    "hacker_valley_media": {
+      "currentDepth": 0,
+      "filesAnalyzed": 0,
+      "insightsGenerated": 0,
+      "visitCount": 0,
+      "lastVisited": null
+    },
+    "career_skills": {
+      "currentDepth": 0,
+      "filesAnalyzed": 0,
+      "insightsGenerated": 0,
+      "visitCount": 0,
+      "lastVisited": null
+    },
+    "financial": {
+      "currentDepth": 0,
+      "filesAnalyzed": 0,
+      "insightsGenerated": 0,
+      "visitCount": 0,
+      "lastVisited": null
+    },
+    "personal_growth": {
+      "currentDepth": 0,
+      "filesAnalyzed": 0,
+      "insightsGenerated": 0,
+      "visitCount": 0,
+      "lastVisited": null
+    },
+    "relationships": {
+      "currentDepth": 0,
+      "filesAnalyzed": 0,
+      "insightsGenerated": 0,
+      "visitCount": 0,
+      "lastVisited": null
+    },
+    "meta_analysis": {
+      "currentDepth": 0,
+      "filesAnalyzed": 0,
+      "insightsGenerated": 0,
+      "visitCount": 0,
+      "lastVisited": null
+    }
+  },
+  "currentFocusIndex": 0,
+  "lastUpdated": null
+}

@@ -1,0 +1,95 @@
+==============================================
+INVESTIGATION ITERATION 2: ENCYCLOPEDIA VERIFICATION
+==============================================
+
+You are verifying that CLI_ENCYCLOPEDIA.md accurately describes the original
+CLI.js files, and that the TypeScript implementation matches.
+
+MISSION: Verify encyclopedia accuracy against actual code.
+
+AUTHORITATIVE INPUTS:
+- Original ClaudeCodeCode/cli.js: @/Users/ronaldeddings/ClaudeCodeTS/bundles/ClaudeCodeCode/cli.js
+- Original ClaudeAgentSDKCode/cli.js: @/Users/ronaldeddings/ClaudeCodeTS/bundles/ClaudeAgentSDKCode/cli.js
+- TypeScript source: @/Users/ronaldeddings/ClaudeCodeTS/src
+- Encyclopedia: @/Users/ronaldeddings/ClaudeCodeTS/CLI_ENCYCLOPEDIA.md
+- Previous iteration findings: @/Users/ronaldeddings/ClaudeCodeTS/investigation/investigation-20251220-112837/iterations/iteration-1-output.md
+
+INVESTIGATION TASKS:
+
+1) ENCYCLOPEDIA SECTION AUDIT
+   For EACH major section in CLI_ENCYCLOPEDIA.md:
+   - Find the corresponding code in CLI.js
+   - Verify the description is accurate
+   - Note any discrepancies
+   
+2) UNDOCUMENTED CODE SEARCH
+   Search CLI.js files for functionality NOT in the encyclopedia:
+   
+   ```bash
+   # Find exported functions
+   grep -oE 'exports\.[a-zA-Z]+|module\.exports' bundles/ClaudeCodeCode/cli.js | head -50
+   
+   # Find class definitions
+   grep -oE 'class [A-Z][a-zA-Z]+' bundles/ClaudeCodeCode/cli.js | sort -u
+   
+   # Find major function patterns
+   grep -oE 'function [a-zA-Z]+|async function [a-zA-Z]+|[a-zA-Z]+\s*=\s*async' bundles/ClaudeCodeCode/cli.js | head -50
+   ```
+
+3) TYPESCRIPT COVERAGE CHECK
+   For each encyclopedia entry:
+   - Is there corresponding TypeScript code?
+   - Does the TypeScript match the encyclopedia description?
+   
+4) VERSION DISCREPANCY CHECK
+   The encyclopedia mentions:
+   - ClaudeAgentSDKCode/cli.js (2.0.67)
+   - ClaudeCodeCode/cli.js (2.0.69)
+   
+   Verify:
+   ```bash
+   # Check for version strings in bundles
+   grep -oE 'version["\s:]+[0-9]+\.[0-9]+\.[0-9]+' bundles/*/cli.js
+   
+   # Check TypeScript version
+   grep -r "version" src/ --include="*.ts" | grep -v node_modules | head -20
+   ```
+
+5) CREATE VERIFICATION REPORT
+
+Output file: investigation/iteration-2-encyclopedia-verification.md
+
+Format:
+```markdown
+# Iteration 2: Encyclopedia Verification
+
+## Section-by-Section Audit
+
+### [Section Name from Encyclopedia]
+- Encyclopedia says: [summary]
+- CLI.js actually: [what code shows]
+- TypeScript has: [what's implemented]
+- Accuracy: ✅ ACCURATE / ⚠️ PARTIAL / ❌ INACCURATE
+
+[Repeat for each section]
+
+## Undocumented Functionality Found
+| Function/Class | In CLI.js | In Encyclopedia | In TypeScript |
+|----------------|-----------|-----------------|---------------|
+| | | | |
+
+## Version Check
+- Encyclopedia versions: 2.0.67, 2.0.69
+- Actual bundle versions: [found]
+- TypeScript version: [found or N/A]
+
+## Encyclopedia Corrections Needed
+1. [correction]
+2. [correction]
+
+## Missing TypeScript Coverage
+1. [missing item]
+2. [missing item]
+```
+
+Begin now.

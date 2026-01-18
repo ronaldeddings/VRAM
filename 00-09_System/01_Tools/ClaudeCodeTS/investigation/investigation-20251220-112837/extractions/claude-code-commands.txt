@@ -1,0 +1,64 @@
+.command(A.command)
+command:"rg"
+command:"workbench.action.terminal.sendSequence"
+command:"rg"
+command:"rg"
+command:"rg"
+command:"rg"
+command:"rg"
+command: "rg"
+command: "${A}"
+command:")){if(!(A.startsWith("
+command: "/review-pr 123"
+command: "${A.blockingError.command}"
+command:"[Plugin Hook]"
+command:"prompt"
+command:"callback"
+command:"callback"
+command:"callback"
+command:"function"
+command:"function"
+command:"callback"
+.command("mcp")
+.command("serve")
+.command("add <name> <commandOrUrl> [args...]")
+.command("remove <name>")
+.command("list")
+.command("get <name>")
+.command("add-json <name> <json>")
+.command("add-from-claude-desktop")
+.command("reset-project-choices")
+.command("plugin")
+.command("validate <path>")
+.command("marketplace")
+.command("add <source>")
+.command("list")
+.command("remove <name>")
+.command("update [name]")
+.command("install <plugin>")
+.command("uninstall <plugin>")
+.command("enable <plugin>")
+.command("disable <plugin>")
+.command("update <plugin>")
+.command("setup-token")
+.command("doctor")
+.command("update")
+.command("install [target]")
+.command("servers")
+command:"servers"
+.command("tools")
+command:"tools"
+.command("info")
+command:"info"
+.command("call")
+command:"call"
+command:"call"
+command:"call"
+.command("grep")
+command:"grep"
+.command("resources")
+command:"resources"
+.command("read")
+command:"read"
+command:"read"
+command:"read"

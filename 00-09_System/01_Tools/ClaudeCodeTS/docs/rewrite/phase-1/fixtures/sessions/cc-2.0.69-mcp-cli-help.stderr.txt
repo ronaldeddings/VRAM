@@ -1,0 +1,1 @@
+Warning: MCP endpoint file not found at /var/folders/y9/178pkym1719_vgbjz6fwl0100000gq/T/claude-code-mcp-cli/9ab35ac0-4915-4733-b9a9-f2b4d25c5180.endpoint (session: 9ab35ac0-4915-4733-b9a9-f2b4d25c5180). Falling back to state file.

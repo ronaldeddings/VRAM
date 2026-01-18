@@ -1,0 +1,5 @@
+function Sn1(A,Q=0,B,G,Z,Y){
+let J=A[A.length-1],I=A[0],X=yu3(A),W=new Date(I.timestamp),K=new Date(J.timestamp);
+return{
+date:J.timestamp,messages:vu3(A),fullPath:"n/a",value:Q,created:W,modified:K,firstPrompt:X,messageCount:A.length,isSidechain:I.isSidechain,isTeammate:I.isTeammate??!1,leafUuid:J.uuid,summary:B,customTitle:G,tag:Y,fileHistorySnapshots:Z,gitBranch:J.gitBranch,projectPath:I.cwd}
+}

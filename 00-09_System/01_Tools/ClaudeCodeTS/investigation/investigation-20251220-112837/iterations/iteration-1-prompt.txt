@@ -1,0 +1,126 @@
+==============================================
+INVESTIGATION ITERATION 1: TOOL CALLING DEEP DIVE
+==============================================
+
+You are investigating whether the TypeScript implementation correctly covers
+all tool calling functionality from the original CLI.js files.
+
+MISSION: Find ALL gaps in tool calling implementation.
+
+AUTHORITATIVE INPUTS:
+- Original ClaudeCodeCode/cli.js: @/Users/ronaldeddings/ClaudeCodeTS/bundles/ClaudeCodeCode/cli.js
+- Original ClaudeAgentSDKCode/cli.js: @/Users/ronaldeddings/ClaudeCodeTS/bundles/ClaudeAgentSDKCode/cli.js
+- TypeScript source: @/Users/ronaldeddings/ClaudeCodeTS/src
+- Encyclopedia: @/Users/ronaldeddings/ClaudeCodeTS/CLI_ENCYCLOPEDIA.md
+
+EXTRACTED PATTERNS (from original CLI.js):
+- @/Users/ronaldeddings/ClaudeCodeTS/investigation/investigation-20251220-112837/extractions/claude-agent-tools.txt
+- @/Users/ronaldeddings/ClaudeCodeTS/investigation/investigation-20251220-112837/extractions/claude-code-tools.txt
+- @/Users/ronaldeddings/ClaudeCodeTS/investigation/investigation-20251220-112837/extractions/claude-agent-commands.txt
+- @/Users/ronaldeddings/ClaudeCodeTS/investigation/investigation-20251220-112837/extractions/claude-code-commands.txt
+
+INVESTIGATION TASKS:
+
+1) TOOL REGISTRY ANALYSIS
+   In the original CLI.js files, find:
+   - How are tools registered?
+   - What is the tool schema/interface?
+   - What tools are built-in vs loaded dynamically?
+   
+   In the TypeScript src/, verify:
+   - Is there a tool registry?
+   - Does it match the original pattern?
+   - Are all original tools present?
+
+2) TOOL EXECUTION FLOW
+   In the original CLI.js:
+   - How is a tool invoked?
+   - How are parameters validated?
+   - How are results returned?
+   - How is streaming handled?
+   
+   In TypeScript:
+   - Is this flow replicated?
+   - Are there any shortcuts taken?
+
+3) SPECIFIC TOOL AUDIT
+   Create a table:
+   | Tool Name | In CLI.js? | In TypeScript? | Implementation Match? |
+   
+   Check for these common tools:
+   - bash/shell execution
+   - file read/write
+   - web search
+   - code execution
+   - editor tools
+   - git tools
+
+4) RUN ACTUAL COMMANDS
+   Execute these and report results:
+   
+   ```bash
+   # List tool-related files
+   find src/ -name "*tool*" -o -name "*Tool*"
+   
+   # Search for tool registration
+   grep -r "registerTool\|toolRegistry\|addTool" src/
+   
+   # Search for tool execution
+   grep -r "executeTool\|runTool\|invokeTool" src/
+   
+   # Check if bun run cli works with a tool
+   bun run cli --help 2>&1 | head -50
+   ```
+
+5) CREATE GAP REPORT
+
+Output file: investigation/iteration-1-tool-gaps.md
+
+Format:
+```markdown
+# Iteration 1: Tool Calling Gap Analysis
+
+## Executive Summary
+[2-3 sentences]
+
+## Tool Registry
+### Original (CLI.js)
+[How it works]
+
+### TypeScript Implementation  
+[How it works or "NOT FOUND"]
+
+### Gap Assessment
+[What's missing]
+
+## Tool Inventory
+| Tool | CLI.js | TypeScript | Status |
+|------|--------|------------|--------|
+| bash | ✅ | ❌ | MISSING |
+| ... | | | |
+
+## Tool Execution Flow
+### Original Flow
+[Step by step]
+
+### TypeScript Flow
+[Step by step or gaps]
+
+## Command Test Results
+[Output from bun run cli tests]
+
+## Critical Gaps (Must Fix)
+1. [gap]
+2. [gap]
+
+## Recommendations
+[Ordered by priority]
+```
+
+OUTPUT CONTRACT:
+- Create the gap report file
+- Run ALL the bash commands specified
+- Be thorough - this is investigation, not implementation
+- End with "ITERATION 1 COMPLETE" and gap count
+
+Begin now.

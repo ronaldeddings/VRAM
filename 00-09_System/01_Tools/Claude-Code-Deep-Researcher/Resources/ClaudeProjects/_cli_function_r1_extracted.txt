@@ -1,0 +1,6 @@
+function r1(){
+try{
+return TI1()}
+catch{
+return pQ()}
+}

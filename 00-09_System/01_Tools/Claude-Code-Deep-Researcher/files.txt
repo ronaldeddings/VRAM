@@ -1,0 +1,164 @@
+./files.txt
+./dist/index.js
+./dist/cli/conversation-analyzer.js
+./dist/cli.js
+./config.json
+./tests/jsonl-parser.test.ts
+./tests/validators.test.ts
+./tests/conversation-builder.test.ts
+./tests/performance.test.ts
+./.claude/memory/otp.txt
+./.claude/memory/tool-memory.txt
+./.claude/memory/memory.txt
+./.claude/settings.json
+./.claude/hooks/load-tool-memory.ts
+./.claude/hooks/block-npm-dev.ts
+./.claude/hooks/block-python.ts
+./.claude/hooks/clear-otp.ts
+./bun.lock
+./docs/CLI-USAGE.md
+./docs/SAMPLE-OUTPUTS.md
+./README.md
+./config.example.json
+./Claude Code Source and Docs/claude-code/sdk.d.ts
+./Claude Code Source and Docs/claude-code/LICENSE.md
+./Claude Code Source and Docs/claude-code/README.md
+./Claude Code Source and Docs/claude-code/yoga.wasm
+./Claude Code Source and Docs/claude-code/package.json
+./Claude Code Source and Docs/claude-code/sdk-tools.d.ts
+./Claude Code Source and Docs/claude-code/cli.js
+./Claude Code Source and Docs/claude-code/sdk.mjs
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/ktor-sse-jvm-3.0.2.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/ktor-server-sse-jvm-3.0.2.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/claude-code-jetbrains-plugin-0.1.11-beta-searchableOptions.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/kotlinx-coroutines-core-jvm-1.9.0.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/kotlinx-serialization-json-jvm-1.8.1.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/config-1.4.3.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/ktor-utils-jvm-3.0.2.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/ktor-server-cio-jvm-3.0.2.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/annotations-23.0.0.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/ktor-io-jvm-3.0.2.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/kotlin-reflect-2.0.21.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/ktor-client-cio-jvm-3.0.2.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/ktor-websocket-serialization-jvm-3.0.2.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/claude-code-jetbrains-plugin-0.1.11-beta.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/kotlinx-io-bytestring-jvm-0.5.4.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/ktor-network-tls-jvm-3.0.2.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/ktor-events-jvm-3.0.2.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/ktor-server-core-jvm-3.0.2.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/ktor-serialization-jvm-3.0.2.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/slf4j-api-2.0.16.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/kotlin-logging-jvm-7.0.0.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/ktor-client-core-jvm-3.0.2.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/kotlinx-serialization-core-jvm-1.8.1.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/ktor-http-cio-jvm-3.0.2.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/ktor-http-jvm-3.0.2.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/ktor-websockets-jvm-3.0.2.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/kotlin-stdlib-2.1.20.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/kotlinx-io-core-jvm-0.5.4.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/kotlinx-coroutines-slf4j-1.9.0.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/ktor-server-websockets-jvm-3.0.2.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/jansi-2.4.1.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/kotlin-sdk-jvm-0.4.0.jar
+./Claude Code Source and Docs/claude-code/vendor/claude-code-jetbrains-plugin/lib/ktor-network-jvm-3.0.2.jar
+./Claude Code Source and Docs/claude-code/vendor/ripgrep/x64-darwin/ripgrep.node
+./Claude Code Source and Docs/claude-code/vendor/ripgrep/x64-darwin/rg
+./Claude Code Source and Docs/claude-code/vendor/ripgrep/arm64-darwin/ripgrep.node
+./Claude Code Source and Docs/claude-code/vendor/ripgrep/arm64-darwin/rg
+./Claude Code Source and Docs/claude-code/vendor/ripgrep/COPYING
+./Claude Code Source and Docs/claude-code/vendor/ripgrep/x64-win32/ripgrep.node
+./Claude Code Source and Docs/claude-code/vendor/ripgrep/x64-win32/rg.exe
+./Claude Code Source and Docs/claude-code/vendor/ripgrep/x64-linux/ripgrep.node
+./Claude Code Source and Docs/claude-code/vendor/ripgrep/x64-linux/rg
+./Claude Code Source and Docs/claude-code/vendor/ripgrep/arm64-linux/ripgrep.node
+./Claude Code Source and Docs/claude-code/vendor/ripgrep/arm64-linux/rg
+./Claude Code Source and Docs/public-docs/configuration-settings/network-config.md
+./Claude Code Source and Docs/public-docs/configuration-settings/settings.md
+./Claude Code Source and Docs/public-docs/configuration-settings/statusline.md
+./Claude Code Source and Docs/public-docs/configuration-settings/terminal-config.md
+./Claude Code Source and Docs/public-docs/configuration-settings/model-config.md
+./Claude Code Source and Docs/public-docs/configuration-settings/output-styles.md
+./Claude Code Source and Docs/public-docs/development-tools-integrations/ide-integrations.md
+./Claude Code Source and Docs/public-docs/development-tools-integrations/third-party-integrations.md
+./Claude Code Source and Docs/public-docs/development-tools-integrations/hooks-guide.md
+./Claude Code Source and Docs/public-docs/development-tools-integrations/devcontainer.md
+./Claude Code Source and Docs/public-docs/development-tools-integrations/hooks.md
+./Claude Code Source and Docs/public-docs/analytics-monitoring/costs.md
+./Claude Code Source and Docs/public-docs/analytics-monitoring/analytics.md
+./Claude Code Source and Docs/public-docs/analytics-monitoring/monitoring-usage.md
+./Claude Code Source and Docs/public-docs/analytics-monitoring/data-usage.md
+./Claude Code Source and Docs/public-docs/cicd-cloud-platforms/gitlab-ci-cd.md
+./Claude Code Source and Docs/public-docs/cicd-cloud-platforms/google-vertex-ai.md
+./Claude Code Source and Docs/public-docs/cicd-cloud-platforms/amazon-bedrock.md
+./Claude Code Source and Docs/public-docs/cicd-cloud-platforms/github-actions.md
+./Claude Code Source and Docs/public-docs/sdk-documentation/sdk-headless.md
+./Claude Code Source and Docs/public-docs/sdk-documentation/sdk-overview.md
+./Claude Code Source and Docs/public-docs/sdk-documentation/sdk-typescript.md
+./Claude Code Source and Docs/public-docs/sdk-documentation/sdk-python.md
+./Claude Code Source and Docs/public-docs/release-notes/claude-code.md
+./Claude Code Source and Docs/public-docs/release-notes/CHANGELOG.md
+./Claude Code Source and Docs/public-docs/api-documentation/claude-code-analytics-api.md
+./Claude Code Source and Docs/public-docs/api-documentation/get-claude-code-usage-report.md
+./Claude Code Source and Docs/public-docs/features-usage/slash-commands.md
+./Claude Code Source and Docs/public-docs/features-usage/common-workflows.md
+./Claude Code Source and Docs/public-docs/features-usage/mcp.md
+./Claude Code Source and Docs/public-docs/features-usage/interactive-mode.md
+./Claude Code Source and Docs/public-docs/features-usage/memory.md
+./Claude Code Source and Docs/public-docs/features-usage/cli-reference.md
+./Claude Code Source and Docs/public-docs/features-usage/sub-agents.md
+./Claude Code Source and Docs/public-docs/support-troubleshooting/troubleshooting.md
+./Claude Code Source and Docs/public-docs/core-documentation/overview.md
+./Claude Code Source and Docs/public-docs/core-documentation/setup.md
+./Claude Code Source and Docs/public-docs/core-documentation/quickstart.md
+./Claude Code Source and Docs/public-docs/security-compliance/legal-and-compliance.md
+./Claude Code Source and Docs/public-docs/security-compliance/llm-gateway.md
+./Claude Code Source and Docs/public-docs/security-compliance/iam.md
+./Claude Code Source and Docs/public-docs/security-compliance/security.md
+./Claude Code Source and Docs/sdk-docs/examples.md
+./Claude Code Source and Docs/sdk-docs/permissions.md
+./Claude Code Source and Docs/sdk-docs/core-functions.md
+./Claude Code Source and Docs/sdk-docs/mcp.md
+./Claude Code Source and Docs/sdk-docs/troubleshooting.md
+./Claude Code Source and Docs/sdk-docs/projects-directory.md
+./Claude Code Source and Docs/sdk-docs/README.md
+./Claude Code Source and Docs/sdk-docs/configuration.md
+./Claude Code Source and Docs/sdk-docs/hooks.md
+./Claude Code Source and Docs/sdk-docs/types.md
+./Claude Code Source and Docs/sdk-docs/installation.md
+./Claude Code Source and Docs/sdk-docs/api-reference.md
+./Claude Code Source and Docs/sdk-docs/tools.md
+./.gitignore
+./package.json
+./implementation/2-claude-jsonl-parser-plan.md
+./implementation/1-Claude-Code-SDK-Implementation-Checklist.md
+./tsconfig.json
+./UseCases/Claude-Code-SDK-Task-Flow-Control.md
+./UseCases/Claude-Code-Task-Validation-Architecture.md
+./src/types/index.ts
+./src/types/claude-conversation.ts
+./src/cli.ts
+./src/utils/path.ts
+./src/utils/message.ts
+./src/utils/session.ts
+./src/cli/conversation-analyzer.ts
+./src/index.ts
+./src/validators/schema-validator.ts
+./src/validators/completeness-checker.ts
+./src/validators/index.ts
+./src/validators/tool-use-validator.ts
+./src/validators/relationship-validator.ts
+./src/services/conversation-manager.ts
+./src/services/step-analyzer.ts
+./src/services/conversation-builder.ts
+./src/services/project-analyzer.ts
+./src/services/claude-code.ts
+./src/services/session-manager.ts
+./src/services/prompt-executor.ts
+./src/services/jsonl-parser.ts
+./src/services/index.ts
+./src/services/config.ts
+./src/services/todo-manager.ts
+./src/services/context-distiller.ts
+./src/services/content-optimizer.ts
+./src/services/session-builder.ts
+./src/claude-sdk-app.ts

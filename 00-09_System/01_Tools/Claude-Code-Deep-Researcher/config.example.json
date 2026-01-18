@@ -1,0 +1,23 @@
+{
+  "maxTurns": 20,
+  "allowedTools": [
+    "Read",
+    "Write", 
+    "Edit",
+    "MultiEdit",
+    "Bash",
+    "Glob",
+    "Grep",
+    "TodoWrite"
+  ],
+  "projectsDirectory": "/Users/username/.claude/projects",
+  "todoDefaults": {
+    "maxTasks": 10,
+    "requiredTasks": [
+      "Setup project",
+      "Implement core functionality",
+      "Add tests",
+      "Documentation"
+    ]
+  }
+}

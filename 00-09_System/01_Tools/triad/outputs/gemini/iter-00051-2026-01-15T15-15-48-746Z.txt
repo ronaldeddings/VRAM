@@ -1,0 +1,6 @@
+I will start by exploring the directory structure of the meeting files and sampling a few transcripts to understand their format and content, specifically looking for recent meetings from 2026 to gauge the current state of client interactions.
+
+I will list the files in the 2026 transcripts directory to identify the most recent meetings, and then I will read one of these transcripts to analyze the current context of client interactions.
+
+I will read the content of a 2026 transcript and a 2023 transcript to compare their structure and tone, while simultaneously performing a keyword search across all transcripts for business-critical terms like "renewal," "budget," and "proposal" to identify key themes and relationship markers.
+

@@ -1,0 +1,11 @@
+{
+  "query": "foo",
+  "ignoreCase": true,
+  "matches": [
+    { "path": "a.txt", "line": 2, "column": 1, "match": "foo", "lineText": "foo bar" },
+    { "path": "a.txt", "line": 3, "column": 1, "match": "Foo", "lineText": "Foo baz" },
+    { "path": "sub/b.txt", "line": 1, "column": 1, "match": "foo", "lineText": "foo" },
+    { "path": "sub/b.txt", "line": 3, "column": 1, "match": "foo", "lineText": "foofoo" },
+    { "path": "sub/b.txt", "line": 3, "column": 4, "match": "foo", "lineText": "foofoo" }
+  ]
+}

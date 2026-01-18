@@ -1,0 +1,38 @@
+**Key Observations**
+- CRM migration is a dominant theme: HubSpot is being sunset (subscription ends Jan 30), data is being manually merged with Wrike via NoCodeDB, and onboarding/testing is time‑boxed before the cutoff. (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-05-522666981.md`, `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-05-522520665.md`)
+- Pipeline hygiene issues are active: duplicate/junk deals, automation misfires, inconsistent deal search, and “stuck” deals due to follow‑up gaps. (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-521053578.md`, `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-09-525972121.md`)
+- Deal/contract semantics are blurry: quotes vs contracts vs deals, with deals acting as containers for multiple contracts; this is being re‑modeled during migration. (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-05-522520665.md`, `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-09-525972121.md`)
+- Manual contract export is a major operational risk: 200+ PDFs may require individual export; audit requests already happened; storage plan is Google Drive. (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-05-522674820.md`)
+- Sales process coaching is ongoing: left‑side pipeline volume matters, auto‑creating deals from scheduled calls is desired, and close‑rate‑driven call volume math is part of training. (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-520962961.md`, `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2023/2023-08-23-33727559.md`)
+
+**Insights**
+- The CRM switch isn’t just a tool swap; it’s a data model and process redesign (deal/quote/contract definitions, stage rules, and automation). Without clarity, migration will perpetuate errors and stall pipeline reporting. (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-05-522520665.md`)
+- Pipeline performance appears constrained more by follow‑up bandwidth and data hygiene than by lead volume alone; “stuck” deals and unclear stages reduce conversion visibility. (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-520962961.md`)
+- Compliance/finance pressures are real (contract retrieval for audits), making contract export a revenue‑ops priority, not just admin work. (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-05-522674820.md`)
+- Team capability is in flux: new hires are being trained while the system is changing, raising the risk of “temporary” workarounds becoming permanent. (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-520962961.md`, `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-09-525972121.md`)
+
+**Opportunities**
+- Build a migration checklist that explicitly maps HubSpot entities (deal/quote/contract) to NoCodeDB tables and names; lock definitions before final import. (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-05-522520665.md`)
+- Create a “stuck deal” workflow: age‑based alerts, required next‑step field, and weekly review to unblock left‑side pipeline. (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-520962961.md`)
+- Automate contract export (HubSpot API or a bulk export process) to avoid 200‑click manual recovery and reduce audit risk. (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-05-522674820.md`)
+- Formalize a cadence for re‑engagement (quarterly/biannual touchpoints, gift reminders) and store it in CRM to protect long‑cycle deals. (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-09-525972121.md`)
+- Use historical close‑rate data (e.g., 50%) to reverse‑engineer required call volume and pipeline coverage targets. (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2023/2023-08-23-33727559.md`)
+
+**Connections**
+- Finance: QuickBooks accuracy, contract retrieval for audits, and pipeline ↔ revenue timing linkages. (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-08-526140322.md`)
+- Operations: project codes and contracts are intertwined with production workflows and Wrike. (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-05-522666981.md`)
+- Team/management: onboarding plus live system migration increases process variance and error risk. (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-520962961.md`)
+- Marketing/BD: left‑side pipeline volume expectations imply outreach and lead gen targets. (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-520962961.md`)
+
+**Recommendations**
+- Create a “CRM Migration Runbook” with owners, dates, and verification steps (export PDFs, validate counts, spot‑check contracts) and target completion at least 1 week before Jan 30. (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-05-522520665.md`)
+- Define pipeline stages and success criteria in a 1‑pager; include how deals/quotes/contracts relate and require a next action on every open deal. (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-09-525972121.md`)
+- Implement a weekly “Deal Hygiene” review: duplicates, stage accuracy, aging, and follow‑up commitments. (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-02-521053578.md`)
+- Build a lightweight follow‑up cadence system (quarterly check‑ins, gifts, renewals) in the new CRM to prevent long‑cycle deals from going dark. (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2026/2026-01-09-525972121.md`)
+- Use close‑rate and target revenue to set minimum monthly call volume; track it on the pipeline dashboard to keep the left side healthy. (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2023/2023-08-23-33727559.md`)
+
+**Triad Improvements (not applied)**
+- Add a “CRM Migration” tagger in Triad to auto‑surface transcripts referencing HubSpot/NoCodeDB/contract export so migration tasks consolidate in one view.
+- Create a built‑in “Sales Pipeline Review” report template that pulls “stuck deal” mentions and required next actions across meetings.
+
+Note: I couldn’t locate an `AGENTS.md` under `/Volumes/VRAM`. If there’s a different path, point me to it.

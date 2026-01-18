@@ -1,0 +1,166 @@
+==============================================
+INVESTIGATION ITERATION 5: COMPREHENSIVE SUMMARY & REMEDIATION
+==============================================
+
+This is the FINAL iteration. Synthesize all findings and create a remediation script.
+
+MISSION: Create actionable remediation plan and script.
+
+PREVIOUS ITERATION OUTPUTS:
+- Iteration 1 output: @/Users/ronaldeddings/ClaudeCodeTS/investigation/investigation-20251220-112837/iterations/iteration-1-output.md
+- Iteration 2 output: @/Users/ronaldeddings/ClaudeCodeTS/investigation/investigation-20251220-112837/iterations/iteration-2-output.md
+- Iteration 3 output: @/Users/ronaldeddings/ClaudeCodeTS/investigation/investigation-20251220-112837/iterations/iteration-3-output.md
+- Iteration 4 output: @/Users/ronaldeddings/ClaudeCodeTS/investigation/investigation-20251220-112837/iterations/iteration-4-output.md
+
+INVESTIGATION FILES:
+- @/Users/ronaldeddings/ClaudeCodeTS/investigation/additional-plan-items.md
+- @/Users/ronaldeddings/ClaudeCodeTS/investigation/FINAL-gap-summary.md
+- @/Users/ronaldeddings/ClaudeCodeTS/investigation/iteration-1-tool-gaps.md
+- @/Users/ronaldeddings/ClaudeCodeTS/investigation/iteration-2-encyclopedia-verification.md
+- @/Users/ronaldeddings/ClaudeCodeTS/investigation/iteration-3-cli-parity.md
+- @/Users/ronaldeddings/ClaudeCodeTS/investigation/iteration-4-subprocess-migration.md
+
+FINAL TASKS:
+
+1) SYNTHESIZE ALL FINDINGS
+   Review all previous iteration outputs and create a unified view of:
+   - All tool calling gaps
+   - All encyclopedia inaccuracies  
+   - All CLI command gaps
+   - All subprocess migration issues
+
+2) PRIORITIZE GAPS
+   Categorize all gaps by:
+   - P0: Critical - breaks core functionality
+   - P1: High - missing major feature
+   - P2: Medium - missing minor feature
+   - P3: Low - nice to have
+
+3) CREATE COMPREHENSIVE SUMMARY
+
+Output file: investigation/FINAL-gap-summary.md
+
+Format:
+```markdown
+# FINAL Gap Summary
+
+## Executive Summary
+[Overall state of the implementation]
+
+## Gap Statistics
+- Total gaps found: X
+- P0 Critical: X
+- P1 High: X
+- P2 Medium: X
+- P3 Low: X
+
+## All Gaps by Category
+
+### Tool Calling Gaps
+| ID | Gap | Priority | Effort |
+|----|-----|----------|--------|
+| T1 | ... | P0 | High |
+
+### CLI Command Gaps
+| ID | Gap | Priority | Effort |
+|----|-----|----------|--------|
+| C1 | ... | P1 | Medium |
+
+### Encyclopedia Issues
+| ID | Issue | Type |
+|----|-------|------|
+| E1 | ... | Inaccuracy |
+
+### Subprocess Issues
+| ID | Issue | Priority |
+|----|-------|----------|
+| S1 | ... | P1 |
+
+## Recommended Fix Order
+1. [First thing to fix]
+2. [Second thing to fix]
+...
+```
+
+4) CREATE REMEDIATION SHELL SCRIPT
+
+Output file: investigation/remediate-gaps.sh
+
+This script should:
+- Be executable
+- Have clear phases for each gap category
+- Include validation after each fix
+- Include the EXACT prompts to give to the agent
+
+Format:
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+# REMEDIATION SCRIPT
+# Generated from investigation run: [RUN_ID]
+# 
+# This script addresses all gaps found in the CLI.js → TypeScript migration.
+
+export PATH="$HOME/.bun/bin:$PATH"
+
+ROOT_DIR="$(pwd)"
+PLAN_FILE="$ROOT_DIR/implementation/1-initial-rewrite-implementation-checklist.md"
+
+#===============================================================================
+# PHASE 1: CRITICAL TOOL CALLING FIXES
+#===============================================================================
+
+echo "Phase 1: Fixing critical tool calling gaps..."
+
+# [Include specific codex prompts to fix each gap]
+
+run_codex_fix() {
+  local fix_id="$1"
+  local prompt="$2"
+  
+  echo "Fixing: $fix_id"
+  # ... codex invocation
+}
+
+# Fix T1: [description]
+# Fix T2: [description]
+# etc.
+
+#===============================================================================
+# PHASE 2: CLI COMMAND FIXES  
+#===============================================================================
+
+echo "Phase 2: Fixing CLI command gaps..."
+
+# [Include specific fixes]
+
+#===============================================================================
+# PHASE 3: VALIDATION
+#===============================================================================
+
+echo "Phase 3: Validating fixes..."
+
+bun test
+bun run typecheck
+bun run cli --help
+bun run cli -p "test prompt"
+
+echo "Remediation complete."
+```
+
+5) CREATE UPDATED IMPLEMENTATION PLAN ITEMS
+
+Output file: investigation/additional-plan-items.md
+
+List NEW checklist items that should be added to the implementation plan
+to address the discovered gaps.
+
+OUTPUT CONTRACT:
+- Create FINAL-gap-summary.md
+- Create remediate-gaps.sh (must be executable with chmod +x)
+- Create additional-plan-items.md
+- Print final statistics
+- End with "INVESTIGATION COMPLETE - REMEDIATION SCRIPT READY"
+
+Begin now.

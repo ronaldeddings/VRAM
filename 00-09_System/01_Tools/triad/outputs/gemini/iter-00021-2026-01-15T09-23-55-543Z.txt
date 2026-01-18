@@ -1,0 +1,8 @@
+I will list the contents of the `/Volumes/VRAM/30-39_Personal` directory to verify the subfolder structure and identify where the reflection notes and raw audio files are located.
+I will list the contents of `30_Reflection` to locate the daily notes and `34_Goals` to verify if it contains any files.
+I will list the contents of `30_Reflection/30.01_daily` to identify specific daily note files and `34_Goals/34.02_annual` to check for goal documents. Additionally, I will list `31_Recordings` to locate the audio files.
+I will read the daily notes `2025-10-06.md` and `2026-01-09.md` to analyze their content and structure. Then, I will list the contents of `33_Learning` to check if it contains any files.
+I will list the contents of `33_Learning/33.01_books` to check for book notes. Then, I will search for "Tasks" within the `/Volumes/VRAM/30-39_Personal` directory to locate any task-related files or folders.
+I will list the contents of `31_Recordings/31.02_limitless` to examine file naming conventions and check for any accompanying transcript files.
+I will list the contents of `31_Capture` and `31_Recordings/31.01_voice_memos` to locate the missing audio files.
+I will list the contents of `31_Capture/31.02_limitless` and `36_Archive` to search for files. Additionally, I will use `glob` to search for `.ogg` files within `/Volumes/VRAM/30-39_Personal` to locate the audio recordings.

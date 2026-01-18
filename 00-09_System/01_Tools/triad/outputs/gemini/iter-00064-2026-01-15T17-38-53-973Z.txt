@@ -1,0 +1,1 @@
+I will list the contents of the `00-09_System` directory to understand the existing system architecture and identify where "Meta" information might be stored. Then, I will search for personal keywords within the `10-19_Work` directory to quantify the "bleed" of personal life into work artifacts.

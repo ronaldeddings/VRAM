@@ -1,0 +1,8 @@
+async function vn1(A){
+let Q=await rW().getLastLog(A);
+if(Q!==null&&Q!==void 0){
+let B=Q[Q.length-1],{
+summaries:G,customTitles:Z,tags:Y,fileHistorySnapshots:J}
+=await yn1(A),I=B?G.get(B.uuid):void 0,X=B?Z.get(B.sessionId):void 0,W=B?Y.get(B.sessionId):void 0;
+return Sn1(Q,0,I,X,Pn1(J,Q),W)}
+return null}

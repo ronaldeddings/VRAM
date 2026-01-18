@@ -1,0 +1,3 @@
+I will search for file paths containing terms like "invoice", "SOW", "budget", "contract", or "expense" within the `10-19_Work` directory to identify where financial documentation is actually located, since the dedicated Finance directory is empty.
+Then, I will search for the term "finance" within the `10-19_Work` directory to understand how financial topics are discussed in a professional context.
+Finally, I will answer the user's request by analyzing the "Financial" focus area, synthesizing the findings to explain the "empty folder" paradox and offering recommendations for better financial data organization.

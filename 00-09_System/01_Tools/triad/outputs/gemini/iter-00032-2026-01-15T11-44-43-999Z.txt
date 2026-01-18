@@ -1,0 +1,4 @@
+I will list the contents of the `/Volumes/VRAM/20-29_Finance` directory to verify the "empty structure" hypothesis.
+I will also search for financial keywords like "invoice", "budget", "revenue", and "salary" within the `/Volumes/VRAM/10-19_Work` directory to locate where financial data might actually be residing (likely tied to the business).
+Finally, I will search for "money" and "cost" within `/Volumes/VRAM/30-39_Personal` to understand the emotional context of his finances.
+

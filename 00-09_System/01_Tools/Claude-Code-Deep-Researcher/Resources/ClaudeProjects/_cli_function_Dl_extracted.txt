@@ -1,0 +1,26 @@
+async function Dl(A,Q){
+try{
+let B=null,G=null,Z;
+if(A===void 0)B=await TLB(0);
+else if(Q){
+G=[];
+for(let J of await xv(Q)){
+if(J.type==="assistant"||J.type==="user"){
+let I=Ya3(J);
+if(I)G.push(I)}
+Z=J.session_id}
+}
+else if(typeof A==="string")B=await vn1(A),Z=A;
+else B=A;
+if(!B&&!G)return null;
+if(B){
+if(ceA(B),LoA(B),etA(B),!Z)Z=x_(B);
+G=B.messages}
+G=FqA(G);
+let Y=await WU("resume",Z);
+return G.push(...Y),{
+messages:G,fileHistorySnapshots:B?.fileHistorySnapshots,sessionId:Z}
+}
+catch(B){
+throw s(B),B}
+}

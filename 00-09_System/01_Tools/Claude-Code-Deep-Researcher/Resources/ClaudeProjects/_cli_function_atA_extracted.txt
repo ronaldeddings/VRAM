@@ -1,0 +1,4 @@
+function atA(A,Q){
+let B=[],G=Q;
+while(G)B.unshift(G),G=G.parentUuid?A.get(G.parentUuid):void 0;
+return B}

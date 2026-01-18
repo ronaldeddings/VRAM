@@ -1,0 +1,354 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Ensure bun + codex are available
+export PATH="$HOME/.bun/bin:$PATH"
+
+ROOT_DIR="$(pwd)"
+SRC_DIR="$ROOT_DIR/src"
+CHANGELOG_ROOT="$ROOT_DIR/changelogs"
+PLAN_FILE="$ROOT_DIR/implementation/1-initial-rewrite-implementation-checklist.md"
+
+# Where your minified bundles live (adjust this!)
+BUNDLES_DIR="$ROOT_DIR/bundles" # e.g. contains ClaudeAgentSDKCode/cli.js, ClaudeCodeCode/cli.js
+
+# Optional: additional docs
+DOCS_DIR="$ROOT_DIR/docs"
+
+TOTAL_PHASES="${TOTAL_PHASES:-19}"
+START_PHASE="${START_PHASE:-14}"
+MAX_RETRIES="${MAX_RETRIES:-3}"
+PYTHON_BIN="${PYTHON_BIN:-}"
+
+TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
+RUN_ID="implementation-$TIMESTAMP"
+RUN_CHANGELOG_DIR="$CHANGELOG_ROOT/$RUN_ID"
+
+mkdir -p "$RUN_CHANGELOG_DIR"
+mkdir -p "$SRC_DIR"
+
+if [[ ! -f "$PLAN_FILE" ]]; then
+  echo "❌ Implementation plan not found: $PLAN_FILE"
+  exit 1
+fi
+
+if [[ ! -d "$BUNDLES_DIR" ]]; then
+  echo "❌ Bundles directory not found: $BUNDLES_DIR"
+  exit 1
+fi
+
+echo "📁 Run ID:"
+echo "   $RUN_ID"
+echo ""
+echo "📄 Plan:       $PLAN_FILE"
+echo "📦 Bundles:    $BUNDLES_DIR"
+echo "📂 Target:     $SRC_DIR"
+echo "🔁 Retries:    $MAX_RETRIES"
+echo "▶️  Phase range: $START_PHASE..$TOTAL_PHASES"
+echo ""
+
+run_codex() {
+  local prompt_file="$1"
+  local output_file="$2"
+  mkdir -p "$(dirname "$output_file")"
+
+  # Allocate TTY and feed prompt via STDIN
+  script -q /dev/null bash -c "
+    codex exec --dangerously-bypass-approvals-and-sandbox < \"$prompt_file\"
+  " >"$output_file"
+}
+
+resolve_python() {
+  if [[ -n "$PYTHON_BIN" ]]; then
+    return 0
+  fi
+  if command -v python3 >/dev/null 2>&1; then
+    PYTHON_BIN="python3"
+    return 0
+  fi
+  if command -v python >/dev/null 2>&1; then
+    PYTHON_BIN="python"
+    return 0
+  fi
+  echo "❌ python not found (need python3 or python). Set PYTHON_BIN=... to override."
+  exit 1
+}
+
+regenerate_internal_todo() {
+  # Keep the internal TODO mirror in sync with the checklist (Phases 1–5).
+  resolve_python
+  "$PYTHON_BIN" - <<'PY'
+import re
+from pathlib import Path
+
+checklist_path = Path("implementation/1-initial-rewrite-implementation-checklist.md")
+out_path = Path("implementation/phase1-5-todo.md")
+
+lines = checklist_path.read_text(encoding="utf-8").splitlines()
+
+phase_starts = {}
+phase_titles = {}
+for idx, line in enumerate(lines, start=1):
+    m = re.match(r"\*\*\*Phase (\d+):\s*(.+?)\*\*\*$", line)
+    if m:
+        p = int(m.group(1))
+        phase_starts[p] = idx
+        phase_titles[p] = m.group(2).strip()
+
+phases = [1, 2, 3, 4, 5]
+for p in phases:
+    if p not in phase_starts:
+        raise SystemExit(f"Missing Phase {p} header")
+
+all_phases = sorted(phase_starts)
+phase_ranges = {}
+for p in phases:
+    start = phase_starts[p]
+    next_start = min((phase_starts[q] for q in all_phases if q > p), default=len(lines) + 1)
+    phase_ranges[p] = (start, next_start - 1)
+
+entries_by_phase = {p: [] for p in phases}
+for p in phases:
+    start, end = phase_ranges[p]
+    for ln in range(start, end + 1):
+        line = lines[ln - 1]
+        m = re.match(r"(\s*)- \[( |x)\] (.*)$", line)
+        if not m:
+            continue
+        checked = (m.group(2) == "x")
+        text = m.group(3).strip()
+        entries_by_phase[p].append((ln, checked, text))
+
+out = []
+out.append("# Phase 1–5 Internal TODO List")
+out.append("")
+out.append(f"Source: `{checklist_path.as_posix()}`")
+out.append("")
+out.append("Each entry is copied from the checklist with a stable ID. Check items off here as we work, then mirror into the main checklist.")
+out.append("")
+
+for p in phases:
+    title = phase_titles[p]
+    out.append(f"## Phase {p}: {title}")
+    out.append("")
+    for i, (ln, checked, text) in enumerate(entries_by_phase[p], start=1):
+        pid = f"P{p}-{i:04d}"
+        box = "x" if checked else " "
+        out.append(f"- [{box}] `{pid}` (checklist L{ln}): {text}")
+    out.append("")
+
+out_path.write_text("\n".join(out).rstrip() + "\n", encoding="utf-8")
+print(f"Regenerated {out_path} ({sum(len(v) for v in entries_by_phase.values())} items)")
+PY
+}
+
+validate_phase() {
+  local phase="$1"
+  local out_file="$2"
+
+  set +e
+  {
+    echo "== VALIDATION: phase $phase =="
+    echo ""
+    if compgen -G "tests/phase${phase}*" >/dev/null; then
+      echo "\$ bun test tests/phase${phase}*"
+      bun test "tests/phase${phase}"* || exit_code=$?
+      echo ""
+    fi
+
+    echo "\$ bun test"
+    bun test || exit_code=$?
+    echo ""
+
+    echo "\$ bun run typecheck"
+    bun run typecheck || exit_code=$?
+    echo ""
+
+    echo "\$ bun run check:boundaries"
+    bun run check:boundaries || exit_code=$?
+    echo ""
+  } >"$out_file" 2>&1
+  local code="${exit_code:-0}"
+  set -e
+  return "$code"
+}
+
+commit_and_push_main() {
+  local phase="$1"
+  local changelog_file="$2"
+
+  if ! command -v git >/dev/null 2>&1; then
+    echo "⚠️ git not found; skipping commit/push."
+    return 0
+  fi
+
+  if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    echo "⚠️ Not a git repo; skipping commit/push."
+    return 0
+  fi
+
+  if ! git remote get-url origin >/dev/null 2>&1; then
+    echo "⚠️ No 'origin' remote configured; skipping push to main."
+    return 0
+  fi
+
+  local branch
+  branch="$(git rev-parse --abbrev-ref HEAD)"
+  if [[ "$branch" != "main" ]]; then
+    echo "⚠️ Current branch is '$branch' (expected 'main')."
+    echo "   Refusing to push to main automatically. Re-run on 'main' or set FORCE_PUSH_MAIN=1."
+    if [[ "${FORCE_PUSH_MAIN:-0}" != "1" ]]; then
+      return 0
+    fi
+  fi
+
+  git add -A
+  if git diff --cached --quiet; then
+    echo "ℹ️ No changes to commit."
+    return 0
+  fi
+
+  git commit -m "Phase ${phase} (${RUN_ID})"
+  # Keep the changelog in the commit even if codex accidentally omitted it from git add.
+  git add "$changelog_file" || true
+  git commit --amend --no-edit || true
+
+  if [[ "$branch" == "main" ]]; then
+    git push origin main
+  else
+    git push origin HEAD:main
+  fi
+}
+
+echo "✅ Using manual phase bounds:"
+echo "   START_PHASE=$START_PHASE"
+echo "   TOTAL_PHASES=$TOTAL_PHASES"
+echo ""
+
+for ((p = START_PHASE; p <= TOTAL_PHASES; p++)); do
+  echo "🚀 Phase $p / $TOTAL_PHASES"
+
+  CHANGELOG_FILE="$RUN_CHANGELOG_DIR/phase-$p-changelog.md"
+  PREV_CHANGELOG="$RUN_CHANGELOG_DIR/phase-$((p - 1))-changelog.md"
+
+  : >"$CHANGELOG_FILE"
+
+  attempt=1
+  last_validation_file=""
+  while true; do
+    ATTEMPT_LOG="$RUN_CHANGELOG_DIR/phase-$p-attempt-$attempt.md"
+    VALIDATION_FILE="$RUN_CHANGELOG_DIR/phase-$p-validation-attempt-$attempt.txt"
+    PROMPT_FILE="$(mktemp)"
+
+    {
+      echo "You are implementing PHASE $p of $TOTAL_PHASES."
+      echo ""
+      echo "=============================================="
+      echo "MISSION: IMPLEMENT THE REWRITE PLAN (PHASE-BY-PHASE)"
+      echo "=============================================="
+      echo ""
+      echo "AUTHORITATIVE INPUTS:"
+      echo "- Implementation Plan: @$PLAN_FILE"
+      echo "- CLI Encyclopedia: @CLI_ENCYCLOPEDIA.md"
+      echo "- Bundles directory: @$BUNDLES_DIR"
+      echo "- Target source directory: @src"
+      if [[ -d "$DOCS_DIR" ]]; then
+        echo "- Local docs directory: @$DOCS_DIR"
+      fi
+      echo ""
+
+      if [[ -f "$PREV_CHANGELOG" ]]; then
+        echo "PREVIOUS PHASE CHANGELOG:"
+        echo "- @$PREV_CHANGELOG"
+        echo ""
+      fi
+
+      if [[ -n "$last_validation_file" ]]; then
+        echo "LAST VALIDATION OUTPUT (FAILED):"
+        echo "- @$last_validation_file"
+        echo ""
+        echo "Your job: fix the issues and re-run validation commands until they pass."
+        echo ""
+      fi
+
+      echo "CRITICAL RULES:"
+      echo "1) Only implement PHASE $p right now."
+      echo "2) Do NOT jump ahead to future phases."
+      echo "3) Read the relevant files thoroughly, especially the bundled/minified cli.js files @bundles/ClaudeCodeCode/cli.js and @bundles/ClaudeAgentSDKCode/cli.js."
+      echo "4) You must treat third-party code as dependencies — do not re-implement vendor internals."
+      echo "5) You must build a clean TypeScript module graph in ./src that matches the plan and the encyclopedia and @$PLAN_FILE"
+      echo "6) Prefer async-first JS/TS, no subprocess-centric control flow."
+      echo ""
+      echo "AUTHENTICATION REQUIREMENT (SAFE):"
+      echo "- Use keychain to extract secrets, search for Claude Code-credentials .... within it there is an accessToken.... Also reference CLAUDE_CODE_SESSION_ACCESS_TOKEN in our old cli.js files"
+      echo "- Assume that using the keychain secret will log you in and you do NOT need to run /login."
+      echo "- If you're able to run 'claude --dangerously-skip-permissions -p sayhello' and if it works, then creds are good and your code is not good."
+      echo ""
+      echo "WHAT TO DO IN THIS PHASE:"
+      echo "- Locate the 'Phase $p' section in the implementation plan and implement it fully."
+      echo "- Check off every completed item in that Phase in the plan."
+      echo "- Add at least one test that proves the phase works (or explain why a test is not applicable)."
+      echo "- If something is ambiguous, make a reasonable best decision and record it in the changelog as a 'Decision'."
+      echo ""
+      echo "VALIDATION:"
+      echo "- Run `bun test`, `bun run typecheck`, and `bun run check:boundaries`."
+      echo "- ALSO: YOU MUST RUN THE IDENTICAL COMMAANDS that are in the previous cli.js files...."
+      echo "- If you cannot run something, explain why and what command should be run by the user."
+      echo ""
+      echo "STDOUT CONTRACT:"
+      echo "- Output ONLY a PHASE Change Log."
+      echo "- Include these sections:"
+      echo "  1) Summary (what you accomplished in Phase $p)"
+      echo "  2) Files changed (created/modified/deleted)"
+      echo "  3) Decisions made (with rationale)"
+      echo "  4) Tests/validation run + results"
+      echo "  5) Remaining work inside Phase $p (if any)"
+      echo "  6) Handoff notes for next phase"
+      echo ""
+      echo "DO NOT print source code to stdout."
+      echo "Begin now."
+    } >"$PROMPT_FILE"
+
+    run_codex "$PROMPT_FILE" "$ATTEMPT_LOG"
+    rm "$PROMPT_FILE"
+
+    {
+      echo "## Attempt $attempt"
+      echo ""
+      cat "$ATTEMPT_LOG"
+      echo ""
+    } >>"$CHANGELOG_FILE"
+
+    regenerate_internal_todo
+
+    if validate_phase "$p" "$VALIDATION_FILE"; then
+      echo "✅ Validation passed for Phase $p (attempt $attempt)."
+      echo "   $VALIDATION_FILE"
+      commit_and_push_main "$p" "$CHANGELOG_FILE"
+      break
+    fi
+
+    echo "❌ Validation failed for Phase $p (attempt $attempt)."
+    echo "   $VALIDATION_FILE"
+    last_validation_file="$VALIDATION_FILE"
+
+    if ((attempt >= MAX_RETRIES)); then
+      echo "❌ Phase $p failed after $MAX_RETRIES attempts. See:"
+      echo "   $CHANGELOG_FILE"
+      echo "   $VALIDATION_FILE"
+      exit 1
+    fi
+
+    attempt=$((attempt + 1))
+  done
+
+  echo "✅ Phase $p complete:"
+  echo "   $CHANGELOG_FILE"
+  echo ""
+done
+
+echo "🎉 All phases complete."
+echo ""
+echo "Artifacts:"
+echo "  - Rewritten source: $SRC_DIR"
+echo "  - Phase change logs: $RUN_CHANGELOG_DIR"

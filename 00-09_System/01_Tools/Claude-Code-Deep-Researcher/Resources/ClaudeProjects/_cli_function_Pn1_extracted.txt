@@ -1,0 +1,12 @@
+function Pn1(A,Q){
+let B=[];
+for(let G of Q){
+let Z=A.get(G.uuid);
+if(!Z)continue;
+if(!Z.isSnapshotUpdate)B.push(Z.snapshot);
+else{
+let Y=B.findLastIndex((J)=>J.messageId===Z.snapshot.messageId);
+if(Y===-1)B.push(Z.snapshot);
+else B[Y]=Z.snapshot}
+}
+return B}

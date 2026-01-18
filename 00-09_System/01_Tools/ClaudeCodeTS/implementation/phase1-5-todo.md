@@ -1,0 +1,413 @@
+# Phase 1–5 Internal TODO List
+
+Source: `implementation/1-initial-rewrite-implementation-checklist.md`
+
+Each entry is copied from the checklist with a stable ID. Check items off here as we work, then mirror into the main checklist.
+
+## Phase 1: Rewrite Charter, Spec Capture, and Behavioral Baseline
+
+- [x] `P1-0001` (checklist L49): Enumerate the externally observable behaviors that must remain stable (CLI UX flows, prompts, approvals, settings precedence, hook events, MCP modes).
+- [x] `P1-0002` (checklist L50): Create a “legacy behavior matrix” that maps each behavior to its source in `CLI_ENCYCLOPEDIA.md` (chapter/section) and relevant entrypoints.
+- [x] `P1-0003` (checklist L51): Identify “process boundary artifacts” (features that exist only because the legacy CLI uses subprocesses) and flag them as redesign candidates.
+- [x] `P1-0004` (checklist L52): Extract the canonical settings sources and precedence rules (user/project/local/policy/flag/cliArg/command/session) as a formal spec to preserve until explicitly changed.
+- [x] `P1-0005` (checklist L53): Extract canonical hook event names and the hook-input shapes (base + event-specific) as a formal spec to preserve until explicitly changed.
+- [x] `P1-0006` (checklist L54): Extract canonical hook gating switches (e.g., `disableAllHooks`, managed-only hooks) and the exact precedence of those gates vs per-event hook configuration.
+- [x] `P1-0007` (checklist L55): Extract canonical permission rule syntax (`Tool(ruleContent)` and bare-tool rules) and the legacy source-precedence order as a formal spec to preserve until explicitly changed.
+- [x] `P1-0008` (checklist L56): Extract MCP “endpoint mode vs state-file/direct mode” behaviors (discovery, timeouts, telemetry differences, connection failure semantics) as a formal spec.
+- [x] `P1-0009` (checklist L57): Document all legacy “async hook protocol” behaviors (long-running hook handoff, async IDs, cancellation handling) as a formal spec to preserve or intentionally replace.
+- [x] `P1-0010` (checklist L58): Capture all legacy “AppState queue” behaviors (notifications, elicitation queue, worker permission queues, sandbox permission queues) as formal queue semantics.
+- [x] `P1-0011` (checklist L59): Capture legacy overlay selection/priority ordering for queues (which prompt renders when multiple queues are non-empty) as a testable state machine.
+- [x] `P1-0012` (checklist L62): Define a portability rubric for every engine module: `portable`, `host-dependent`, `optional capability`, `unsupported on mobile/web`.
+- [x] `P1-0013` (checklist L63): Define a “no Node-only API in core” rule and list disallowed APIs/classes by category (filesystem, subprocess, raw sockets, process globals).
+- [x] `P1-0014` (checklist L64): Define minimum supported execution environments (Hermes/JSC, modern browsers, Node LTS) and their baseline Web APIs (AbortController, fetch, streams).
+- [x] `P1-0015` (checklist L65): Define a capability policy for optional “shell-like” features (desktop-only, remote execution, or excluded).
+- [x] `P1-0016` (checklist L66): Define explicit failure semantics for missing capabilities (typed errors, UI messaging, fallback strategies).
+- [x] `P1-0017` (checklist L67): Define “mobile-safe” networking constraints (TLS only, fetch-based transports, background limitations).
+- [x] `P1-0018` (checklist L70): Define data sensitivity tiers (credentials, tokens, local file contents, transcripts, telemetry payloads).
+- [x] `P1-0019` (checklist L71): Define redaction rules for logs/telemetry (never emit secrets; hash stable identifiers where needed).
+- [x] `P1-0020` (checklist L72): Define where policy/enterprise-managed settings can override user/project/local behavior and which overrides must be transparent to the user.
+- [x] `P1-0021` (checklist L73): Define a “policy audit trail” requirement (which decisions must be explainable and attributable to a source).
+- [x] `P1-0022` (checklist L74): Define a threat model for plugin/hook execution in a portable environment (no arbitrary shell, restricted capabilities, deterministic timeouts).
+- [x] `P1-0023` (checklist L77): Define “migration target stages” (engine library, new CLI adapter, RN host, web host) and what qualifies as “usable” at each stage.
+- [x] `P1-0024` (checklist L78): Define a shadow-run strategy (run legacy + new engine in parallel where possible, compare decisions/outputs deterministically).
+- [x] `P1-0025` (checklist L79): Define a compatibility budget: which legacy behaviors are required for v3 launch vs can be deferred.
+- [x] `P1-0026` (checklist L80): Identify legacy subsystems that must be supported early for migration (settings merge/IO, permissions prompts, MCP invocation).
+- [x] `P1-0027` (checklist L83): Create a risk register section (owner, impact, likelihood, mitigation, “decision deadline”) to be expanded in later phases.
+- [x] `P1-0028` (checklist L84): Create a deferred-decisions list with explicit “do not decide yet” notes for API surfaces (hooks schema, tool registry, transport choices).
+- [x] `P1-0029` (checklist L87): Capture a sanitized corpus of legacy sessions that exercise: permissions prompts, hooks (including async hooks), MCP endpoint mode, MCP direct/state-file flows, background agents (Magic Docs, session memory), and stop/resume flows.
+- [x] `P1-0030` (checklist L88): For each captured session, store:
+- [x] `P1-0031` (checklist L89): normalized effective settings snapshot (all sources + precedence applied)
+- [x] `P1-0032` (checklist L90): normalized permission rule set (all sources + precedence applied)
+- [x] `P1-0033` (checklist L91): ordered hook selection results per event (including match diagnostics)
+- [x] `P1-0034` (checklist L92): tool invocation transcripts (inputs redacted; streaming event counts/hashes)
+- [x] `P1-0035` (checklist L93): MCP mode selection + connection outcomes
+- [x] `P1-0036` (checklist L94): Define sanitization/redaction rules for the corpus and validate them with automated scans (no secrets, no raw file contents unless explicitly allowed).
+- [x] `P1-0037` (checklist L95): Define a “golden replay contract”: given recorded nondeterministic inputs (clock/RNG/network stubs), the engine must emit byte-for-byte identical normalized event logs.
+- [x] `P1-0038` (checklist L98): Inventory all “special entrypoints” and sidecar modes in the legacy CLIs (at minimum: `--mcp-cli`, `--ripgrep`, Chrome native host mode, teleport/remote session helpers).
+- [x] `P1-0039` (checklist L99): For each entrypoint, document:
+- [x] `P1-0040` (checklist L100): user-facing invocation forms and outputs
+- [x] `P1-0041` (checklist L101): internal dependencies (files, env vars, network endpoints)
+- [x] `P1-0042` (checklist L102): whether behavior is required for v3 launch, CLI-only, or optional future
+- [x] `P1-0043` (checklist L103): Classify each entrypoint as: `in-process engine command`, `host adapter feature`, `desktop-only capability`, or `deprecated`.
+- [x] `P1-0044` (checklist L106): Inventory all legacy hook event names and confirm inclusion/exclusion rules across builds (at minimum include `UserPromptSubmit` in addition to the pre/post tool and session lifecycle events).
+- [x] `P1-0045` (checklist L107): Capture the per-event hook selection algorithm inputs (event name, matcher set, ordering, dedupe) and expected outputs (selected hook list + diagnostics).
+- [x] `P1-0046` (checklist L108): Capture hook-specific payload variants and “special outputs” that affect core behavior (e.g., `updatedMCPToolOutput` style post-processing) as explicit compatibility requirements.
+- [x] `P1-0047` (checklist L109): Capture legacy “hook agent” safeguards (turn limits, budgeting defaults) and convert them into explicit v3 budgeting constraints for model-driven hooks.
+- [x] `P1-0048` (checklist L110): Capture the legacy behavior when hooks are disabled globally (`disableAllHooks`) vs disabled by policy (managed-only hooks), including the required user-visible messaging.
+- [x] `P1-0049` (checklist L111): Capture legacy failure handling for hooks (when hook errors block tool execution vs become warnings) and the exact conditions that trigger stop hooks.
+- [x] `P1-0050` (checklist L114): Capture the legacy “network request outside sandbox” approval interaction as a spec: request identity, queueing behavior, retry, and UI copy constraints (copy may change, but required fields must exist).
+- [x] `P1-0051` (checklist L115): Capture the legacy worker/leader-mediated sandbox approval path (queue semantics, timeout behavior, and failure fallback when the leader is unreachable).
+- [x] `P1-0052` (checklist L116): Capture how sandbox approval prompts interact with other overlays (permission prompts, elicitation prompts, notifications) and define a deterministic selection priority order.
+- [x] `P1-0053` (checklist L117): Capture request-id generation constraints (uniqueness scope, correlation to host/time) and define v3-equivalent correlation requirements without relying on `Date.now()` in tests.
+- [x] `P1-0054` (checklist L120): Inventory all env vars and CLI flags that affect behavior (MCP CLI gates, endpoint mode gates, tool timeouts, enabled settings sources, “managed-only” toggles).
+- [x] `P1-0055` (checklist L121): For each env var/flag, define the v3 mapping: `host adapter config` → `settings overlay` → `policy` (and explicitly mark “CLI-only” controls).
+- [x] `P1-0056` (checklist L122): Define a “deprecation map” for env vars/flags that cannot exist on mobile/web (env) and the replacement knobs (settings/policy UI).
+- [x] `P1-0057` (checklist L123): Add golden tests that assert env/flag mapping produces identical effective configuration snapshots on Node/CLI hosts.
+- [x] `P1-0058` (checklist L126): `tests/phase1-legacy-spec.test.ts` asserts the captured legacy knobs appear in both bundles (hook event names, MCP env vars, settings source list, permission rule-source list) and that permission rule parse/format matches the legacy encoding.
+
+## Phase 2: High-Level Architecture and Canonical Module Graph
+
+- [x] `P2-0001` (checklist L139): Produce an ASCII architecture diagram that includes: core runtime, state model, tools layer, hooks engine, permissions engine, settings system, MCP integration, background agents, and UI adapters.
+- [x] `P2-0002` (checklist L140): For each component in the diagram, document:
+- [x] `P2-0003` (checklist L141): Inputs (events, commands, configs)
+- [x] `P2-0004` (checklist L142): Outputs (events, state updates, streams)
+- [x] `P2-0005` (checklist L143): Ownership boundaries (who can call whom)
+- [x] `P2-0006` (checklist L144): Platform-agnostic vs host-dependent classification
+- [x] `P2-0007` (checklist L145): Define a single “engine entrypoint” that is UI-agnostic (no CLI assumptions) and communicates via typed events.
+- [x] `P2-0008` (checklist L146): Define a “host boundary” where all non-portable effects occur (storage/filesystem/network/shell/clipboard/notifications).
+- [x] `P2-0009` (checklist L149): Define a module tree (example shape; final names are provisional):
+- [x] `P2-0010` (checklist L150): `core/runtime/*` (scheduler, task model, cancellation)
+- [x] `P2-0011` (checklist L151): `core/events/*` (typed event bus, stream adapters)
+- [x] `P2-0012` (checklist L152): `core/state/*` (app/session store, reducers, selectors)
+- [x] `P2-0013` (checklist L153): `core/settings/*` (schema, sources, merge, patching)
+- [x] `P2-0014` (checklist L154): `core/permissions/*` (rules, evaluation, explainability)
+- [x] `P2-0015` (checklist L155): `core/hooks/*` (schema, matching, execution)
+- [x] `P2-0016` (checklist L156): `core/tools/*` (tool contracts, registry, execution pipeline)
+- [x] `P2-0017` (checklist L157): `core/mcp/*` (client, transports, endpoint/direct modes)
+- [x] `P2-0018` (checklist L158): `core/agents/*` (background agents, long-running tasks)
+- [x] `P2-0019` (checklist L159): `platform/*` (host capability implementations for node/web/mobile/desktop)
+- [x] `P2-0020` (checklist L160): `ui/*` (cli adapter, react/rn adapters)
+- [x] `P2-0021` (checklist L161): For each module, document:
+- [x] `P2-0022` (checklist L162): Responsibility owned
+- [x] `P2-0023` (checklist L163): Responsibilities explicitly not owned
+- [x] `P2-0024` (checklist L164): Legacy subsystems replaced (reference encyclopedia chapters/sections)
+- [x] `P2-0025` (checklist L165): Define allowed dependency directions (e.g., `core/*` cannot import `platform/*` or `ui/*`).
+- [x] `P2-0026` (checklist L166): Define an internal “types-only” module for shared schemas to prevent circular imports.
+- [x] `P2-0027` (checklist L169): Define a canonical “engine API surface” as interfaces/types only (no concrete implementations yet).
+- [x] `P2-0028` (checklist L170): Define a canonical event taxonomy (engine events → UI adapters; host events → engine).
+- [x] `P2-0029` (checklist L171): Define a canonical error taxonomy (capability missing, permission denied, policy override, transport failure, task cancelled, timeout).
+- [x] `P2-0030` (checklist L172): Define a canonical serialization strategy for:
+- [x] `P2-0031` (checklist L173): persisted settings
+- [x] `P2-0032` (checklist L174): session/app state snapshots
+- [x] `P2-0033` (checklist L175): hook definitions and results
+- [x] `P2-0034` (checklist L176): tool invocations and results (including streaming)
+- [x] `P2-0035` (checklist L179): Decide how the repo enforces “portable core” (lint rules, import boundaries, build targets, type tests).
+- [x] `P2-0036` (checklist L180): Define a “host capability smoke test” suite that runs on each platform adapter to validate required APIs exist.
+- [x] `P2-0037` (checklist L181): Define “mobile-safe mode” gates: core must boot and run with filesystem/shell capabilities absent.
+- [x] `P2-0038` (checklist L184): Define a monorepo/workspace layout that supports multiple builds (engine library, CLI, RN, web) without leaking platform code into core.
+- [x] `P2-0039` (checklist L185): Define TypeScript target constraints compatible with RN + web (avoid Node globals; prefer standard Web APIs).
+- [x] `P2-0040` (checklist L186): Define how to ship schema/types across packages without bundler-specific hacks.
+- [x] `P2-0041` (checklist L187): ⚠️ Do not decide final bundler/toolchain yet; define constraints the toolchain must satisfy (tree-shaking, conditional exports, RN compatibility).
+- [x] `P2-0042` (checklist L190): Define a single “schema registry” location (within `core/types/*` or equivalent) that owns all versioned wire/persistence schemas:
+- [x] `P2-0043` (checklist L191): engine events
+- [x] `P2-0044` (checklist L192): persisted settings documents
+- [x] `P2-0045` (checklist L193): session transcripts and attachments
+- [x] `P2-0046` (checklist L194): hook definitions and hook results
+- [x] `P2-0047` (checklist L195): tool manifests and tool results
+- [x] `P2-0048` (checklist L196): MCP envelopes (engine-facing)
+- [x] `P2-0049` (checklist L197): Define schema versioning rules (SemVer-like vs integer schema versions) and explicit migration behavior (upgrade-only vs downgrade support).
+- [x] `P2-0050` (checklist L198): Define a compatibility policy: what happens when a host UI is older/newer than the engine (strict reject vs best-effort with capability flags).
+- [x] `P2-0051` (checklist L199): Define a conformance test harness that validates:
+- [x] `P2-0052` (checklist L200): validator parity across packages
+- [x] `P2-0053` (checklist L201): stable canonical stringification for diffs/hashes
+- [x] `P2-0054` (checklist L204): Define an ADR template for each “⚠️ do not decide yet” topic (hook action surface, MCP transports, tool packaging, isolation tech).
+- [x] `P2-0055` (checklist L205): Define a “decision gate checklist” (data required before deciding: benchmarks, security review, host feasibility matrix).
+- [x] `P2-0056` (checklist L206): Require that each ADR includes a rollback path and explicit “revisit by” milestone.
+- [x] `P2-0057` (checklist L209): `tests/phase2-architecture-boundaries.test.ts` asserts import-boundary enforcement, host capability smoke checks, and canonical JSON stability.
+
+## Phase 3: Core Async Runtime and Scheduling Model (Deterministic Kernel)
+
+- [x] `P3-0001` (checklist L222): Define a `Task` model (identity, parent/child relationships, labels, metadata, lifecycle state).
+- [x] `P3-0002` (checklist L223): Define a task ID strategy that is stable for correlation (string IDs, monotonic counters in tests, host-provided UUIDs in production).
+- [x] `P3-0003` (checklist L224): Define task result semantics (`success`, `error`, `cancelled`, `timeout`) and how results are surfaced to the store and event bus.
+- [x] `P3-0004` (checklist L225): Define a supervision model (parent task cancels/awaits children; failure policies: fail-fast vs isolate vs escalate).
+- [x] `P3-0005` (checklist L226): Define task-local metadata semantics (immutable vs mutable, how to update without hidden global state).
+- [x] `P3-0006` (checklist L227): Define a `Scheduler` interface (enqueue, run loop tick, cooperative yields, priorities).
+- [x] `P3-0007` (checklist L228): Define scheduler tick semantics (what a “tick” means; how many tasks can run per tick; when yielding is required).
+- [x] `P3-0008` (checklist L229): Define scheduler fairness rules in a way that can be asserted under test (e.g., bounded wait time for non-immediate tasks).
+- [x] `P3-0009` (checklist L230): Define scheduler instrumentation hooks (task queued/started/yielded/completed) to support tracing without platform-specific APIs.
+- [x] `P3-0010` (checklist L231): Define explicit cancellation semantics using `AbortSignal` (propagation rules, cancellation reasons, idempotency).
+- [x] `P3-0011` (checklist L232): Define a cancellation reason taxonomy (user cancel, stop request, timeout, policy denied, host lifecycle).
+- [x] `P3-0012` (checklist L233): Define cancellation propagation rules for fan-out (single abort cancels multiple child tasks) and fan-in (child cancellation does not necessarily cancel parent).
+- [x] `P3-0013` (checklist L234): Define timeout semantics (monotonic clock, timer cancellation, deterministic test clock).
+- [x] `P3-0014` (checklist L235): Define a monotonic clock interface and a wall-clock interface (avoid assuming system time is monotonic).
+- [x] `P3-0015` (checklist L236): Define timeout ownership (which component owns timers; how to prevent leaked timers on cancellation).
+- [x] `P3-0016` (checklist L237): Define backpressure semantics for streaming (bounded queues, drop policies, pausing producers).
+- [x] `P3-0017` (checklist L238): Define bounded-queue behavior per stream type (tool stdout-like stream vs telemetry vs debug logs) and acceptable drop policies.
+- [x] `P3-0018` (checklist L239): Define explicit “stream closed” semantics (final event, close reason) and how consumers detect completion deterministically.
+- [x] `P3-0019` (checklist L240): Define a “task context” object that is passed explicitly (no implicit thread-local storage assumptions).
+- [x] `P3-0020` (checklist L241): Define which fields belong in task context (capabilities handle, settings snapshot, session ID, correlation IDs, permission mode).
+- [x] `P3-0021` (checklist L242): Define a rule that task context must be serializable for replay (or explicitly mark non-serializable fields and exclude from recordings).
+- [x] `P3-0022` (checklist L245): Define scheduling queues (e.g., immediate, high, normal, low) and fairness policy.
+- [x] `P3-0023` (checklist L246): Define the internal run-queue data structure(s) required (FIFO deques vs priority heap) and the expected big-O characteristics under load.
+- [x] `P3-0024` (checklist L247): Define how priorities interact with fairness (e.g., weighted round-robin, aging) and what is considered starvation.
+- [x] `P3-0025` (checklist L248): Define how long-running tasks yield cooperatively (explicit `await scheduler.yield()` checkpoints).
+- [x] `P3-0026` (checklist L249): Define mandatory yield points for engine-owned loops (agent loops, hook chains, tool streaming adapters) so UI remains responsive.
+- [x] `P3-0027` (checklist L250): Define a “budget per tick” policy (max work/time before yielding) and how it’s enforced without relying on Node-only timers.
+- [x] `P3-0028` (checklist L251): Define a starvation-prevention mechanism and testable invariants.
+- [x] `P3-0029` (checklist L252): Define how UI events (user input) preempt background tasks without killing them.
+- [x] `P3-0030` (checklist L253): Define preemption semantics for prompts/approvals (foreground prompt can suspend a background agent waiting for user input).
+- [x] `P3-0031` (checklist L254): Define how to cap concurrency for heavy operations (tool executions, MCP calls, background agents).
+- [x] `P3-0032` (checklist L255): Define concurrency limiters as first-class runtime resources (named semaphores) so policies can tune them.
+- [x] `P3-0033` (checklist L256): Define per-category limits (network, filesystem, model queries, MCP) and how limits are surfaced in diagnostics.
+- [x] `P3-0034` (checklist L257): Define how to surface task progress to UI adapters (typed progress events, not console output).
+- [x] `P3-0035` (checklist L258): Define “progress event throttling” semantics to avoid UI overload (coalescing, min interval, max buffered).
+- [x] `P3-0036` (checklist L261): Define user-initiated cancel/stop semantics (what gets cancelled: current tool, hook chain, agent loop, entire session).
+- [x] `P3-0037` (checklist L262): Define stop escalation policy (e.g., soft stop → hard cancel after grace period) and ensure it is deterministic/testable.
+- [x] `P3-0038` (checklist L263): Define system-initiated cancellation (timeouts, host lifecycle events, policy enforcement).
+- [x] `P3-0039` (checklist L264): Define “partial completion” rules for cancellable operations (what state is committed vs rolled back).
+- [x] `P3-0040` (checklist L265): Define which operations must be atomic from the user’s perspective (settings patch apply, permission update persistence).
+- [x] `P3-0041` (checklist L266): Define how cancellation interacts with streaming outputs (final event, resource cleanup, idempotent close).
+- [x] `P3-0042` (checklist L267): Define translation rules between platform abort errors and engine cancellation errors (normalize to engine taxonomy).
+- [x] `P3-0043` (checklist L268): Define how cancellation is represented in persisted logs (so replay can reproduce outcomes).
+- [x] `P3-0044` (checklist L269): Define a durable “interrupt marker” event format for transcripts (so resumed sessions preserve why a run ended).
+- [x] `P3-0045` (checklist L272): Define an event bus abstraction that supports:
+- [x] `P3-0046` (checklist L273): async iteration (`AsyncIterable<Event>`)
+- [x] `P3-0047` (checklist L274): fan-out to multiple subscribers
+- [x] `P3-0048` (checklist L275): bounded buffering and backpressure signals
+- [x] `P3-0049` (checklist L276): Define a canonical `EngineEvent` envelope contract with fields that are stable across hosts:
+- [x] `P3-0050` (checklist L277): `eventId` (unique, stable string; deterministic in tests)
+- [x] `P3-0051` (checklist L278): `sessionId` / `workspaceId` (when applicable)
+- [x] `P3-0052` (checklist L279): `channel` (see below) and `severity`
+- [x] `P3-0053` (checklist L280): `seq` (monotonic per `(sessionId, channel)`; never reused)
+- [x] `P3-0054` (checklist L281): `tsMono` (monotonic clock tick for ordering) and optional `tsWall` (display only)
+- [x] `P3-0055` (checklist L282): correlation IDs (`taskId`, `toolRunId`, `hookRunId`, `mcpRequestId`) when applicable
+- [x] `P3-0056` (checklist L283): `redactionClass`/`sensitivity` marker(s) required for downstream sinks
+- [x] `P3-0057` (checklist L284): a versioned `payload` (validated at emit time)
+- [x] `P3-0058` (checklist L285): Define event “channels” (e.g., `ui`, `diagnostic`, `telemetry`, `transcript`, `debug`) with explicit redaction + persistence rules per channel.
+- [x] `P3-0059` (checklist L286): Define channel-level delivery contracts (must-deliver vs best-effort) and which channels may drop events under load.
+- [x] `P3-0060` (checklist L287): Define per-channel QoS knobs (buffer size, drop policy, coalescing keys, min emit interval) and require that they are configurable via policy/settings for managed environments.
+- [x] `P3-0061` (checklist L288): Define event ordering guarantees (per-session total order vs per-subsystem partial order) and make them testable.
+- [x] `P3-0062` (checklist L289): Define subscription lifecycle semantics (late subscribers get snapshot? only new events? configurable per channel).
+- [x] `P3-0063` (checklist L290): Define a “subscription cursor” concept (monotonic sequence numbers per session/channel) so hosts can resume event consumption after backgrounding/crash.
+- [x] `P3-0064` (checklist L291): Define cursor persistence rules per host:
+- [x] `P3-0065` (checklist L292): where cursors live (ephemeral memory vs durable storage)
+- [x] `P3-0066` (checklist L293): when cursor updates are flushed (periodic vs on important events)
+- [x] `P3-0067` (checklist L294): crash-consistency expectations (at-least-once vs exactly-once delivery semantics per channel)
+- [x] `P3-0068` (checklist L295): Define “snapshot on subscribe” semantics for stateful channels (e.g., `ui`/`transcript`):
+- [x] `P3-0069` (checklist L296): snapshot payload contract (bounded; may reference attachments)
+- [x] `P3-0070` (checklist L297): snapshot versioning and compatibility rules
+- [x] `P3-0071` (checklist L298): deterministic snapshot timing relative to ongoing event emission
+- [x] `P3-0072` (checklist L299): Define bridging adapters for environments with/without native streams (ReadableStream vs AsyncIterator).
+- [x] `P3-0073` (checklist L300): Define a strict contract: core emits structured events; UI layers render them.
+- [x] `P3-0074` (checklist L301): Define a test harness that can deterministically consume and assert event sequences.
+- [x] `P3-0075` (checklist L302): Define a “record/replay” event sink that can persist event streams for debugging and regression harnesses (bounded, redacted).
+- [x] `P3-0076` (checklist L305): Define what “deterministic” means per subsystem (scheduler order, timestamps, random IDs, network nondeterminism).
+- [x] `P3-0077` (checklist L306): Introduce abstractions for nondeterministic inputs (clock, RNG/UUID, filesystem ordering) behind injectable interfaces.
+- [x] `P3-0078` (checklist L307): Define deterministic UUID/RNG sources for tests and “seed injection” for reproducible runs.
+- [x] `P3-0079` (checklist L308): Define deterministic ordering rules when host APIs return unordered collections (directory listing, Map iteration) and enforce in adapters.
+- [x] `P3-0080` (checklist L309): Define a “replay mode” concept for tests (recorded inputs → deterministic event outputs).
+- [x] `P3-0081` (checklist L310): Define invariants and property tests for the scheduler (no lost tasks, cancellation propagation correctness).
+- [x] `P3-0082` (checklist L313): Define error classification rules (recoverable vs fatal vs policy-denied) and required UI/telemetry behavior for each.
+- [x] `P3-0083` (checklist L314): Define how background task failures are surfaced (notification banners vs logs only) without interrupting foreground workflows.
+- [x] `P3-0084` (checklist L315): Define how “fatal engine errors” are handled (safe shutdown, state snapshot, user messaging).
+- [x] `P3-0085` (checklist L316): Define retry policies for transient failures (network/MCP) in a way that is deterministic under test.
+- [x] `P3-0086` (checklist L319): Define how the runtime integrates with host UI event loops (RN/UI thread constraints, web rendering loops, CLI input loop) without blocking.
+- [x] `P3-0087` (checklist L320): Define a host-provided “idle callback” or “yield hint” interface (optional) to improve responsiveness without changing semantics.
+- [x] `P3-0088` (checklist L321): Define how host lifecycle events are delivered into the runtime (background/foreground, connectivity, termination) as typed events.
+- [x] `P3-0089` (checklist L324): Define the single internal stream type used by core (`AsyncIterable<StreamEvent>` or equivalent) and a strict event set:
+- [x] `P3-0090` (checklist L325): `chunk` (bytes or string + encoding)
+- [x] `P3-0091` (checklist L326): `progress` (typed, bounded)
+- [x] `P3-0092` (checklist L327): `diagnostic` (redacted, non-user-visible)
+- [x] `P3-0093` (checklist L328): `close` (reason + final counters)
+- [x] `P3-0094` (checklist L329): Define canonical chunk encoding rules (UTF-8 by default; binary chunks explicitly tagged; no implicit platform encodings).
+- [x] `P3-0095` (checklist L330): Define backpressure signals (consumer can request pause/resume; bounded buffering policies) and how they map onto environments without native stream pausing.
+- [x] `P3-0096` (checklist L331): Define “stream transcript hashing” rules for tests (store hashes + counters instead of raw chunks for sensitive outputs).
+- [x] `P3-0097` (checklist L332): Define adapters:
+- [x] `P3-0098` (checklist L333): stream ↔ ReadableStream (web)
+- [x] `P3-0099` (checklist L334): stream ↔ Node streams (Node host only, adapter-layer)
+- [x] `P3-0100` (checklist L335): stream ↔ RN event emitter (RN host only, adapter-layer)
+- [x] `P3-0101` (checklist L338): Define how scheduler “ticks” relate to JS microtask/macrotask queues (avoid relying on Node-specific `setImmediate` behavior).
+- [x] `P3-0102` (checklist L339): Define a deterministic test clock contract that supports:
+- [x] `P3-0103` (checklist L340): advancing time
+- [x] `P3-0104` (checklist L341): running due timers
+- [x] `P3-0105` (checklist L342): inspecting pending timers/leaks
+- [x] `P3-0106` (checklist L343): Define a runtime self-check that can detect “busy loop without yields” (budget violations) and emit diagnostics in dev/test builds.
+- [x] `P3-0107` (checklist L346): Define a `TaskScope` (or equivalent) concept that provides:
+- [x] `P3-0108` (checklist L347): structured lifetimes (scope owns all child tasks)
+- [x] `P3-0109` (checklist L348): guaranteed cancellation on scope close
+- [x] `P3-0110` (checklist L349): deterministic “join” semantics in tests (no orphaned work)
+- [x] `P3-0111` (checklist L350): Define scope types used by the engine (app-global scope, session scope, tool-run scope, hook-run scope, MCP-connection scope).
+- [x] `P3-0112` (checklist L351): Define resource accounting primitives that can be measured portably:
+- [x] `P3-0113` (checklist L352): time budget (via injected monotonic clock)
+- [x] `P3-0114` (checklist L353): event budget (max emitted events per channel per time window)
+- [x] `P3-0115` (checklist L354): network budget (requests in-flight, bytes read/written where observable)
+- [x] `P3-0116` (checklist L355): storage budget (bytes persisted, attachment size ceilings)
+- [x] `P3-0117` (checklist L356): Define what “resource exhaustion” does (throttle, backpressure, fail with typed `BudgetExceededError`) and which subsystems are allowed to degrade vs must fail.
+- [x] `P3-0118` (checklist L357): Define invariants that must hold at scope boundaries (no leaked timers, no leaked subscriptions, all streams closed, capability handles released).
+- [x] `P3-0119` (checklist L358): Add deterministic tests that assert: closing a session scope cancels all tool/hook/MCP/background tasks and emits a bounded, redacted “shutdown summary” event.
+- [x] `P3-0120` (checklist L361): Define a `RuntimeSnapshot` schema that captures, at minimum:
+- [x] `P3-0121` (checklist L362): runnable queue depths by priority
+- [x] `P3-0122` (checklist L363): all live tasks (state, parent, labels, correlation IDs, start tick, last-yield tick)
+- [x] `P3-0123` (checklist L364): all live scopes and their owned tasks
+- [x] `P3-0124` (checklist L365): all active concurrency permits/limiters (current, max, wait queue length)
+- [x] `P3-0125` (checklist L366): all active streams (tool/hook/MCP) and last-emitted sequence numbers
+- [x] `P3-0126` (checklist L367): all pending timers/timeouts (owner task, deadline tick, reason)
+- [x] `P3-0127` (checklist L368): Define a “progress heartbeat” mechanism: what constitutes progress (task yield, event emission, stream chunk) and how frequently progress must occur per long-running category.
+- [x] `P3-0128` (checklist L369): Define hang detection rules that are deterministic under test:
+- [x] `P3-0129` (checklist L370): “no progress for N monotonic ticks” thresholds per category (tool run, MCP streaming, background agent)
+- [x] `P3-0130` (checklist L371): explicit “waiting on user” states that suppress hang alerts
+- [x] `P3-0131` (checklist L372): single-fire escalation (emit diagnostic once per incident; no spam)
+- [x] `P3-0132` (checklist L373): escalation actions (capture snapshot, emit redacted summary, optionally cancel under explicit policy)
+- [x] `P3-0133` (checklist L374): Define a portable “debug dump” engine command that emits a redacted `RuntimeSnapshot` + summary counters; hosts may attach stacks if available.
+- [x] `P3-0134` (checklist L375): Define production safety gates: snapshot capture is bounded, redacted, and policy-controlled (may be disabled in managed environments).
+- [x] `P3-0135` (checklist L376): Add conformance tests that assert:
+- [x] `P3-0136` (checklist L377): snapshots are deterministic given a seeded scheduler/test clock
+- [x] `P3-0137` (checklist L378): hang detection triggers exactly once per simulated hang and does not regress event ordering guarantees
+- [x] `P3-0138` (checklist L379): hang detection does not auto-cancel tasks that are awaiting elicitation/approvals unless configured
+- [x] `P3-0139` (checklist L382): Define a “replay capture” artifact format that can reproduce engine behavior without relying on host APIs:
+- [x] `P3-0140` (checklist L383): initial capability descriptor (availability + versions; no secrets)
+- [x] `P3-0141` (checklist L384): seeded RNG/UUID source identity
+- [x] `P3-0142` (checklist L385): deterministic clock timeline (monotonic ticks advanced by the harness)
+- [x] `P3-0143` (checklist L386): injected host events (lifecycle, connectivity) with timestamps
+- [x] `P3-0144` (checklist L387): injected UI inputs (prompt submit, approvals, elicitation responses) with stable IDs
+- [x] `P3-0145` (checklist L388): recorded nondeterministic capability responses (filesystem listing order, simulated network responses)
+- [x] `P3-0146` (checklist L389): Define capture redaction rules (PII/secrets/file contents) and require a “redaction manifest” explaining what was removed/hashed.
+- [x] `P3-0147` (checklist L390): Define what is not captured (secret store contents; raw model thoughts) and how replays behave when those inputs are absent.
+- [x] `P3-0148` (checklist L391): Define replay assertions:
+- [x] `P3-0149` (checklist L392): engine event sequences match (channel + seq + kind + correlation IDs)
+- [x] `P3-0150` (checklist L393): state snapshots at selected checkpoints match (hash-based diff)
+- [x] `P3-0151` (checklist L394): permission decisions + explanations match (source attribution)
+- [x] `P3-0152` (checklist L395): Define a replay diff classifier (allowed nondeterminism vs benign UI formatting vs correctness regressions) and require it to be deterministic.
+- [x] `P3-0153` (checklist L396): Add a conformance suite that replays a fixture capture across Node + web-like + RN-like adapters and asserts identical classified outcomes.
+- [x] `P3-0154` (checklist L399): `tests/phase3-runtime.test.ts` asserts cooperative yield, timeout behavior, limiter blocking/unblocking, stream sequencing, and a robust `runUntilIdle` for microtask-driven resumption.
+
+## Phase 4: Host Capability Abstraction (iOS/Web/Desktop-Safe)
+
+- [x] `P4-0001` (checklist L412): Define a canonical list of host capabilities (minimum viable set):
+- [x] `P4-0002` (checklist L413): storage (key/value, structured, encryption optional)
+- [x] `P4-0003` (checklist L414): filesystem (optional; may be absent)
+- [x] `P4-0004` (checklist L415): network (fetch-based)
+- [x] `P4-0005` (checklist L416): crypto/uuid (portable)
+- [x] `P4-0006` (checklist L417): clock/timers (injectable)
+- [x] `P4-0007` (checklist L418): lifecycle (foreground/background/terminate, connectivity) as a first-class event source
+- [x] `P4-0008` (checklist L419): background execution (optional; iOS/web constraints explicit)
+- [x] `P4-0009` (checklist L420): file import/export (document picker / downloads) as optional
+- [x] `P4-0010` (checklist L421): UI affordances (clipboard, notifications, haptics) as optional
+- [x] `P4-0011` (checklist L422): shell/command execution (optional; desktop-only or remote)
+- [x] `P4-0012` (checklist L423): local endpoint exposure (optional; desktop/CLI only; policy-gated)
+- [x] `P4-0013` (checklist L424): IPC/extension bridge (optional; desktop only; policy-gated)
+- [x] `P4-0014` (checklist L425): process/environment access (optional; heavily restricted)
+- [x] `P4-0015` (checklist L426): Define how capabilities are queried (static descriptor + runtime availability checks).
+- [x] `P4-0016` (checklist L427): Define typed capability errors (`CapabilityUnavailableError`, `CapabilityPolicyDeniedError`) and required UI messaging hooks.
+- [x] `P4-0017` (checklist L428): Define “capability policy” (engine-level rules that can further restrict available capabilities at runtime based on permissions/policy).
+- [x] `P4-0018` (checklist L431): Define a storage interface that can back:
+- [x] `P4-0019` (checklist L432): settings files (or settings documents)
+- [x] `P4-0020` (checklist L433): session transcripts/logs
+- [x] `P4-0021` (checklist L434): caches (MCP endpoint configs, tool caches)
+- [x] `P4-0022` (checklist L435): Define storage consistency requirements (atomic write, compare-and-swap, versioning).
+- [x] `P4-0023` (checklist L436): Define storage quota/error semantics (quota exceeded, transient failure, corruption detected) and how each maps to engine error taxonomy + recovery UX.
+- [x] `P4-0024` (checklist L437): Define storage keying rules (per-app vs per-workspace vs per-session namespaces) to prevent cross-workspace leakage.
+- [x] `P4-0025` (checklist L438): Define encryption-at-rest expectations and how keys are provisioned (host-provided; engine does not manage secrets).
+- [x] `P4-0026` (checklist L439): Define how storage change notifications are delivered (watchers/events) without assuming filesystem watchers exist.
+- [x] `P4-0027` (checklist L442): Define a filesystem interface that supports only what engine needs (read/write/list/stat, path normalization) and avoids Node path semantics.
+- [x] `P4-0028` (checklist L443): Define path canonicalization rules (POSIX-like internal representation; host adapter handles OS specifics).
+- [x] `P4-0029` (checklist L444): Define sandboxing hooks (restrict root directories; expose an “allowed working directories” view to permissions engine).
+- [x] `P4-0030` (checklist L445): Define a strategy for environments without filesystem (iOS/web): emulate via storage where feasible; otherwise fail gracefully.
+- [x] `P4-0031` (checklist L448): Define a network interface that is expressible via `fetch` semantics (request/response, headers, streaming bodies where available).
+- [x] `P4-0032` (checklist L449): Define retry/backoff policies as a library component (configurable; deterministic under test).
+- [x] `P4-0033` (checklist L450): Define network permission integration points (domain allow/deny/ask; policy override).
+- [x] `P4-0034` (checklist L451): Define how to run on mobile with background restrictions (pause/resume, cancel on app background when required).
+- [x] `P4-0035` (checklist L454): Define an optional capability for “shell-like automation” that is **explicitly non-required** and **must not be a concurrency model**.
+- [x] `P4-0036` (checklist L455): Define an explicit constraint: the v3 codebase must not rely on OS process spawning as an implementation mechanism (no Node `child_process`, no “spawn-per-tool” designs).
+- [x] `P4-0037` (checklist L456): Define an explicit constraint: hooks must never be granted any “shell-like” capability (even on desktop); hooks are declarative only.
+- [x] `P4-0038` (checklist L457): Define strict constraints: core engine and hooks must not require this capability to function.
+- [x] `P4-0039` (checklist L458): Define alternative strategies for shell-dependent legacy features:
+- [x] `P4-0040` (checklist L459): pure TS/WASM substitutes (e.g., search, diff)
+- [x] `P4-0041` (checklist L460): remote execution via trusted host/server (explicit policy + auth; not an implicit fallback)
+- [x] `P4-0042` (checklist L461): feature gating (hide/disable with clear UX)
+- [x] `P4-0043` (checklist L462): Define a “desktop power feature” stance that remains compliant with the no-subprocess goal:
+- [x] `P4-0044` (checklist L463): host-native libraries (e.g., libgit2 bindings) instead of invoking `git`
+- [x] `P4-0045` (checklist L464): WASM bundles for portable engines
+- [x] `P4-0046` (checklist L465): optional authenticated RPC to a separately installed companion (not spawned by the app)
+- [x] `P4-0047` (checklist L466): Define failure semantics: if this capability is absent, tools/features that require it are not silently replaced; they must be explicitly unavailable with actionable guidance.
+- [x] `P4-0048` (checklist L467): ⚠️ Do not decide the exact automation mechanism yet; define only the capability boundary, security model, and failure semantics.
+- [x] `P4-0049` (checklist L470): Define a rule: tools/hooks/agents receive only the subset of capabilities they are authorized to use (filtered capability view).
+- [x] `P4-0050` (checklist L471): Define how filtered capability views are constructed (based on permission decision + policy + tool metadata) and how attempts to access missing capabilities are surfaced.
+- [x] `P4-0051` (checklist L472): Define how to prevent accidental retention/leakage of full capability handles into long-lived closures (review checklist + lint rules).
+- [x] `P4-0052` (checklist L473): Define a capability “audit mode” for tests that records which capabilities were exercised during a run.
+- [x] `P4-0053` (checklist L476): Define a “secret storage” interface for credentials/tokens (MCP endpoint keys, auth tokens) that is separate from general settings storage.
+- [x] `P4-0054` (checklist L477): Define rules for what may be stored in plain settings vs secret storage (never store bearer tokens in settings JSON).
+- [x] `P4-0055` (checklist L478): Define rotation/invalidations semantics for secrets (logout, policy changes, token expiry) and how they propagate to running tasks.
+- [x] `P4-0056` (checklist L481): Define a `WorkspaceId` concept that can exist without a filesystem path (mobile/web), and a mapping to a path-based workspace on desktop/Node.
+- [x] `P4-0057` (checklist L482): Define workspace discovery/selection flows per host:
+- [x] `P4-0058` (checklist L483): CLI: default workspace = cwd (but explicitly captured as a workspace record)
+- [x] `P4-0059` (checklist L484): Desktop GUI: user selects a folder (workspace record persisted)
+- [x] `P4-0060` (checklist L485): Mobile/web: user selects a “workspace profile” (remote repo, synced snapshot, or document set)
+- [x] `P4-0061` (checklist L486): Define how settings sources that are “project-scoped” bind to `WorkspaceId` on non-filesystem hosts.
+- [x] `P4-0062` (checklist L487): Define a “workspace trust” artifact per workspace (used by hooks/tools) with clear UX for establishing/withdrawing trust.
+- [x] `P4-0063` (checklist L488): Define workspace-to-repo binding semantics (optional): how a `WorkspaceId` can map to a remote repo identifier (URL + branch) even when no local checkout exists.
+- [x] `P4-0064` (checklist L489): Define workspace renaming/migration semantics (IDs stable; display names mutable) and ensure persisted settings/policy references remain valid.
+- [x] `P4-0065` (checklist L492): Produce a host/capability matrix for: Node/CLI, desktop GUI, web, RN (Hermes/JSC), including known gaps (ReadableStream support, crypto APIs, filesystem availability).
+- [x] `P4-0066` (checklist L493): Define per-capability “polyfill allowed?” rules (e.g., `fetch` polyfill allowed in RN; filesystem polyfill not allowed if it breaks trust model).
+- [x] `P4-0067` (checklist L494): Define a “capability compliance” diagnostic report: at boot, enumerate available capabilities, polyfills activated, and policy restrictions applied.
+- [x] `P4-0068` (checklist L495): Add a conformance test that boots the engine with a “minimal mobile-safe” capability set (no filesystem, no local endpoint, no process/env) and asserts required subsystems still function (settings, permissions prompts, hooks lifecycle, MCP endpoint).
+- [x] `P4-0069` (checklist L498): `tests/phase4-capabilities.test.ts` asserts typed capability errors, filtered capability views, compliance reporting, Node storage CAS semantics, path normalization, and retry/backoff determinism.
+
+## Phase 5: App and Session State Model (UI-Agnostic, Event-Driven)
+
+- [x] `P5-0001` (checklist L511): Define `AppState` vs `SessionState` separation (global settings/capabilities vs per-session conversation/task state).
+- [x] `P5-0002` (checklist L512): Define session identity and lifecycle states (created, active, paused, ended, error).
+- [x] `P5-0003` (checklist L513): Define transcript/event-log model (append-only log + derived views) and retention policy.
+- [x] `P5-0004` (checklist L514): Define “tool use” entity model (tool name, input, output, streaming events, permissions decision, timing, cancellation).
+- [x] `P5-0005` (checklist L515): Define “hook run” entity model (event name, selected hooks, per-hook outcomes/effects, streaming messages).
+- [x] `P5-0006` (checklist L516): Define “MCP connection” model (server identity, mode, connection status, resources/tools snapshot).
+- [x] `P5-0007` (checklist L519): Define a store interface that supports:
+- [x] `P5-0008` (checklist L520): dispatching typed actions/commands
+- [x] `P5-0009` (checklist L521): emitting typed events to UI
+- [x] `P5-0010` (checklist L522): snapshotting and restoring state
+- [x] `P5-0011` (checklist L523): Define reducer purity requirements (no side effects; side effects happen via runtime tasks).
+- [x] `P5-0012` (checklist L524): Define selector strategy for UI adapters (memoization without platform-specific caching primitives).
+- [x] `P5-0013` (checklist L525): Define how state updates are serialized for persistence (versioned schemas; migrations).
+- [x] `P5-0014` (checklist L528): Define a generic queue model with priority and exclusivity (only one overlay renders at a time).
+- [x] `P5-0015` (checklist L529): Define a deterministic overlay-selection algorithm (priority tiers + stable tie-breakers) and assert it with golden tests from legacy overlay behavior.
+- [x] `P5-0016` (checklist L530): Define notification queue semantics matching legacy behavior (immediate vs queued, invalidation keys, timeouts).
+- [x] `P5-0017` (checklist L531): Define elicitation queue semantics (MCP “ask user” prompts) including:
+- [x] `P5-0018` (checklist L532): request identity
+- [x] `P5-0019` (checklist L533): concurrency rules (serial vs parallel)
+- [x] `P5-0020` (checklist L534): cancellation propagation
+- [x] `P5-0021` (checklist L535): Define permission prompt queue semantics (tool approvals; “don’t ask again” persistence).
+- [x] `P5-0022` (checklist L536): Define worker/agent permission queue semantics (leader/worker split; mobile-safe behavior).
+- [x] `P5-0023` (checklist L537): Define sandbox-network approval queue semantics (distinct from tool permissions; domain-scoped; leader/worker mediated where supported).
+- [x] `P5-0024` (checklist L538): Define queue persistence rules across app lifecycle events (what survives background/foreground; what is cancelled) and require explicit host adapters to surface resume/restore behavior.
+- [x] `P5-0025` (checklist L541): Define what state must persist across app restarts (settings, sessions, caches) vs what is ephemeral (UI overlays).
+- [x] `P5-0026` (checklist L542): Define schema versioning and migration hooks for persisted state.
+- [x] `P5-0027` (checklist L543): Define crash recovery semantics (incomplete tool runs, partially applied settings patches, in-flight background agents).
+- [x] `P5-0028` (checklist L544): Define a “safe startup sequence” that can boot with partial state and recover gradually.
+- [x] `P5-0029` (checklist L547): Define whether multiple sessions can run concurrently in one engine instance (and if not, define enforcement).
+- [x] `P5-0030` (checklist L548): Define resource-sharing rules across sessions (MCP connections, caches, network budgets).
+- [x] `P5-0031` (checklist L549): Define how background agents are scoped (per app, per session, or both) and cancellation rules.
+- [x] `P5-0032` (checklist L552): Define a versioned transcript event schema that is:
+- [x] `P5-0033` (checklist L553): append-only
+- [x] `P5-0034` (checklist L554): serializable (no functions/classes)
+- [x] `P5-0035` (checklist L555): bounded (supports truncation/compaction markers)
+- [x] `P5-0036` (checklist L556): portable across hosts (no OS-specific fields)
+- [x] `P5-0037` (checklist L557): Define a canonical “attachment reference” model (content-addressed or stable IDs) so large payloads do not live inline in transcript events.
+- [x] `P5-0038` (checklist L558): Define attachment classes and constraints:
+- [x] `P5-0039` (checklist L559): text artifacts (tool logs, hook logs)
+- [x] `P5-0040` (checklist L560): structured artifacts (JSON tool outputs)
+- [x] `P5-0041` (checklist L561): binary artifacts (optional; capability-gated; stored out-of-line)
+- [x] `P5-0042` (checklist L562): Define redaction markers at the schema level (fields annotated as `sensitive`) and a deterministic redaction pass used by:
+- [x] `P5-0043` (checklist L563): logs
+- [x] `P5-0044` (checklist L564): diagnostic bundles
+- [x] `P5-0045` (checklist L565): regression corpora
+- [x] `P5-0046` (checklist L566): Define transcript hashing/summary rules for tests (hash chunks + counts; avoid storing sensitive raw data).
+- [x] `P5-0047` (checklist L567): Define export/import behavior for sessions:
+- [x] `P5-0048` (checklist L568): export contains transcript + minimal metadata + redacted attachments
+- [x] `P5-0049` (checklist L569): import rehydrates into a read-only “replay session” unless explicitly migrated
+- [x] `P5-0050` (checklist L572): Define “view model selectors” for each host UI (CLI/RN/web) as pure functions over canonical state (no host-specific IO in selectors).
+- [x] `P5-0051` (checklist L573): Define a stable transcript rendering contract (how tool/hook/MCP events become UI lines/cards) that is consistent across hosts and can be snapshot-tested.
+- [x] `P5-0052` (checklist L574): Define “state diff” event emission rules (when to emit incremental diffs vs full snapshots) to keep mobile/web performant without losing determinism.
+- [x] `P5-0053` (checklist L575): Add golden snapshot tests that render a known transcript into each UI adapter’s view model and assert identical semantic output (text differs by UI chrome, not by meaning).
+- [x] `P5-0054` (checklist L578): `tests/phase5-state.test.ts` asserts session lifecycle creation/activation, overlay selection precedence, and stable transcript semantic rendering.
+- [x] `P5-0055` (checklist L579): `tests/phase1-5-e2e-baseline.test.ts` asserts an end-to-end boot path: engine start → deterministic `state/app-state` emission → host user input → transcript append → monotonic UI event sequencing → clean stop with `engine/stopped`.

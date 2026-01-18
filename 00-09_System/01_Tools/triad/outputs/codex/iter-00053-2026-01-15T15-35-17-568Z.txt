@@ -1,0 +1,35 @@
+**Key Observations**
+- Team health is explicitly rated 3.75/5 and described as “in transition,” with tooling/process friction (Notion→Reich, cloud storage, RQC, defined procedures) and chain-of-command clarity as key gaps (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2025/2025-03-05-245505368.md`).
+- Burnout risk is named directly: leadership wants to slow down, avoid “max RPMs,” and build a sustainable production system instead of relying on any one person (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2025/2025-04-25-284628381.md`).
+- Performance concerns around Charles are persistent: underperformance, inconsistent quality, and communication gaps; salary misalignment adds tension, and a replacement is discussed (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2025/2025-03-05-245505368.md`, `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2025/2025-04-25-284628381.md`).
+- Post‑reorg pulse check shows improved morale and speed with a smaller team; a lighter but regular cadence (Mon/Fri meetings) is requested (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2025/2025-07-17-354727567.md`).
+- Ron’s paternity leave plan includes formalizing Emily’s operational authority and Ron stepping into visionary mode, with explicit mention of “team health” ownership in ops (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2025/2025-07-17-354727567.md`).
+
+**Insights**
+- Team health is improving but still fragile; process/tooling stability and communication clarity are the most leveraged fixes.
+- One role’s performance drag (Charles) is impacting quality, velocity, and morale; unresolved, it will continue to tax the rest of the team.
+- The leadership transition is a net positive if it’s paired with cadence and documented operating rules; otherwise, ambiguity will creep back in.
+- Burnout signals are clear; without buffer and predictable capacity, the team remains on a “razor’s edge.”
+
+**Opportunities**
+- Convert the 3.75/5 baseline into a real health metric with a simple weekly pulse and trend line.
+- Lock in a consistent cadence (Mon kick‑off + Fri recap) to preserve the “small and fast” benefits.
+- Normalize production standards: RQC checklist, podcast editing playbook, and storage/tooling decisions.
+- Reduce single‑point dependencies through cross‑training and systemization before staffing changes.
+- Build a backlog buffer to prevent deadline panic and reduce burnout risk.
+
+**Connections**
+- Paternity leave and CEO role shift elevate the need for process maturity and clear ownership (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2025/2025-07-17-354727567.md`).
+- Personal bandwidth constraints show up in day‑to‑day delivery planning, affecting pacing and delegation (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2024/2024-02-14-68527763.md`).
+- Sales outreach support (Ivan/Berna) ties ops capacity to pipeline performance, so team health directly influences revenue flow (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2025/2025-07-17-354727567.md`).
+
+**Recommendations**
+1) Start a weekly team health pulse (1–5 + top blocker) in Monday kick‑offs; use 3.75 as baseline and review trends monthly (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2025/2025-03-05-245505368.md`).
+2) Publish a podcast production/RQC playbook and require daily status updates on in‑flight episodes; measure cycle time and rework weekly (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2025/2025-03-05-245505368.md`).
+3) Decide Charles’ path within 2–3 weeks (defined improvement plan with metrics + deadline, or transition); avoid prolonged ambiguity (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2025/2025-03-05-245505368.md`, `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2025/2025-04-25-284628381.md`).
+4) Create a 1–2 week production buffer and capacity plan to get off the “razor’s edge” and reduce burnout (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2025/2025-03-05-245505368.md`, `/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2025/2025-04-25-284628381.md`).
+5) Document the ops decision flow (Emily primary, Ron visionary) and reinforce it in weekly meetings through paternity leave (`/Volumes/VRAM/10-19_Work/13_Meetings/13.01_transcripts/2025/2025-07-17-354727567.md`).
+
+**Triad Improvement Opportunities**
+- Add a transcript “noise filter” step (e.g., suppress repetitive filler like “Thank you” from Fathom) to improve search precision in `search.db`.
+- Expose a quick filter to exclude `.json` metadata in search results by default when scanning transcripts.

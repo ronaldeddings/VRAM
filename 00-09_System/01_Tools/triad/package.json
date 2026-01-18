@@ -1,0 +1,25 @@
+{
+  "name": "triad",
+  "version": "1.0.0",
+  "description": "Self-Managing AI Agent Orchestration System - Runs Claude, Codex, and Gemini continuously to understand Ron Eddings, Hacker Valley Media, and VRAM",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "bun --hot src/index.ts",
+    "dev": "bun --hot src/index.ts",
+    "serve": "bun src/index.ts",
+    "index": "bun src/index.ts",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.3.0"
+  },
+  "author": "Triad System",
+  "license": "MIT",
+  "engines": {
+    "bun": ">=1.0.0"
+  }
+}

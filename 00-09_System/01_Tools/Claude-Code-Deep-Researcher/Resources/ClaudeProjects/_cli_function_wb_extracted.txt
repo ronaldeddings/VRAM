@@ -1,0 +1,19 @@
+async function wb(A,Q){
+if(A.length<=1)return GAA(Q);
+let B=jA(),G=Ub();
+try{
+B.statSync(G)}
+catch{
+return GAA(Q)}
+let Z=A.map((J)=>eu(J)),Y=[];
+try{
+let J=B.readdirSync(G);
+for(let I of J){
+if(!I.isDirectory())continue;
+let X=I.name;
+if(Z.some((K)=>X===K||X.startsWith(K+"-")))Y.push(tS(G,X))}
+}
+catch{
+return GAA(Q)}
+if(Y.length===0)return GAA(Q);
+return RLB(Y,!0,Q)}

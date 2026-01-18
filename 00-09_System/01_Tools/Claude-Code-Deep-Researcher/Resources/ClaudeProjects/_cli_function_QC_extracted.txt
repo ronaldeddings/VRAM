@@ -1,0 +1,3 @@
+function QC(A){
+if(typeof A!=="string")return null;
+return Lu3.test(A)?A:null}

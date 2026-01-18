@@ -1,0 +1,4 @@
+I will begin by listing the files in the target directory to confirm availability and then read a sample markdown and JSON file to understand the structure and depth of the content. Then, I will perform a search for cross-domain keywords to validate the "Universal Inbox" hypothesis.
+
+I will read a sample transcript from the `2024` subdirectory to understand the content structure. Then, I will search for personal keywords within the `2024` and `2025` directories to quantify the "leakage" of personal life into work records.
+

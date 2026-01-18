@@ -1,0 +1,10 @@
+function FqA(A){
+try{
+let Q=A.map(Za3),B=d_B(Q);
+if(B[B.length-1]?.type==="user")B.push(hE({
+content:CAA}
+));
+return B}
+catch(Q){
+throw s(Q),Q}
+}
