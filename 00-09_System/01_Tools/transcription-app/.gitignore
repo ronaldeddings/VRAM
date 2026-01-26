@@ -44,3 +44,6 @@ data/output/*
 # Converted WAV files (can be regenerated)
 data/wavs/*
 !data/wavs/.gitkeep
+
+# Models (large binaries - download separately)
+models/

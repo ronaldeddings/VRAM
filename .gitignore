@@ -66,6 +66,16 @@ projects/
 # =============================================================================
 00-09_System/01_Tools/Agent_Tools/
 00-09_System/01_Tools/Maestro/
+# Duplicate/large tool directories (copies exist in Agent_Tools)
+00-09_System/01_Tools/Claude-Code-Deep-Researcher/
+00-09_System/01_Tools/ClaudeCodeTS/
+00-09_System/01_Tools/triad/
+
+# =============================================================================
+# EXCLUDED WORK DIRECTORIES (too large - database dumps, app configs)
+# =============================================================================
+# Budibase/n8n/NocoDB apps and backups (3.8GB+)
+10-19_Work/10_Hacker_Valley_Media/10.09_technology/10.09.03_apps/
 
 # =============================================================================
 # GENERATED DATABASES (EXCLUDE - MASSIVE FILES)
@@ -211,8 +221,11 @@ e2e-results/
 *.onnx
 
 # =============================================================================
-# PERSONAL DOCUMENTS AT ROOT
+# PERSONAL/WORK DOCUMENTS (stray files in wrong locations)
 # =============================================================================
 Triad_Analysis_Personal_Growth.md
+# Stray work files in tools directories
+00-09_System/01_Tools/search_engine/VS26_*.md
+00-09_System/01_Tools/search_engine/*_Storyboard.md
 10-19_Work/10_Hacker_Valley_Media/10.09_technology/10.09.01_website/hackervalley-website-hubspot/
 10-19_Work/10_Hacker_Valley_Media/10.09_technology/10.09.01_website/hvm-website-payloadcms/

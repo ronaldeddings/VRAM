@@ -8,28 +8,22 @@ REST API documentation for the VRAM Search server.
 http://localhost:3000
 ```
 
-## Endpoints
-
-### GET /
-
-Serves the Web UI.
-
-**Response**: HTML page
-
----
+## Search Endpoints
 
 ### GET /search
 
-Full-text search across indexed files.
+Keyword search using PostgreSQL tsvector full-text search.
 
 **Query Parameters**:
 
 | Parameter | Type | Required | Default | Description |
 |-----------|------|----------|---------|-------------|
-| `q` | string | Yes | - | Search query (FTS5 syntax) |
+| `q` | string | Yes | - | Search query |
 | `limit` | integer | No | 20 | Max results (1-100) |
 | `offset` | integer | No | 0 | Pagination offset |
-| `area` | string | No | - | Filter by area (Work, Finance, Personal, Archive, System) |
+| `area` | string | No | - | Filter by area |
+| `type` | string | No | - | Filter by extension (md, txt, json) |
+| `sources` | string | No | all | Comma-separated: file,email,slack,transcript |
 
 **Example Request**:
 ```bash
@@ -42,13 +36,11 @@ curl "http://localhost:3000/search?q=security&limit=5&area=Work"
   "query": "security",
   "results": [
     {
-      "path": "/Volumes/VRAM/10-19_Work/14_Communications/14.01_emails/2025/2025-04-04_security.md",
-      "filename": "2025-04-04_security.md",
+      "path": "/Volumes/VRAM/10-19_Work/.../security.md",
+      "filename": "security.md",
       "area": "Work",
-      "category": "Communications",
       "extension": "md",
       "file_size": 13029,
-      "modified_at": "2025-12-30T10:57:47.000Z",
       "snippet": "...5 Mindset Shifts →Security← Teams Must Adopt..."
     }
   ],
@@ -57,13 +49,87 @@ curl "http://localhost:3000/search?q=security&limit=5&area=Work"
 }
 ```
 
-**FTS5 Query Syntax**:
-- Simple terms: `security`
-- Phrases: `"cloud security"`
-- AND (implicit): `security compliance`
-- OR: `security OR privacy`
-- NOT: `security NOT cloud`
-- Prefix: `secur*`
+---
+
+### GET /semantic
+
+Semantic search using pgvector embeddings.
+
+**Query Parameters**:
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `q` | string | Yes | - | Search query |
+| `limit` | integer | No | 10 | Max results |
+| `sources` | string | No | all | Sources to search |
+
+**Example**:
+```bash
+curl "http://localhost:3000/semantic?q=project%20planning&limit=5"
+```
+
+---
+
+### GET /hybrid
+
+Combined keyword + semantic search using Reciprocal Rank Fusion.
+
+**Query Parameters**:
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `q` | string | Yes | - | Search query |
+| `limit` | integer | No | 10 | Max results |
+| `fts_weight` | float | No | 0.4 | Weight for keyword results (0-1) |
+| `strategy` | string | No | rrf | Fusion strategy: rrf, weighted, max |
+| `sources` | string | No | all | Sources to search |
+
+**Example**:
+```bash
+curl "http://localhost:3000/hybrid?q=meeting%20notes&limit=10&fts_weight=0.5"
+```
+
+---
+
+### GET /search/slack
+
+Slack-specific semantic search.
+
+**Query Parameters**:
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `q` | string | Yes | - | Search query |
+| `limit` | integer | No | 10 | Max results |
+| `channel` | string | No | - | Filter by channel name |
+
+**Example**:
+```bash
+curl "http://localhost:3000/search/slack?q=podcast&limit=5"
+```
+
+---
+
+### GET /search/emails
+
+Email-specific semantic search.
+
+**Query Parameters**:
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `q` | string | Yes | - | Search query |
+| `limit` | integer | No | 10 | Max results |
+
+---
+
+## Resource Endpoints
+
+### GET /
+
+Serves the Web UI.
+
+**Response**: HTML page
 
 ---
 
@@ -176,7 +242,7 @@ curl "http://localhost:3000/stats"
 
 ### GET /health
 
-Health check endpoint.
+Basic health check endpoint.
 
 **Example Request**:
 ```bash
@@ -184,8 +250,59 @@ curl "http://localhost:3000/health"
 ```
 
 **Example Response**:
+```json
+{
+  "status": "healthy",
+  "postgres": "connected",
+  "embedding_server": "available"
+}
 ```
-OK
+
+---
+
+### GET /health/slack-sync
+
+Slack sync status and health.
+
+**Example Request**:
+```bash
+curl "http://localhost:3000/health/slack-sync"
+```
+
+**Example Response**:
+```json
+{
+  "status": "ok",
+  "message": "Slack sync is up to date",
+  "last_sync": "2026-01-24T16:45:29.513Z",
+  "age_hours": 2.5,
+  "archive_exists": true,
+  "archive_size_mb": 156.2,
+  "healthy": true
+}
+```
+
+**Status Values**:
+| Status | Description |
+|--------|-------------|
+| `ok` | Sync completed within 25 hours |
+| `stale` | Sync is overdue (> 25 hours) |
+| `warning` | Sync has never run |
+| `error` | Error checking sync status |
+
+---
+
+### GET /embedding/status
+
+Embedding server status.
+
+**Example Response**:
+```json
+{
+  "available": true,
+  "port": 8081,
+  "model": "Qwen3-Embedding-8B"
+}
 ```
 
 ---

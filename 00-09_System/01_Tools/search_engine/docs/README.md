@@ -1,122 +1,141 @@
 # VRAM Search System
 
-A high-performance full-text search engine for the VRAM (Video RAM) local data asset system. Built with Bun and SQLite FTS5 for sub-100ms search across 180,000+ files.
+A high-performance search engine for the VRAM personal data asset management system. Built with Bun runtime and PostgreSQL for hybrid keyword + semantic search across 180,000+ files.
 
 ## Overview
 
-VRAM Search provides instant full-text search across all text-based files in your VRAM data store, including:
-- Markdown documents (`.md`)
-- Plain text files (`.txt`)
-- JSON data files (`.json`)
+VRAM Search provides instant full-text and semantic search across:
+- **Files**: Markdown (`.md`), text (`.txt`), JSON (`.json`)
+- **Emails**: Indexed email content with metadata
+- **Transcripts**: Meeting transcriptions
+- **Slack**: Message history with incremental sync
 
 ### Key Features
 
-- **Fast Search**: ~25ms average query time using SQLite FTS5
-- **Multiple Interfaces**: Web UI, CLI, API, and Raycast integration
-- **Area Filtering**: Search within Work, Finance, Personal, Archive, or System areas
-- **Real-time Indexing**: File watcher automatically updates the index
-- **Johnny.Decimal Integration**: Respects the folder organization structure
+- **Hybrid Search**: PostgreSQL tsvector FTS + pgvector semantic search
+- **Multiple Interfaces**: Web UI, CLI, REST API
+- **Area Filtering**: Search within Johnny.Decimal areas
+- **Real-time Indexing**: File watcher for automatic updates
+- **Automated Slack Sync**: Daily backup via launchd
 
 ## Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                      VRAM Search System                      │
-├─────────────────────────────────────────────────────────────┤
-│                                                              │
-│  ┌─────────┐   ┌─────────┐   ┌─────────┐   ┌──────────┐    │
-│  │   CLI   │   │  Web UI │   │ Raycast │   │   API    │    │
-│  └────┬────┘   └────┬────┘   └────┬────┘   └────┬─────┘    │
-│       │             │             │              │          │
-│       └─────────────┴──────┬──────┴──────────────┘          │
-│                            │                                 │
-│                     ┌──────▼──────┐                         │
-│                     │   Server    │ ← Port 3000             │
-│                     │  (Bun.serve)│                         │
-│                     └──────┬──────┘                         │
-│                            │                                 │
-│                     ┌──────▼──────┐                         │
-│                     │   SQLite    │                         │
-│                     │    FTS5     │ ← search.db             │
-│                     └──────┬──────┘                         │
-│                            │                                 │
-│  ┌─────────┐        ┌──────▼──────┐                         │
-│  │ Watcher │───────▶│   Indexer   │                         │
-│  └─────────┘        └─────────────┘                         │
-│                                                              │
-└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────┐
+│                      VRAM Search System                          │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  ┌─────────┐   ┌─────────┐   ┌─────────┐   ┌──────────┐        │
+│  │   CLI   │   │  Web UI │   │ Raycast │   │   API    │        │
+│  └────┬────┘   └────┬────┘   └────┬────┘   └────┬─────┘        │
+│       │             │             │              │              │
+│       └─────────────┴──────┬──────┴──────────────┘              │
+│                            │                                     │
+│                     ┌──────▼──────┐                             │
+│                     │   Server    │ ← Port 3000                 │
+│                     │  (Bun.serve)│                             │
+│                     └──────┬──────┘                             │
+│                            │                                     │
+│  ┌─────────────────────────┼─────────────────────────┐          │
+│  │              PostgreSQL (vram_embeddings)          │          │
+│  │  ┌───────────┐ ┌───────────┐ ┌───────────────┐   │          │
+│  │  │ documents │ │  chunks   │ │ slack_chunks  │   │          │
+│  │  │ (FTS)     │ │ (vectors) │ │ (vectors)     │   │          │
+│  │  └───────────┘ └───────────┘ └───────────────┘   │          │
+│  └───────────────────────────────────────────────────┘          │
+│                            │                                     │
+│  ┌─────────┐  ┌────────────┴────────────┐  ┌──────────────┐    │
+│  │ Watcher │──│      Embedding Server   │──│  Slack Sync  │    │
+│  └─────────┘  │   (Qwen3-Embedding-8B)  │  │  (launchd)   │    │
+│               │       Port 8081          │  └──────────────┘    │
+│               └─────────────────────────┘                       │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
 ## Components
 
 | Component | File | Purpose |
 |-----------|------|---------|
-| Indexer | `indexer.ts` | Scans VRAM and populates the FTS5 database |
-| Server | `server.ts` | HTTP API server with Web UI |
-| CLI | `cli.ts` | Command-line search interface |
-| Watcher | `watcher.ts` | Real-time file change detection |
-| Raycast | `vram-search.sh` | Raycast script command |
+| Server | `server.ts` | HTTP API with Web UI |
+| Start | `start.ts` | Unified startup (embedding + API) |
+| Indexer | `indexer.ts` | Full filesystem reindex |
+| CLI | `cli.ts` | Command-line search |
+| Watcher | `watcher.ts` | Real-time file monitoring |
+| Slack Sync | `scripts/slack-sync.ts` | Automated Slack backup |
 
 ## Quick Start
 
 ```bash
 cd /Volumes/VRAM/00-09_System/01_Tools/search_engine
 
-# Start the server (includes Web UI)
-bun server.ts
+# Start the unified server (embedding + API)
+bun start
 
-# In another terminal, start the file watcher
-bun watcher.ts
+# Or start just the API server
+bun run serve
 ```
 
-Then open http://localhost:3000/ in your browser.
+Open http://localhost:3000/ in your browser.
+
+## Search Types
+
+| Type | Endpoint | Speed | Best For |
+|------|----------|-------|----------|
+| Keyword | `/search` | ~50ms | Exact terms, names, filenames |
+| Semantic | `/semantic` | ~2s | Concepts, similar meaning |
+| Hybrid | `/hybrid` | ~1s | General search (recommended) |
 
 ## Index Statistics
 
-- **Total Files**: 181,399
-- **Total Size**: 4,087 MB
-- **Areas**: Work (177,167), System (4,190), Personal (42)
-- **File Types**: JSON (98,146), Markdown (80,641), Text (2,612)
+- **Total Files**: ~188,000
+- **Total Size**: ~4 GB
+- **Embeddings**: ~345,000 (files, emails, slack)
+- **Areas**: Work, Finance, Personal, Archive, System
 
 ## Directory Structure
 
 ```
 /Volumes/VRAM/
 ├── 00-09_System/
-│   ├── 00_Index/
-│   │   └── search.db          # SQLite FTS5 database
 │   └── 01_Tools/
 │       └── search_engine/     # This project
-│           ├── indexer.ts
-│           ├── server.ts
-│           ├── cli.ts
-│           ├── watcher.ts
-│           ├── index.html
-│           ├── vram-search.sh
-│           └── docs/
+│           ├── start.ts       # Unified startup
+│           ├── server.ts      # API server
+│           ├── indexer.ts     # Reindexer
+│           ├── cli.ts         # CLI tool
+│           ├── watcher.ts     # File watcher
+│           ├── scripts/       # Automation scripts
+│           │   └── slack-sync.ts
+│           └── docs/          # Documentation
 ├── 10-19_Work/
+│   └── 14_Communications/
+│       └── 14.02_slack/       # Slack data
+│           ├── json/          # Raw JSON exports
+│           └── markdown/      # Converted markdown
 ├── 20-29_Finance/
 ├── 30-39_Personal/
-└── 40-49_Archive/
+└── 90-99_Archive/
 ```
 
 ## Requirements
 
 - [Bun](https://bun.sh) v1.0+
-- macOS (for launchd auto-start)
+- PostgreSQL 15+ with pgvector extension
+- macOS (for launchd automation)
 - VRAM volume mounted at `/Volumes/VRAM`
 
 ## Performance
 
-| Metric | Target | Actual |
-|--------|--------|--------|
-| Search latency | <100ms | ~25ms |
-| Index size | - | 181,399 files |
-| Database size | - | ~500MB |
-| Watcher CPU | Low | <1% idle |
+| Metric | Value |
+|--------|-------|
+| Keyword search | ~50ms |
+| Semantic search | ~2s |
+| Hybrid search | ~1s |
+| Full reindex | ~10min |
 
 ## See Also
 
 - [API Reference](./API.md) - REST API documentation
 - [CLI Guide](./CLI.md) - Command-line usage
-- [Configuration](./CONFIG.md) - Setup and configuration options
+- [Configuration](./CONFIG.md) - Setup and configuration
+- [Slack Sync](./SLACK.md) - Slack backup automation

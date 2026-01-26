@@ -675,6 +675,60 @@ const server = Bun.serve({
       });
     },
 
+    // Slack sync health check
+    "/health/slack-sync": async () => {
+      const lastSyncFile = "/Volumes/VRAM/10-19_Work/14_Communications/14.02_slack/.sync/last_sync.txt";
+      const archiveDir = "/Volumes/VRAM/10-19_Work/14_Communications/14.02_slack/.sync/slackdump_archive";
+
+      try {
+        const file = Bun.file(lastSyncFile);
+        const archiveExists = await Bun.file(`${archiveDir}/slackdump.sqlite`).exists();
+
+        if (!(await file.exists())) {
+          return jsonResponse({
+            status: "warning",
+            message: "Slack sync has not run yet",
+            last_sync: null,
+            age_hours: null,
+            archive_exists: archiveExists,
+            healthy: false
+          });
+        }
+
+        const lastSyncStr = await file.text();
+        const lastSync = new Date(lastSyncStr.trim());
+        const now = new Date();
+        const ageMs = now.getTime() - lastSync.getTime();
+        const ageHours = Math.round(ageMs / (1000 * 60 * 60) * 10) / 10;
+        const healthy = ageHours < 25; // Allow 25 hours for daily sync tolerance
+
+        // Get archive stats
+        let archiveSize = 0;
+        try {
+          const stat = await Bun.file(`${archiveDir}/slackdump.sqlite`).stat();
+          archiveSize = stat.size;
+        } catch {}
+
+        return jsonResponse({
+          status: healthy ? "ok" : "stale",
+          message: healthy ? "Slack sync is up to date" : "Slack sync is overdue",
+          last_sync: lastSync.toISOString(),
+          age_hours: ageHours,
+          archive_exists: archiveExists,
+          archive_size_mb: Math.round(archiveSize / (1024 * 1024) * 10) / 10,
+          healthy: healthy
+        });
+      } catch (err: any) {
+        return jsonResponse({
+          status: "error",
+          message: err.message,
+          last_sync: null,
+          age_hours: null,
+          healthy: false
+        }, 500);
+      }
+    },
+
     // ==================== NEW METADATA ENDPOINTS ====================
 
     // Contacts list and search

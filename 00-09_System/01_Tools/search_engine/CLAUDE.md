@@ -43,6 +43,22 @@ PostgreSQL Database (vram_embeddings)
 | `pg-client.ts` | PostgreSQL/pgvector client | imported |
 | `index.html` | Web UI (served at `/`) | via server |
 
+### Slack Sync Scripts
+
+| File | Purpose | Run Command |
+|------|---------|-------------|
+| `scripts/slack-sync.ts` | Master orchestrator | `bun scripts/slack-sync.ts` |
+| `scripts/sync-slack-json.ts` | Extract JSON from slackdump | imported by slack-sync |
+| `scripts/convert-slack-markdown.ts` | Convert JSON to markdown | imported by slack-sync |
+| `scripts/index-slack-incremental.ts` | Index to PostgreSQL | imported by slack-sync |
+
+**Slack Data Locations:**
+- Archive: `/Volumes/VRAM/10-19_Work/14_Communications/14.02_slack/.sync/slackdump_archive/`
+- JSON: `/Volumes/VRAM/10-19_Work/14_Communications/14.02_slack/json/`
+- Markdown: `/Volumes/VRAM/10-19_Work/14_Communications/14.02_slack/markdown/`
+
+**Automated Schedule:** Daily at 6 AM via launchd (`~/Library/LaunchAgents/com.vram.slack-sync.plist`)
+
 ## Bun Runtime
 
 Default to Bun instead of Node.js:
@@ -137,6 +153,7 @@ Base URL: `http://localhost:3000`
 | `/browse/<area>?limit=50` | GET | Browse files by area |
 | `/stats` | GET | Index statistics |
 | `/health` | GET | Health check |
+| `/health/slack-sync` | GET | Slack sync status |
 | `/embed` | POST | Generate embedding for text |
 | `/embedding/status` | GET | Embedding server status |
 
@@ -232,6 +249,7 @@ bun start
 
 ```bash
 curl http://localhost:3000/health
+curl http://localhost:3000/health/slack-sync
 curl http://localhost:3000/stats
 ```
 

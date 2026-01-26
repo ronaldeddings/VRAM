@@ -1,0 +1,32 @@
+{
+  "name": "sitemap-to-md",
+  "version": "1.0.0",
+  "description": "Lightweight TypeScript tool to download sitemaps and convert pages to markdown",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "sitemap-to-md": "dist/index.js"
+  },
+  "scripts": {
+    "dev": "bun run src/index.ts",
+    "build": "bun build src/index.ts --outdir=dist --target=node --format=esm",
+    "start": "node dist/index.js",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "sitemap",
+    "markdown",
+    "scraper",
+    "bun",
+    "typescript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
