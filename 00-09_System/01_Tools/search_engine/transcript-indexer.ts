@@ -10,7 +10,7 @@
 import { getConnection } from "./pg-client";
 
 const VRAM = "/Volumes/VRAM";
-const TRANSCRIPT_PATH = `${VRAM}/Backup/meetings/fathom_transcripts`;
+const TRANSCRIPT_PATH = `${VRAM}/Backup/meetings/fathom_json`;
 const MY_DOMAIN = "hackervalley.com";
 
 interface FathomParticipant {
